@@ -27,3 +27,17 @@ flutter.targetSdkVersion=32
 flutter.compileSdkVersion=32
 flutter.versionCode=1
 ```
+
+-Firebase Realtime Database kuralları
+```
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "$user_id": {
+      ".read": "auth != null && auth.uid == $user_id",
+      ".write": "auth != null && auth.uid == $user_id"
+    }
+  }
+}
+```
