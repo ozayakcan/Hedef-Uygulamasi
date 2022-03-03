@@ -27,16 +27,24 @@ void main() async {
   if (kIsWeb) {
     await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
   }
-  runApp(MyApp());
+  FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    if (kDebugMode) {
+      if (user == null) {
+        print('Kullanıcı giriş yapmadı!');
+      } else {
+        print('Kullanıcı giriş yaptı!');
+      }
+    }
+  });
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
-      stream: _auth.authStateChanges(),
+      stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, snapshot1) {
         if (snapshot1.connectionState == ConnectionState.waiting) {
           if (kIsWeb) {
