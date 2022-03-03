@@ -1,4 +1,8 @@
+import 'package:auth_buttons/auth_buttons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hedef/utils/auth.dart';
 import 'package:hedef/utils/colors.dart';
 import 'package:hedef/utils/variables.dart';
 
@@ -54,23 +58,28 @@ TextStyle mediumTextStyleWhite() {
   );
 }
 
-ElevatedButton googleSignInBtn(void Function() _onPressed) {
-  return ElevatedButton(
-    style: ElevatedButton.styleFrom(
-      minimumSize: Size.fromHeight(Variables.defaultButtonHeight),
-      primary: Colors.white,
-      padding: EdgeInsets.all(Variables.defaultButtonPadding),
-      side: BorderSide(
-        color: Colors.black54,
-        width: Variables.defaultButtonBorderSize,
-      ),
-      onPrimary: MyColors.colorPrimary,
+GoogleAuthButton googleAuthBtn(BuildContext context) {
+  return GoogleAuthButton(
+    style: AuthButtonStyle(
+      width: MediaQuery.of(context).size.width,
+      height: Variables.defaultButtonHeight,
+      borderColor: Colors.black,
     ),
-    onPressed: _onPressed,
-    child: const Text(
-      "Google ile Giriş Yap",
-      style: TextStyle(color: Colors.black),
-    ),
+    onPressed: () {
+      try {
+        if (kIsWeb) {
+          Auth.signInWithGoogleWeb();
+        } else {
+          Auth.signInWithGoogle();
+        }
+      } on FirebaseAuthException catch (e) {
+        if (kDebugMode) {
+          print('Giriş Başarısız! Kod: ${e.code}');
+          print(e.message);
+        }
+      }
+    },
+    text: "Google ile Giriş Yap",
   );
 }
 

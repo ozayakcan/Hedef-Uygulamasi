@@ -22,11 +22,7 @@ class _LoginState extends State<Login> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                googleSignInBtn(googleSignIn),
-                const SizedBox(
-                  height: 10,
-                ),
-                emailSignInBtn(googleSignIn),
+                googleAuthBtn(context),
               ],
             ),
           ),
@@ -34,6 +30,4 @@ class _LoginState extends State<Login> {
       ),
     );
   }
-
-  void googleSignIn() {}
 }
