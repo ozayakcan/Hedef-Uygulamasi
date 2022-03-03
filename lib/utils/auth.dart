@@ -19,8 +19,6 @@ class Auth {
   static Future<UserCredential> signInWithGoogleWeb() async {
     GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
-    googleProvider.setCustomParameters({'login_hint': 'kullanici@gmail.com'});
-
     return await FirebaseAuth.instance.signInWithPopup(googleProvider);
     // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
   }
