@@ -28,6 +28,14 @@ flutter.compileSdkVersion=32
 flutter.versionCode=1
 ```
 
+- key.properties örneği
+```
+storePassword=şifre
+keyPassword=şifre
+keyAlias=release
+storeFile=key/keystore.jks
+```
+
 -Firebase Realtime Database kuralları
 ```
 {
