@@ -2,6 +2,7 @@ import 'package:auth_buttons/auth_buttons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hedef/utils/auth.dart';
 import 'package:hedef/utils/colors.dart';
 import 'package:hedef/utils/errors.dart';
@@ -89,10 +90,14 @@ GoogleAuthButton googleAuthBtn(BuildContext context) {
     style: defaultAuthButtonStyle(MediaQuery.of(context).size.width),
     onPressed: () {
       try {
-        if (kIsWeb) {
-          Auth.signInWithGoogleWeb();
-        } else {
-          Auth.signInWithGoogle();
+        try {
+          if (kIsWeb) {
+            Auth.signInWithGoogleWeb();
+          } else {
+            Auth.signInWithGoogle();
+          }
+        } on PlatformException catch (e) {
+          loginError2(context, e);
         }
       } on FirebaseAuthException catch (e) {
         loginError(context, e);
@@ -105,17 +110,7 @@ GoogleAuthButton googleAuthBtn(BuildContext context) {
 EmailAuthButton emailAuthBtn(BuildContext context) {
   return EmailAuthButton(
     style: defaultAuthButtonStyle(MediaQuery.of(context).size.width),
-    onPressed: () {
-      try {
-        if (kIsWeb) {
-          Auth.signInWithGoogleWeb();
-        } else {
-          Auth.signInWithGoogle();
-        }
-      } on FirebaseAuthException catch (e) {
-        loginError(context, e);
-      }
-    },
+    onPressed: () {},
     text: "Eposta ile Giriş Yap",
   );
 }
