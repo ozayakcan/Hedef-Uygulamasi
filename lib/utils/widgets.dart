@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hedef/utils/auth.dart';
 import 'package:hedef/utils/colors.dart';
+import 'package:hedef/utils/errors.dart';
 import 'package:hedef/utils/variables.dart';
 
 MaterialApp homeMaterialApp(Widget page) {
@@ -37,6 +38,22 @@ Container appBarTitle(String title) {
   );
 }
 
+class ScaffoldSnackbar {
+  ScaffoldSnackbar(this._context);
+  final BuildContext _context;
+
+  factory ScaffoldSnackbar.of(BuildContext context) {
+    return ScaffoldSnackbar(context);
+  }
+  void show(String message) {
+    ScaffoldMessenger.of(_context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(content: Text(message)),
+      );
+  }
+}
+
 TextStyle simpleTextStyle() {
   return const TextStyle(
     color: Colors.black87,
@@ -58,13 +75,17 @@ TextStyle mediumTextStyleWhite() {
   );
 }
 
+AuthButtonStyle defaultAuthButtonStyle(double _width) {
+  return AuthButtonStyle(
+    width: _width,
+    height: Variables.defaultButtonHeight,
+    borderColor: Colors.black,
+  );
+}
+
 GoogleAuthButton googleAuthBtn(BuildContext context) {
   return GoogleAuthButton(
-    style: AuthButtonStyle(
-      width: MediaQuery.of(context).size.width,
-      height: Variables.defaultButtonHeight,
-      borderColor: Colors.black,
-    ),
+    style: defaultAuthButtonStyle(MediaQuery.of(context).size.width),
     onPressed: () {
       try {
         if (kIsWeb) {
@@ -73,31 +94,27 @@ GoogleAuthButton googleAuthBtn(BuildContext context) {
           Auth.signInWithGoogle();
         }
       } on FirebaseAuthException catch (e) {
-        if (kDebugMode) {
-          print('Giriş Başarısız! Kod: ${e.code}');
-          print(e.message);
-        }
+        loginError(context, e);
       }
     },
     text: "Google ile Giriş Yap",
   );
 }
 
-ElevatedButton emailSignInBtn(void Function() _onPressed) {
-  return ElevatedButton(
-    style: ElevatedButton.styleFrom(
-      minimumSize: Size.fromHeight(Variables.defaultButtonHeight),
-      primary: MyColors.colorPrimary,
-      padding: EdgeInsets.all(Variables.defaultButtonPadding),
-      side: BorderSide(
-        color: Colors.black54,
-        width: Variables.defaultButtonBorderSize,
-      ),
-    ),
-    onPressed: _onPressed,
-    child: const Text(
-      "Eposta ile Giriş Yap",
-      style: TextStyle(color: Colors.white),
-    ),
+EmailAuthButton emailAuthBtn(BuildContext context) {
+  return EmailAuthButton(
+    style: defaultAuthButtonStyle(MediaQuery.of(context).size.width),
+    onPressed: () {
+      try {
+        if (kIsWeb) {
+          Auth.signInWithGoogleWeb();
+        } else {
+          Auth.signInWithGoogle();
+        }
+      } on FirebaseAuthException catch (e) {
+        loginError(context, e);
+      }
+    },
+    text: "Eposta ile Giriş Yap",
   );
 }
