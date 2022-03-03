@@ -79,7 +79,8 @@ AuthButtonStyle defaultAuthButtonStyle(double _width) {
   return AuthButtonStyle(
     width: _width,
     height: Variables.defaultButtonHeight,
-    borderColor: Colors.black,
+    borderColor: Colors.black26,
+    splashColor: Colors.black12,
   );
 }
 
