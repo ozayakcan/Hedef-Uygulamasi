@@ -115,17 +115,21 @@ GoogleAuthButton googleAuthBtn(BuildContext context) {
     style: defaultAuthButtonStyle(MediaQuery.of(context).size.width),
     onPressed: () {
       try {
-        try {
-          if (kIsWeb) {
-            Auth.signInWithGoogleWeb();
-          } else {
-            Auth.signInWithGoogle();
-          }
-        } on PlatformException catch (e) {
-          loginError2(context, e);
+        if (kIsWeb) {
+          Auth.signInWithGoogleWeb().then((value) {
+            if (value != null) {
+              ScaffoldSnackbar.of(context).show(value);
+            }
+          });
+        } else {
+          Auth.signInWithGoogle().then((value) {
+            if (value != null) {
+              ScaffoldSnackbar.of(context).show(value);
+            }
+          });
         }
-      } on FirebaseAuthException catch (e) {
-        loginError(context, e);
+      } on PlatformException catch (e) {
+        loginError2(context, e);
       }
     },
     text: "Google ile Giriş Yap",

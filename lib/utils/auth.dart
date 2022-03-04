@@ -6,25 +6,35 @@ class Auth {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   static get user => _auth.currentUser;
 
-  static Future<UserCredential> signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  static Future signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
 
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
 
-    return await _auth.signInWithCredential(credential);
+      await _auth.signInWithCredential(credential);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return firebaseAuthMessages(e.code);
+    }
   }
 
-  static Future<UserCredential> signInWithGoogleWeb() async {
-    GoogleAuthProvider googleProvider = GoogleAuthProvider();
+  static Future signInWithGoogleWeb() async {
+    try {
+      GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
-    return await _auth.signInWithPopup(googleProvider);
-    // return await _auth.signInWithRedirect(googleProvider);
+      await _auth.signInWithPopup(googleProvider);
+      //await _auth.signInWithRedirect(googleProvider);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return firebaseAuthMessages(e.code);
+    }
   }
 
   static Future signupWithEmail(String email, String password) async {
