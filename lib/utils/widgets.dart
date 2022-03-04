@@ -7,6 +7,7 @@ import 'package:hedef/utils/auth.dart';
 import 'package:hedef/utils/colors.dart';
 import 'package:hedef/utils/errors.dart';
 import 'package:hedef/utils/variables.dart';
+import 'package:hedef/views/home.dart';
 import 'package:hedef/views/login.dart';
 
 MaterialApp homeMaterialApp(Widget page) {
@@ -157,6 +158,10 @@ CustomAuthButton signinBtn(BuildContext context, TextEditingController email,
     onPressed: () {
       Auth.signInWithEmail(email.text, password.text).then((value) {
         if (value == null) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          );
         } else {
           ScaffoldSnackbar.of(context).show(value);
         }
