@@ -61,4 +61,7 @@ class MyColors {
       900: Color(0xFF111111),
     },
   );
+
+  static const Color defaultBtnBorderColor = Colors.black26;
+  static const Color defaultBtnSplashColor = Colors.black12;
 }

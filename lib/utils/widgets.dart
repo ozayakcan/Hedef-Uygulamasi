@@ -7,6 +7,7 @@ import 'package:hedef/utils/auth.dart';
 import 'package:hedef/utils/colors.dart';
 import 'package:hedef/utils/errors.dart';
 import 'package:hedef/utils/variables.dart';
+import 'package:hedef/views/login.dart';
 
 MaterialApp homeMaterialApp(Widget page) {
   return MaterialApp(
@@ -26,6 +27,7 @@ PreferredSizeWidget appBarMain(String title) {
     title: appBarTitle(
       title,
     ),
+    toolbarHeight: 50,
   );
 }
 
@@ -76,12 +78,35 @@ TextStyle mediumTextStyleWhite() {
   );
 }
 
+//Giriş Butonları
 AuthButtonStyle defaultAuthButtonStyle(double _width) {
   return AuthButtonStyle(
     width: _width,
     height: Variables.defaultButtonHeight,
-    borderColor: Colors.black26,
-    splashColor: Colors.black12,
+    borderColor: MyColors.defaultBtnBorderColor,
+    splashColor: MyColors.defaultBtnSplashColor,
+  );
+}
+
+AuthButtonStyle primaryButtonStyle(double _width) {
+  return AuthButtonStyle(
+    width: _width,
+    height: Variables.defaultButtonHeight,
+    borderColor: MyColors.defaultBtnBorderColor,
+    splashColor: MyColors.defaultBtnSplashColor,
+    buttonColor: MyColors.colorPrimary,
+    textStyle: const TextStyle(color: Colors.white),
+  );
+}
+
+AuthButtonStyle secondaryButtonStyle(double _width) {
+  return AuthButtonStyle(
+    width: _width,
+    height: Variables.defaultButtonHeight,
+    borderColor: MyColors.defaultBtnBorderColor,
+    splashColor: MyColors.defaultBtnSplashColor,
+    buttonColor: MyColors.colorSecondary,
+    textStyle: const TextStyle(color: Colors.white),
   );
 }
 
@@ -110,7 +135,59 @@ GoogleAuthButton googleAuthBtn(BuildContext context) {
 EmailAuthButton emailAuthBtn(BuildContext context) {
   return EmailAuthButton(
     style: defaultAuthButtonStyle(MediaQuery.of(context).size.width),
-    onPressed: () {},
+    onPressed: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => EmailAuth()),
+      );
+    },
     text: "Eposta ile Giriş Yap",
+  );
+}
+
+CustomAuthButton signinBtn(BuildContext context, TextEditingController email,
+    TextEditingController password) {
+  return CustomAuthButton(
+    iconUrl: "",
+    style: primaryButtonStyle(MediaQuery.of(context).size.width),
+    onPressed: () {
+      Auth.signInWithEmail(email.text, password.text).then((value) {
+        if (value == null) {
+        } else {
+          ScaffoldSnackbar.of(context).show(value);
+        }
+      });
+    },
+    text: "Giriş Yap",
+  );
+}
+
+CustomAuthButton signupBtn(BuildContext context, TextEditingController email,
+    TextEditingController password) {
+  return CustomAuthButton(
+    iconUrl: "",
+    style: secondaryButtonStyle(MediaQuery.of(context).size.width),
+    onPressed: () {
+      Auth.signupWithEmail(email.text, password.text).then((value) {
+        if (value == null) {
+          ScaffoldSnackbar.of(context)
+              .show("Başarıyla kaydoldunuz! Şimdi giriş yapabilirsiniz!");
+        } else {
+          ScaffoldSnackbar.of(context).show(value);
+        }
+      });
+    },
+    text: "Kaydol",
+  );
+}
+
+CustomAuthButton backBtn(BuildContext context) {
+  return CustomAuthButton(
+    iconUrl: "",
+    style: defaultAuthButtonStyle(MediaQuery.of(context).size.width),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+    text: "Geri",
   );
 }
