@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hedef/utils/errors.dart';
 
@@ -6,7 +7,7 @@ class Auth {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   static get user => _auth.currentUser;
 
-  static Future signInWithGoogle() async {
+  static Future signInWithGoogle(BuildContext context) async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -21,11 +22,11 @@ class Auth {
       await _auth.signInWithCredential(credential);
       return null;
     } on FirebaseAuthException catch (e) {
-      return firebaseAuthMessages(e.code);
+      return firebaseAuthMessages(context, e.code);
     }
   }
 
-  static Future signInWithGoogleWeb() async {
+  static Future signInWithGoogleWeb(BuildContext context) async {
     try {
       GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
@@ -33,26 +34,28 @@ class Auth {
       //await _auth.signInWithRedirect(googleProvider);
       return null;
     } on FirebaseAuthException catch (e) {
-      return firebaseAuthMessages(e.code);
+      return firebaseAuthMessages(context, e.code);
     }
   }
 
-  static Future signupWithEmail(String email, String password) async {
+  static Future signupWithEmail(
+      BuildContext context, String email, String password) async {
     try {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       return null;
     } on FirebaseAuthException catch (e) {
-      return firebaseAuthMessages(e.code);
+      return firebaseAuthMessages(context, e.code);
     }
   }
 
-  static Future signInWithEmail(String email, String password) async {
+  static Future signInWithEmail(
+      BuildContext context, String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       return null;
     } on FirebaseAuthException catch (e) {
-      return firebaseAuthMessages(e.code);
+      return firebaseAuthMessages(context, e.code);
     }
   }
 }

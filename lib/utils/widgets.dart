@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hedef/utils/auth.dart';
 import 'package:hedef/utils/colors.dart';
-import 'package:hedef/utils/errors.dart';
 import 'package:hedef/utils/variables.dart';
 import 'package:hedef/views/home.dart';
 import 'package:hedef/views/login.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 MaterialApp homeMaterialApp(Widget page) {
   return MaterialApp(
@@ -17,6 +18,13 @@ MaterialApp homeMaterialApp(Widget page) {
       primarySwatch: MyColors.colorPrimary,
       visualDensity: VisualDensity.adaptivePlatformDensity,
     ),
+    localizationsDelegates: const [
+      AppLocalizations.delegate,
+      GlobalMaterialLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+    ],
+    supportedLocales: AppLocalizations.supportedLocales,
     title: "Hedef",
     home: page,
   );
@@ -116,23 +124,25 @@ GoogleAuthButton googleAuthBtn(BuildContext context) {
     onPressed: () {
       try {
         if (kIsWeb) {
-          Auth.signInWithGoogleWeb().then((value) {
+          Auth.signInWithGoogleWeb(context).then((value) {
             if (value != null) {
               ScaffoldSnackbar.of(context).show(value);
             }
           });
         } else {
-          Auth.signInWithGoogle().then((value) {
+          Auth.signInWithGoogle(context).then((value) {
             if (value != null) {
               ScaffoldSnackbar.of(context).show(value);
             }
           });
         }
       } on PlatformException catch (e) {
-        loginError2(context, e);
+        if (kDebugMode) {
+          print(e.message);
+        }
       }
     },
-    text: "Google ile Giriş Yap",
+    text: AppLocalizations.of(context).login_with_google,
   );
 }
 
@@ -145,7 +155,7 @@ EmailAuthButton emailAuthBtn(BuildContext context) {
         MaterialPageRoute(builder: (context) => EmailAuth()),
       );
     },
-    text: "Eposta ile Giriş Yap",
+    text: AppLocalizations.of(context).login_with_email,
   );
 }
 
@@ -155,7 +165,7 @@ CustomAuthButton signinBtn(BuildContext context, TextEditingController email,
     iconUrl: "",
     style: primaryButtonStyle(MediaQuery.of(context).size.width),
     onPressed: () {
-      Auth.signInWithEmail(email.text, password.text).then((value) {
+      Auth.signInWithEmail(context, email.text, password.text).then((value) {
         if (value == null) {
           Navigator.pushReplacement(
             context,
@@ -166,7 +176,7 @@ CustomAuthButton signinBtn(BuildContext context, TextEditingController email,
         }
       });
     },
-    text: "Giriş Yap",
+    text: AppLocalizations.of(context).login,
   );
 }
 
@@ -176,16 +186,16 @@ CustomAuthButton signupBtn(BuildContext context, TextEditingController email,
     iconUrl: "",
     style: secondaryButtonStyle(MediaQuery.of(context).size.width),
     onPressed: () {
-      Auth.signupWithEmail(email.text, password.text).then((value) {
+      Auth.signupWithEmail(context, email.text, password.text).then((value) {
         if (value == null) {
           ScaffoldSnackbar.of(context)
-              .show("Başarıyla kaydoldunuz! Şimdi giriş yapabilirsiniz!");
+              .show(AppLocalizations.of(context).register_success);
         } else {
           ScaffoldSnackbar.of(context).show(value);
         }
       });
     },
-    text: "Kaydol",
+    text: AppLocalizations.of(context).register,
   );
 }
 
@@ -196,6 +206,6 @@ CustomAuthButton backBtn(BuildContext context) {
     onPressed: () {
       Navigator.pop(context);
     },
-    text: "Geri",
+    text: AppLocalizations.of(context).back,
   );
 }

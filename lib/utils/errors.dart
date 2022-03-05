@@ -1,64 +1,48 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
-import 'package:hedef/utils/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-void loginError(BuildContext context, FirebaseAuthException e) {
-  ScaffoldSnackbar.of(context).show('Giriş Başarısız! ${e.message}');
+String firebaseAuthMessages(BuildContext context, String code) {
   if (kDebugMode) {
-    print('Giriş Başarısız! Kod: ${e.code}');
-    print(e.message);
+    print("Hata Kodu: " + code);
   }
-}
-
-void loginError2(BuildContext context, PlatformException e) {
-  if (kDebugMode) {
-    print(e.message);
-  }
-}
-
-String firebaseAuthMessages(String code) {
   if (code == "invalid-email") {
-    return "Eposta geçersiz! Lütfen geçerli bir Eposta adresi girin!";
+    return AppLocalizations.of(context).invalid_email;
   } else if (code == "expired-action-code") {
-    return "Kod zaman aşımına uğradı! Lütfen yeni kod alın!";
+    return AppLocalizations.of(context).expired_action_code;
   } else if (code == "invalid-action-code") {
-    return "Geçersiz kod! Lütfen kodu tekrar isteyin!";
+    return AppLocalizations.of(context).invalid_action_code;
   } else if (code == "user-disabled") {
-    return "Kullanıcı devredışı bırakılmış!";
+    return AppLocalizations.of(context).user_disabled;
   } else if (code == "user-not-found") {
-    return "Kullanıcı bulunamadı! Bu işlemi gerçekleştirmeden önce kaydolun!";
+    return AppLocalizations.of(context).user_not_found;
   } else if (code == "weak-password") {
-    return "Girilen şifre zayıf! Lütfen daha güçlü bir şifre girin!";
+    return AppLocalizations.of(context).weak_password;
   } else if (code == "email-already-in-use") {
-    return "Eposta zaten kullanılıyor! Şifrenizi unuttuysanız lütfen şifre sıfırla butonuna basın!";
-  } else if (code == "invalid-email") {
-    return "Geçersiz eposta! Lütfen girdiğiniz eposta adresini kontrol edin!";
-  } else if (code == "operation-not-allowed") {
-    return "Bu işleme izin verilmiyor!";
+    return AppLocalizations.of(context).email_already_in_use;
   } else if (code == "account-exists-with-different-credential") {
-    return "Hesap başka bir kimlik bilgileri ile zaten mevcut!";
+    return AppLocalizations.of(context)
+        .account_exists_with_different_credential;
   } else if (code == "credential-already-in-use") {
-    return "Bu kimlik bilgisi zaten kullanımda!";
+    return AppLocalizations.of(context).credential_already_in_use;
   } else if (code == "invalid-continue-uri") {
-    return "İstekte bulunulan url geçersiz!";
+    return AppLocalizations.of(context).invalid_continue_uri;
   } else if (code == "unauthorized-continue-uri") {
-    return "İstekte bulunulan url yetkilendirilmemiş";
+    return AppLocalizations.of(context).unauthorized_continue_uri;
   } else if (code == "invalid-credential") {
-    return "Geçersiz kimlik bilgisi! Lütfen daha sonra tekrar deneyin!";
+    return AppLocalizations.of(context).invalid_credential;
   } else if (code == "wrong-password") {
-    return "Şifre yanlış!";
+    return AppLocalizations.of(context).wrong_password;
   } else if (code == "invalid-verification-code") {
-    return "Doğrulama kodu geçersiz!";
+    return AppLocalizations.of(context).invalid_verification_code;
   } else if (code == "cancelled-popup-request") {
-    return "Açılır pencere isteği iptal edildi!";
+    return AppLocalizations.of(context).cancelled_popup_request;
   } else if (code == "popup-blocked") {
-    return "Açılır pencere engellendi! Lütfen engellemeyi kaldırıp tekrar deneyin!";
+    return AppLocalizations.of(context).popup_blocked;
   } else if (code == "popup-closed-by-user") {
-    return "Giriş iptal edildi!";
+    return AppLocalizations.of(context).popup_closed_by_user;
   } else if (code == "unauthorized-domain") {
-    return "Yetkisiz alan adı!";
+    return AppLocalizations.of(context).unauthorized_domain;
   }
-  return "Bir hata oluştu! Lütfen daha sonra tekrar deneyin!";
+  return AppLocalizations.of(context).an_error_occurred;
 }

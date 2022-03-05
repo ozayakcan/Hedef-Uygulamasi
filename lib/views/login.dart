@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hedef/utils/colors.dart';
 import 'package:hedef/utils/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -8,7 +9,7 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarMain("Giriş Yap"),
+      appBar: appBarMain(AppLocalizations.of(context).login),
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height - 50,
@@ -42,7 +43,7 @@ class EmailAuth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarMain("Eposta ile Giriş Yap"),
+      appBar: appBarMain(AppLocalizations.of(context).login_with_email),
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height - 50,
@@ -52,20 +53,13 @@ class EmailAuth extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  "Hesabınız yoksa bilgileri girdikten sonra kaydol butonuna basın.",
-                  style: simpleTextStyle(),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
                 TextField(
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
-                  decoration: const InputDecoration(
-                    labelText: "Eposta",
-                    labelStyle: TextStyle(
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context).email,
+                    labelStyle: const TextStyle(
                       color: MyColors.colorPrimary,
                     ),
                   ),
@@ -82,9 +76,9 @@ class EmailAuth extends StatelessWidget {
                   obscureText: true,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                    labelText: "Şifre",
-                    labelStyle: TextStyle(
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context).password,
+                    labelStyle: const TextStyle(
                       color: MyColors.colorPrimary,
                     ),
                   ),
