@@ -49,6 +49,26 @@ Container appBarTitle(String title) {
   );
 }
 
+DefaultTabController defaultTabController(
+    BuildContext context, List<Widget> tabList, List<Widget> tabContentList) {
+  return DefaultTabController(
+    length: 2,
+    child: Scaffold(
+      appBar: AppBar(
+        title: appBarTitle(AppLocalizations.of(context).app_name),
+        bottom: TabBar(
+          labelStyle: titilliumWebTextStyle(Colors.white),
+          unselectedLabelStyle: titilliumWebTextStyle(Colors.white70),
+          tabs: tabList,
+        ),
+      ),
+      body: TabBarView(
+        children: tabContentList,
+      ),
+    ),
+  );
+}
+
 class ScaffoldSnackbar {
   ScaffoldSnackbar(this._context);
   final BuildContext _context;
@@ -63,6 +83,14 @@ class ScaffoldSnackbar {
         SnackBar(content: Text(message)),
       );
   }
+}
+
+TextStyle titilliumWebTextStyle(Color color) {
+  return TextStyle(
+    color: color,
+    fontSize: 16,
+    fontFamily: "TitilliumWeb",
+  );
 }
 
 TextStyle simpleTextStyle() {
@@ -86,7 +114,7 @@ TextStyle mediumTextStyleWhite() {
   );
 }
 
-//Giriş Butonları
+//Giriş Sayfası
 AuthButtonStyle defaultAuthButtonStyle(double _width) {
   return AuthButtonStyle(
     width: _width,

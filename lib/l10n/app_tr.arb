@@ -1,4 +1,5 @@
 {
+    "app_name": "",
     "login_failed_error_msg": "Giriş Başarısız! Hata: %s",
     "invalid_email": "Eposta geçersiz! Lütfen geçerli bir Eposta adresi girin!",
     "expired_action_code": "Kod zaman aşımına uğradı! Lütfen yeni kod alın!",
@@ -28,5 +29,7 @@
     "email": "Eposta",
     "password": "Şifre",
     "password_repeat": "Şifre Tekrar",
-    "passwords_do_not_match": "Şifreler eşleşmiyor."
+    "passwords_do_not_match": "Şifreler eşleşmiyor.",
+    "active_up": "AKTİF",
+    "completed_up": "TAMAMLANAN"
 }
