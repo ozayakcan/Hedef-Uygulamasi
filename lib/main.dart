@@ -47,14 +47,7 @@ class MyApp extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, snapshot1) {
         if (snapshot1.connectionState == ConnectionState.waiting) {
-          if (kIsWeb) {
-            return homeMaterialApp(const SplashScreen());
-          } else {
-            return homeMaterialApp(SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-            ));
-          }
+          return homeMaterialApp(const SplashScreen());
         } else {
           if (snapshot1.hasData) {
             return homeMaterialApp(const HomePage());

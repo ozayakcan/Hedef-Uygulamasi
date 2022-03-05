@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hedef/utils/images.dart';
 
@@ -6,14 +7,21 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Image.asset(
-          AssetsImages.logo,
-          height: 40,
-          width: 40,
+    if (kIsWeb) {
+      return Scaffold(
+        body: Center(
+          child: Image.asset(
+            AssetsImages.logo,
+            height: 40,
+            width: 40,
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      return SizedBox(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+      );
+    }
   }
 }
