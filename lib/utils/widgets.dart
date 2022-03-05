@@ -195,10 +195,7 @@ CustomAuthButton loginBtn(BuildContext context, TextEditingController email,
     onPressed: () {
       Auth.signInWithEmail(context, email.text, password.text).then((value) {
         if (value == null) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-          );
+          Navigator.pop(context);
         } else {
           ScaffoldSnackbar.of(context).show(value);
         }
