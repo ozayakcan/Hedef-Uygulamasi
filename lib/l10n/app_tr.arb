@@ -26,5 +26,7 @@
     "register_success": "Başarıyla kaydoldunuz! Artık giriş yapabilirsiniz!",
     "back": "Geri",
     "email": "Eposta",
-    "password": "Şifre"
+    "password": "Şifre",
+    "password_repeat": "Şifre Tekrar",
+    "passwords_do_not_match": "Şifreler eşleşmiyor."
 }

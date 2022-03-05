@@ -146,20 +146,20 @@ GoogleAuthButton googleAuthBtn(BuildContext context) {
   );
 }
 
-EmailAuthButton emailAuthBtn(BuildContext context) {
+EmailAuthButton emailLoginBtn(BuildContext context) {
   return EmailAuthButton(
     style: defaultAuthButtonStyle(MediaQuery.of(context).size.width),
     onPressed: () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => EmailAuth()),
+        MaterialPageRoute(builder: (context) => EmailLogin()),
       );
     },
     text: AppLocalizations.of(context).login_with_email,
   );
 }
 
-CustomAuthButton signinBtn(BuildContext context, TextEditingController email,
+CustomAuthButton loginBtn(BuildContext context, TextEditingController email,
     TextEditingController password) {
   return CustomAuthButton(
     iconUrl: "",
@@ -180,20 +180,39 @@ CustomAuthButton signinBtn(BuildContext context, TextEditingController email,
   );
 }
 
-CustomAuthButton signupBtn(BuildContext context, TextEditingController email,
-    TextEditingController password) {
+CustomAuthButton registerRtBtn(BuildContext context) {
   return CustomAuthButton(
     iconUrl: "",
     style: secondaryButtonStyle(MediaQuery.of(context).size.width),
     onPressed: () {
-      Auth.signupWithEmail(context, email.text, password.text).then((value) {
-        if (value == null) {
-          ScaffoldSnackbar.of(context)
-              .show(AppLocalizations.of(context).register_success);
-        } else {
-          ScaffoldSnackbar.of(context).show(value);
-        }
-      });
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => EmailRegister()),
+      );
+    },
+    text: AppLocalizations.of(context).register,
+  );
+}
+
+CustomAuthButton registerBtn(BuildContext context, TextEditingController email,
+    TextEditingController password, TextEditingController passwordRp) {
+  return CustomAuthButton(
+    iconUrl: "",
+    style: secondaryButtonStyle(MediaQuery.of(context).size.width),
+    onPressed: () {
+      if (password.text == passwordRp.text) {
+        Auth.signupWithEmail(context, email.text, password.text).then((value) {
+          if (value == null) {
+            ScaffoldSnackbar.of(context)
+                .show(AppLocalizations.of(context).register_success);
+          } else {
+            ScaffoldSnackbar.of(context).show(value);
+          }
+        });
+      } else {
+        ScaffoldSnackbar.of(context)
+            .show(AppLocalizations.of(context).passwords_do_not_match);
+      }
     },
     text: AppLocalizations.of(context).register,
   );
@@ -207,5 +226,68 @@ CustomAuthButton backBtn(BuildContext context) {
       Navigator.pop(context);
     },
     text: AppLocalizations.of(context).back,
+  );
+}
+
+TextField emailTextField(
+    {required BuildContext context,
+    required TextEditingController emailController,
+    CustomAuthButton? authButton,
+    FocusNode? passwordFocus}) {
+  return TextField(
+    controller: emailController,
+    keyboardType: TextInputType.emailAddress,
+    textInputAction:
+        passwordFocus != null ? TextInputAction.next : TextInputAction.done,
+    decoration: InputDecoration(
+      labelText: AppLocalizations.of(context).email,
+      labelStyle: const TextStyle(
+        color: MyColors.colorPrimary,
+      ),
+    ),
+    onSubmitted: (v) {
+      if (authButton != null) {
+        authButton.onPressed!();
+        return;
+      }
+      if (passwordFocus != null) {
+        FocusScope.of(context).requestFocus(passwordFocus);
+        return;
+      }
+    },
+  );
+}
+
+TextField passwordTextField(
+    {required BuildContext context,
+    required String pwtext,
+    required TextEditingController passwordController,
+    CustomAuthButton? authButton,
+    FocusNode? passwordFocus,
+    FocusNode? passwordRpFocus}) {
+  return TextField(
+    controller: passwordController,
+    focusNode: passwordFocus,
+    obscureText: true,
+    enableSuggestions: false,
+    autocorrect: false,
+    textInputAction:
+        passwordRpFocus != null ? TextInputAction.next : TextInputAction.done,
+    decoration: InputDecoration(
+      labelText: pwtext,
+      labelStyle: const TextStyle(
+        color: MyColors.colorPrimary,
+      ),
+    ),
+    onSubmitted: (v) {
+      if (authButton != null) {
+        authButton.onPressed!();
+        return;
+      }
+      if (passwordRpFocus != null) {
+        FocusScope.of(context).requestFocus(passwordRpFocus);
+        return;
+      }
+    },
   );
 }
