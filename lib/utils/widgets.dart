@@ -1,11 +1,11 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hedef/utils/auth.dart';
 import 'package:hedef/utils/colors.dart';
 import 'package:hedef/utils/variables.dart';
-import 'package:hedef/views/home.dart';
 import 'package:hedef/views/login.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -44,7 +44,7 @@ Container appBarTitle(String title) {
     margin: const EdgeInsets.only(left: 10),
     child: Text(
       title,
-      style: mediumTextStyleWhite(),
+      style: simpleTextStyleWhite(mediumFontSize),
     ),
   );
 }
@@ -57,8 +57,14 @@ DefaultTabController defaultTabController(
       appBar: AppBar(
         title: appBarTitle(AppLocalizations.of(context).app_name),
         bottom: TabBar(
-          labelStyle: titilliumWebTextStyle(Colors.white),
-          unselectedLabelStyle: titilliumWebTextStyle(Colors.white70),
+          labelStyle: titilliumWebTextStyle(
+            Colors.white,
+            normalFontSize,
+          ),
+          unselectedLabelStyle: titilliumWebTextStyle(
+            Colors.white70,
+            normalFontSize,
+          ),
           tabs: tabList,
         ),
       ),
@@ -85,35 +91,38 @@ class ScaffoldSnackbar {
   }
 }
 
-TextStyle titilliumWebTextStyle(Color color) {
+TextStyle titilliumWebTextStyle(Color color, double _fontSize) {
   return TextStyle(
     color: color,
-    fontSize: 16,
+    fontSize: _fontSize,
     fontFamily: "TitilliumWeb",
   );
 }
 
-TextStyle simpleTextStyle() {
-  return const TextStyle(
+TextStyle simpleTextStyle(double _fontSize) {
+  return TextStyle(
     color: Colors.black87,
-    fontSize: 16,
+    fontSize: _fontSize,
   );
 }
 
-TextStyle mediumTextStyle() {
-  return const TextStyle(
-    color: Colors.black87,
-    fontSize: 17,
-  );
-}
-
-TextStyle mediumTextStyleWhite() {
-  return const TextStyle(
+TextStyle simpleTextStyleWhite(double _fontSize) {
+  return TextStyle(
     color: Colors.white,
-    fontSize: 17,
+    fontSize: _fontSize,
   );
 }
 
+TextStyle linktTextStyle(double _fonstSize) {
+  return TextStyle(
+    color: MyColors.colorPrimary,
+    fontSize: _fonstSize,
+  );
+}
+
+double normalFontSize = 16;
+double mediumFontSize = 17;
+double bigFontSize = 18;
 //Giriş Sayfası
 AuthButtonStyle defaultAuthButtonStyle(double _width) {
   return AuthButtonStyle(
@@ -314,5 +323,43 @@ TextField passwordTextField(
         return;
       }
     },
+  );
+}
+
+//Diğer
+
+Widget warningBox(Widget child, double width, double height) {
+  return Container(
+    decoration: const BoxDecoration(color: Colors.grey),
+    width: width,
+    height: height,
+    child: Container(
+      alignment: Alignment.center,
+      child: child,
+    ),
+  );
+}
+
+Widget getClickableText(BuildContext context, List<String> listStr) {
+  List<TextSpan> list = [];
+  for (var i = 0; i < listStr.length; i++) {
+    if (listStr[i].contains("%s")) {
+      list.add(
+        TextSpan(
+            text: listStr[i].replaceAll("%s", ""),
+            style: linktTextStyle(normalFontSize),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                if (kDebugMode) {
+                  print('Tıklandı');
+                }
+              }),
+      );
+    } else {
+      list.add(TextSpan(text: listStr[i]));
+    }
+  }
+  return RichText(
+    text: TextSpan(style: simpleTextStyle(normalFontSize), children: list),
   );
 }

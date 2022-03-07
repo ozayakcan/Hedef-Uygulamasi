@@ -31,5 +31,6 @@
     "password_repeat": "Şifre Tekrar",
     "passwords_do_not_match": "Şifreler eşleşmiyor.",
     "active_up": "AKTİF",
-    "completed_up": "TAMAMLANAN"
+    "completed_up": "TAMAMLANAN",
+    "email_not_verified": "Eposta adresin doğrulanmamış. |Buraya%s| tıklayarak doğrulayabilirsin."
 }

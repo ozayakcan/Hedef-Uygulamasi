@@ -17,35 +17,56 @@ class _HomePageState extends State<HomePage> {
     getUser();
   }
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  late String userID;
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  late User? user;
   late String userEmail;
 
   Future<void> getUser() async {
     setState(() {
-      userID = _auth.currentUser!.uid;
-      userEmail = _auth.currentUser!.email!;
+      user = auth.currentUser!;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return defaultTabController(
-      context,
-      [
-        Tab(
-          text: AppLocalizations.of(context).active_up,
+    List<String> emailVerifiyWarning =
+        AppLocalizations.of(context).email_not_verified.split("|");
+
+    return Column(
+      children: [
+        SizedBox(
+          height: user!.emailVerified
+              ? MediaQuery.of(context).size.height
+              : MediaQuery.of(context).size.height - 35,
+          width: MediaQuery.of(context).size.width,
+          child: defaultTabController(
+            context,
+            [
+              Tab(
+                text: AppLocalizations.of(context).active_up,
+              ),
+              Tab(
+                text: AppLocalizations.of(context).completed_up,
+              ),
+            ],
+            [
+              Text("Aktifler Sayfası, Üye ID:" +
+                  user!.uid +
+                  " Üye Eposta:" +
+                  user!.email!),
+              Text("Tamamlananlar Sayfası, Üye ID:" +
+                  user!.uid +
+                  " Üye Eposta:" +
+                  user!.email!),
+            ],
+          ),
         ),
-        Tab(
-          text: AppLocalizations.of(context).completed_up,
-        ),
-      ],
-      [
-        Text("Aktifler Sayfası, Üye ID:" + userID + " Üye Eposta:" + userEmail),
-        Text("Tamamlananlar Sayfası, Üye ID:" +
-            userID +
-            " Üye Eposta:" +
-            userEmail),
+        if (!user!.emailVerified)
+          warningBox(
+            getClickableText(context, emailVerifiyWarning),
+            MediaQuery.of(context).size.width,
+            35,
+          ),
       ],
     );
   }
