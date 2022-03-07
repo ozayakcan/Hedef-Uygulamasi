@@ -1,5 +1,5 @@
 {
-    "app_name": "",
+    "app_name": "Hedef",
     "login_failed_error_msg": "Login failed! Error: %s",
     "invalid_email": "Invalid email! Please enter a valid email!",
     "expired_action_code": "Code expired!",
