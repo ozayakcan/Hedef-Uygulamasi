@@ -3,12 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hedef/firebase_options.dart';
-import 'package:hedef/secrets.dart';
-import 'package:hedef/utils/widgets.dart';
-import 'package:hedef/views/home.dart';
-import 'package:hedef/views/login.dart';
-import 'package:hedef/views/splash_screen.dart';
+
+import 'firebase_options.dart';
+import 'secrets.dart';
+import 'views/home.dart';
+import 'views/login.dart';
+import 'views/splash_screen.dart';
+import 'widgets/page_style.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,15 +28,6 @@ void main() async {
   if (kIsWeb) {
     await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
   }
-  FirebaseAuth.instance.authStateChanges().listen((User? user) {
-    if (kDebugMode) {
-      if (user == null) {
-        print('Kullanıcı giriş yapmadı!');
-      } else {
-        print('Kullanıcı giriş yaptı!');
-      }
-    }
-  });
   runApp(const MyApp());
 }
 
