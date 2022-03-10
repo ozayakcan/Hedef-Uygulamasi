@@ -2,8 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hedef/utils/errors.dart';
-import 'package:hedef/utils/widgets.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Auth {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -58,16 +56,6 @@ class Auth {
       return null;
     } on FirebaseAuthException catch (e) {
       return firebaseAuthMessages(context, e.code);
-    }
-  }
-
-  static Future<void> sendEmailVerification(BuildContext context) async {
-    User? user = _auth.currentUser;
-    if (user != null) {
-      user.sendEmailVerification();
-    } else {
-      ScaffoldSnackbar.of(context)
-          .show(AppLocalizations.of(context).login_warning);
     }
   }
 }

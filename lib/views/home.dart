@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:hedef/utils/auth.dart';
 import 'package:hedef/utils/widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -46,6 +45,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     List<String> emailVerifiyWarning =
         AppLocalizations.of(context).email_not_verified.split("|");
 
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
         SizedBox(
           height: user!.emailVerified
               ? MediaQuery.of(context).size.height
-              : MediaQuery.of(context).size.height - 35,
+              : MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: defaultTabController(
             context,
@@ -77,14 +77,7 @@ class _HomePageState extends State<HomePage> {
                   user!.email!),
             ],
           ),
-        ),
-        if (!user!.emailVerified)
-          warningBox(
-            getClickableText(context, emailVerifiyWarning,
-                Auth.sendEmailVerification(context)),
-            MediaQuery.of(context).size.width,
-            35,
-          ),
+        )
       ],
     );
   }
