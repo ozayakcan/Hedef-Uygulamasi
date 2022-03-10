@@ -32,5 +32,6 @@
     "passwords_do_not_match": "Şifreler eşleşmiyor.",
     "active_up": "AKTİF",
     "completed_up": "TAMAMLANAN",
-    "email_not_verified": "Eposta adresin doğrulanmamış. |Buraya%s| tıklayarak doğrulayabilirsin."
+    "email_not_verified": "Eposta adresin doğrulanmamış. |Buraya%s| tıklayarak doğrulayabilirsin.",
+    "login_warning": "Bu işlem için giriş yapmalısınız!"
 }

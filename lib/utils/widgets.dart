@@ -340,7 +340,8 @@ Widget warningBox(Widget child, double width, double height) {
   );
 }
 
-Widget getClickableText(BuildContext context, List<String> listStr) {
+Widget getClickableText(
+    BuildContext context, List<String> listStr, Future<void> action) {
   List<TextSpan> list = [];
   for (var i = 0; i < listStr.length; i++) {
     if (listStr[i].contains("%s")) {
@@ -350,9 +351,7 @@ Widget getClickableText(BuildContext context, List<String> listStr) {
             style: linktTextStyle(normalFontSize),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                if (kDebugMode) {
-                  print('Tıklandı');
-                }
+                action;
               }),
       );
     } else {
