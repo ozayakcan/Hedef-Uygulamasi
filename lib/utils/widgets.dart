@@ -1,6 +1,5 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hedef/utils/auth.dart';
@@ -326,42 +325,5 @@ TextField passwordTextField(
         return;
       }
     },
-  );
-}
-
-//Diğer
-
-Widget warningBox(Widget child, double width, double height) {
-  return Container(
-    decoration: const BoxDecoration(color: Colors.grey),
-    width: width,
-    height: height,
-    child: Container(
-      alignment: Alignment.center,
-      child: child,
-    ),
-  );
-}
-
-Widget getClickableText(
-    BuildContext context, List<String> listStr, Future<void> action) {
-  List<TextSpan> list = [];
-  for (var i = 0; i < listStr.length; i++) {
-    if (listStr[i].contains("%s")) {
-      list.add(
-        TextSpan(
-            text: listStr[i].replaceAll("%s", ""),
-            style: linktTextStyle(normalFontSize),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                action;
-              }),
-      );
-    } else {
-      list.add(TextSpan(text: listStr[i]));
-    }
-  }
-  return RichText(
-    text: TextSpan(style: simpleTextStyle(normalFontSize), children: list),
   );
 }
