@@ -31,5 +31,6 @@
     "passwords_do_not_match": "Şifreler eşleşmiyor.",
     "active_up": "AKTİF",
     "completed_up": "TAMAMLANAN",
-    "login_warning": "Bu işlem için giriş yapmalısınız!"
+    "login_warning": "Bu işlem için giriş yapmalısınız!",
+    "logout": "Çıkış Yap"
 }

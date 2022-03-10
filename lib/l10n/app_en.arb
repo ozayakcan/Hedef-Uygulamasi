@@ -31,5 +31,6 @@
     "passwords_do_not_match": "Passwords do not match.",
     "active_up": "ACTIVE",
     "completed_up": "COMPLETED",
-    "login_warning": "Bu işlem için giriş yapmalısınız!"
+    "login_warning": "Bu işlem için giriş yapmalısınız!",
+    "logout": "Logout"
 }

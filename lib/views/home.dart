@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hedef/utils/auth.dart';
 import 'package:hedef/utils/widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -45,10 +46,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
-    List<String> emailVerifiyWarning =
-        AppLocalizations.of(context).email_not_verified.split("|");
-
     return Column(
       children: [
         SizedBox(
@@ -75,6 +72,22 @@ class _HomePageState extends State<HomePage> {
                   user!.uid +
                   " Üye Eposta:" +
                   user!.email!),
+            ],
+            [
+              PopupMenuButton(
+                enabled: true,
+                onSelected: (value) {
+                  if (value == 1) {
+                    FirebaseAuth.instance.signOut();
+                  }
+                },
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    child: Text(AppLocalizations.of(context).logout),
+                    value: 1,
+                  ),
+                ],
+              ),
             ],
           ),
         )

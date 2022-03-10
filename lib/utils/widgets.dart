@@ -48,13 +48,14 @@ Container appBarTitle(String title) {
   );
 }
 
-DefaultTabController defaultTabController(
-    BuildContext context, List<Widget> tabList, List<Widget> tabContentList) {
+DefaultTabController defaultTabController(BuildContext context,
+    List<Widget> tabList, List<Widget> tabContentList, List<Widget> menu) {
   return DefaultTabController(
     length: 2,
     child: Scaffold(
       appBar: AppBar(
         title: appBarTitle(AppLocalizations.of(context).app_name),
+        actions: menu,
         bottom: TabBar(
           labelStyle: titilliumWebTextStyle(
             Colors.white,
