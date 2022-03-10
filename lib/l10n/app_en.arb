@@ -24,7 +24,6 @@
     "login_with_email": "Login with Email",
     "login": "Login",
     "register": "Register",
-    "register_success": "You have successfully registered! You can login now!",
     "back": "Back",
     "email": "Email",
     "password": "Password",

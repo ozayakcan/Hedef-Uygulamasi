@@ -154,7 +154,12 @@ class EmailRegister extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                backBtn(context),
+                backBtn(context, action: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => EmailLogin()),
+                  );
+                }),
                 const SizedBox(
                   height: 40,
                 ),

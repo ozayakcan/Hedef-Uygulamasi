@@ -219,7 +219,7 @@ CustomAuthButton registerRtBtn(BuildContext context) {
     iconUrl: "",
     style: secondaryButtonStyle(MediaQuery.of(context).size.width),
     onPressed: () {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => EmailRegister()),
       );
@@ -237,8 +237,7 @@ CustomAuthButton registerBtn(BuildContext context, TextEditingController email,
       if (password.text == passwordRp.text) {
         Auth.signupWithEmail(context, email.text, password.text).then((value) {
           if (value == null) {
-            ScaffoldSnackbar.of(context)
-                .show(AppLocalizations.of(context).register_success);
+            Navigator.pop(context);
           } else {
             ScaffoldSnackbar.of(context).show(value);
           }
@@ -252,12 +251,16 @@ CustomAuthButton registerBtn(BuildContext context, TextEditingController email,
   );
 }
 
-CustomAuthButton backBtn(BuildContext context) {
+CustomAuthButton backBtn(BuildContext context, {VoidCallback? action}) {
   return CustomAuthButton(
     iconUrl: "",
     style: defaultAuthButtonStyle(MediaQuery.of(context).size.width),
     onPressed: () {
-      Navigator.pop(context);
+      if (action == null) {
+        Navigator.pop(context);
+      } else {
+        action();
+      }
     },
     text: AppLocalizations.of(context).back,
   );
