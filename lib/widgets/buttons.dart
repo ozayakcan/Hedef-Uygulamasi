@@ -123,6 +123,17 @@ CustomAuthButton registerBtn(BuildContext context, TextEditingController email,
       if (password.text == passwordRp.text) {
         Auth.signupWithEmail(context, email.text, password.text).then((value) {
           if (value == null) {
+            Auth.sendEmailVerification(context).then((value) {
+              if (value == null) {
+                if (kDebugMode) {
+                  print("Eposta onayı gönderildi.");
+                }
+              } else {
+                if (kDebugMode) {
+                  print("Eposta gönderilemedi. Hata: " + value);
+                }
+              }
+            });
             Navigator.pop(context);
           } else {
             ScaffoldSnackbar.of(context).show(value);

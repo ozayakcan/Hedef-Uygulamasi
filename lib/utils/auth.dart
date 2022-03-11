@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'errors.dart';
 
@@ -57,6 +58,17 @@ class Auth {
       return null;
     } on FirebaseAuthException catch (e) {
       return firebaseAuthMessages(context, e.code);
+    }
+  }
+
+  static Future sendEmailVerification(BuildContext context) async {
+    try {
+      _auth.setLanguageCode(AppLocalizations.of(context).localeName);
+      final user = FirebaseAuth.instance.currentUser!;
+      await user.sendEmailVerification();
+      return null;
+    } catch (e) {
+      return e.toString();
     }
   }
 }
