@@ -101,40 +101,50 @@ class EmailRegister extends StatelessWidget {
       passwordController,
       passwordRpController,
     );
-    return formPage(
+    return WillPopScope(
+      onWillPop: () async {
+        back(context);
+        return false;
+      },
+      child: formPage(
+        context,
+        AppLocalizations.of(context).register,
+        [
+          emailTextField(
+            context: context,
+            emailController: emailController,
+            passwordFocus: passwordFocus,
+          ),
+          passwordTextField(
+            context: context,
+            pwtext: AppLocalizations.of(context).password,
+            passwordController: passwordController,
+            passwordFocus: passwordFocus,
+            passwordRpFocus: passwordRpFocus,
+          ),
+          passwordTextField(
+            context: context,
+            pwtext: AppLocalizations.of(context).password_repeat,
+            passwordController: passwordRpController,
+            authButton: registerBtnVar,
+            passwordFocus: passwordRpFocus,
+          ),
+          registerBtnVar,
+          backBtn(
+            context,
+            action: () {
+              back(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  void back(BuildContext context) {
+    Navigator.pushReplacement(
       context,
-      AppLocalizations.of(context).register,
-      [
-        emailTextField(
-          context: context,
-          emailController: emailController,
-          passwordFocus: passwordFocus,
-        ),
-        passwordTextField(
-          context: context,
-          pwtext: AppLocalizations.of(context).password,
-          passwordController: passwordController,
-          passwordFocus: passwordFocus,
-          passwordRpFocus: passwordRpFocus,
-        ),
-        passwordTextField(
-          context: context,
-          pwtext: AppLocalizations.of(context).password_repeat,
-          passwordController: passwordRpController,
-          authButton: registerBtnVar,
-          passwordFocus: passwordRpFocus,
-        ),
-        registerBtnVar,
-        backBtn(
-          context,
-          action: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => EmailLogin()),
-            );
-          },
-        ),
-      ],
+      MaterialPageRoute(builder: (context) => EmailLogin()),
     );
   }
 }
@@ -150,26 +160,36 @@ class ResetPassword extends StatelessWidget {
       context,
       emailController,
     );
-    return formPage(
+    return WillPopScope(
+      onWillPop: () async {
+        back(context);
+        return false;
+      },
+      child: formPage(
+        context,
+        AppLocalizations.of(context).reset_password,
+        [
+          emailTextField(
+            context: context,
+            emailController: emailController,
+            authButton: resetPasswordBtnVar,
+          ),
+          resetPasswordBtnVar,
+          backBtn(
+            context,
+            action: () {
+              back(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  void back(BuildContext context) {
+    Navigator.pushReplacement(
       context,
-      AppLocalizations.of(context).reset_password,
-      [
-        emailTextField(
-          context: context,
-          emailController: emailController,
-          authButton: resetPasswordBtnVar,
-        ),
-        resetPasswordBtnVar,
-        backBtn(
-          context,
-          action: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => EmailLogin()),
-            );
-          },
-        ),
-      ],
+      MaterialPageRoute(builder: (context) => EmailLogin()),
     );
   }
 }
