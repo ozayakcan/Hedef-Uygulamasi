@@ -29,6 +29,8 @@
     "password": "Password",
     "password_repeat": "Password Repeat",
     "passwords_do_not_match": "Passwords do not match.",
+    "name": "Name",
+    "name_must_3_character": "Name must be at least 3 characters.",
     "reset_password": "Reset Password",
     "reset_password_link_sent": "Password reset link has been sent. Check your email to reset your password.",
     "active_up": "ACTIVE",

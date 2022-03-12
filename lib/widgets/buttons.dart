@@ -101,9 +101,7 @@ EmailAuthButton emailLoginBtn(BuildContext context, bool redirectEnabled) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => EmailLogin(
-            redirectEnabled: redirectEnabled,
-          ),
+          builder: (context) => EmailLogin(),
         ),
       );
     },
@@ -112,26 +110,22 @@ EmailAuthButton emailLoginBtn(BuildContext context, bool redirectEnabled) {
 }
 
 CustomAuthButton loginBtn(BuildContext context, TextEditingController email,
-    TextEditingController password, bool redirectEnabled) {
+    TextEditingController password) {
   return CustomAuthButton(
     iconUrl: "",
     style: primaryButtonStyle(MediaQuery.of(context).size.width),
     onPressed: () {
       Auth.signInWithEmail(context, email.text, password.text).then((value) {
         if (value == null) {
-          if (redirectEnabled) {
-            Navigator.pop(context);
-          } else {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => HomePage(
-                  redirectEnabled: redirectEnabled,
-                ),
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomePage(
+                redirectEnabled: false,
               ),
-              (route) => false,
-            );
-          }
+            ),
+            (route) => false,
+          );
         } else {
           ScaffoldSnackbar.of(context).show(value);
         }
@@ -142,49 +136,52 @@ CustomAuthButton loginBtn(BuildContext context, TextEditingController email,
 }
 
 CustomAuthButton registerBtn(
-    BuildContext context,
-    TextEditingController email,
-    TextEditingController password,
-    TextEditingController passwordRp,
-    bool redirectEnabled) {
+  BuildContext context,
+  TextEditingController email,
+  TextEditingController name,
+  TextEditingController password,
+  TextEditingController passwordRp,
+) {
   return CustomAuthButton(
     iconUrl: "",
     style: secondaryButtonStyle(MediaQuery.of(context).size.width),
     onPressed: () {
-      if (password.text == passwordRp.text) {
-        Auth.signupWithEmail(context, email.text, password.text).then((value) {
-          if (value == null) {
-            Auth.sendEmailVerification(context).then((value) {
-              if (value == null) {
-                if (kDebugMode) {
-                  print("Eposta onayı gönderildi.");
+      if (name.text.isNotEmpty && name.text.length >= 3) {
+        if (password.text == passwordRp.text) {
+          Auth.signupWithEmail(context, email.text, name.text, password.text)
+              .then((value) {
+            if (value == null) {
+              Auth.sendEmailVerification(context).then((value) {
+                if (value == null) {
+                  if (kDebugMode) {
+                    print("Eposta onayı gönderildi.");
+                  }
+                } else {
+                  if (kDebugMode) {
+                    print("Eposta gönderilemedi. Hata: " + value);
+                  }
                 }
-              } else {
-                if (kDebugMode) {
-                  print("Eposta gönderilemedi. Hata: " + value);
-                }
-              }
-            });
-            if (redirectEnabled) {
-              Navigator.pop(context);
-            } else {
+              });
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => HomePage(
-                    redirectEnabled: redirectEnabled,
+                  builder: (context) => const HomePage(
+                    redirectEnabled: false,
                   ),
                 ),
                 (route) => false,
               );
+            } else {
+              ScaffoldSnackbar.of(context).show(value);
             }
-          } else {
-            ScaffoldSnackbar.of(context).show(value);
-          }
-        });
+          });
+        } else {
+          ScaffoldSnackbar.of(context)
+              .show(AppLocalizations.of(context).passwords_do_not_match);
+        }
       } else {
         ScaffoldSnackbar.of(context)
-            .show(AppLocalizations.of(context).passwords_do_not_match);
+            .show(AppLocalizations.of(context).name_must_3_character);
       }
     },
     text: AppLocalizations.of(context).register,

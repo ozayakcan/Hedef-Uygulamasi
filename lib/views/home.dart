@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hedef/widgets/menu.dart';
 
+import '../utils/auth.dart';
 import '../widgets/page_style.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,32 +17,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  late User? user;
+
   @override
   void initState() {
     super.initState();
-    getUser();
-  }
-
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  late User? user;
-  late String userEmail;
-  late bool isEmailVerified;
-  late Timer _timer;
-
-  Future<void> getUser() async {
-    setState(() {
-      user = auth.currentUser!;
-      isEmailVerified = user!.emailVerified;
-    });
-    Future(() async {
-      _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
-        if (isEmailVerified) {
-          _timer.cancel();
-        } else {
-          setState(() {
-            isEmailVerified = user!.emailVerified;
-          });
-        }
+    Auth.getUser(auth).then((value) {
+      setState(() {
+        user = value;
       });
     });
   }
@@ -76,18 +60,11 @@ class _HomePageState extends State<HomePage> {
                   user!.email!),
             ],
             drawer: DrawerMenu(
-              user: user,
               redirectEnabled: widget.redirectEnabled,
             ),
           ),
         )
       ],
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _timer.cancel();
   }
 }

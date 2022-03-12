@@ -2,22 +2,32 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hedef/utils/colors.dart';
+import 'package:hedef/utils/variables.dart';
 
 import '../utils/auth.dart';
 import '../views/login.dart';
 
 class DrawerMenu extends StatefulWidget {
-  const DrawerMenu(
-      {Key? key, required this.user, required this.redirectEnabled})
-      : super(key: key);
+  const DrawerMenu({Key? key, required this.redirectEnabled}) : super(key: key);
 
-  final User? user;
   final bool redirectEnabled;
   @override
   State<DrawerMenu> createState() => _DrawerMenuState();
 }
 
 class _DrawerMenuState extends State<DrawerMenu> {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  late User? user;
+  @override
+  void initState() {
+    super.initState();
+    Auth.getUser(auth).then((value) {
+      setState(() {
+        user = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -25,14 +35,34 @@ class _DrawerMenuState extends State<DrawerMenu> {
         color: MyColors.colorPrimary,
         child: ListView(
           children: [
-            const SizedBox(
+            SizedBox(
               height: 48,
+              child: Center(
+                child: Column(children: [
+                  Text(
+                    user!.displayName.toString(),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: Variables.mediumFontSize,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    user!.email.toString(),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: Variables.normalFontSize,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ]),
+              ),
             ),
             menuItem(
               text: AppLocalizations.of(context).logout,
               icon: Icons.logout,
               action: () {
-                Auth.logout();
+                auth.signOut();
                 if (!widget.redirectEnabled) {
                   Navigator.pushAndRemoveUntil(
                     context,

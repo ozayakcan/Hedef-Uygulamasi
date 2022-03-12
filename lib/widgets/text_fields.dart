@@ -8,12 +8,14 @@ TextField emailTextField(
     {required BuildContext context,
     required TextEditingController emailController,
     CustomAuthButton? authButton,
-    FocusNode? passwordFocus}) {
+    FocusNode? prevFocus,
+    FocusNode? nextFocus}) {
   return TextField(
     controller: emailController,
+    focusNode: prevFocus,
     keyboardType: TextInputType.emailAddress,
     textInputAction:
-        passwordFocus != null ? TextInputAction.next : TextInputAction.done,
+        nextFocus != null ? TextInputAction.next : TextInputAction.done,
     decoration: InputDecoration(
       labelText: AppLocalizations.of(context).email,
       labelStyle: const TextStyle(
@@ -25,8 +27,39 @@ TextField emailTextField(
         authButton.onPressed!();
         return;
       }
-      if (passwordFocus != null) {
-        FocusScope.of(context).requestFocus(passwordFocus);
+      if (nextFocus != null) {
+        FocusScope.of(context).requestFocus(nextFocus);
+        return;
+      }
+    },
+  );
+}
+
+TextField nameTextField(
+    {required BuildContext context,
+    required TextEditingController nameController,
+    CustomAuthButton? authButton,
+    FocusNode? prevFocus,
+    FocusNode? nextFocus}) {
+  return TextField(
+    controller: nameController,
+    focusNode: prevFocus,
+    keyboardType: TextInputType.name,
+    textInputAction:
+        nextFocus != null ? TextInputAction.next : TextInputAction.done,
+    decoration: InputDecoration(
+      labelText: AppLocalizations.of(context).name,
+      labelStyle: const TextStyle(
+        color: MyColors.colorPrimary,
+      ),
+    ),
+    onSubmitted: (v) {
+      if (authButton != null) {
+        authButton.onPressed!();
+        return;
+      }
+      if (nextFocus != null) {
+        FocusScope.of(context).requestFocus(nextFocus);
         return;
       }
     },
@@ -38,16 +71,16 @@ TextField passwordTextField(
     required String pwtext,
     required TextEditingController passwordController,
     CustomAuthButton? authButton,
-    FocusNode? passwordFocus,
-    FocusNode? passwordRpFocus}) {
+    FocusNode? prevFocus,
+    FocusNode? nextFocus}) {
   return TextField(
     controller: passwordController,
-    focusNode: passwordFocus,
+    focusNode: prevFocus,
     obscureText: true,
     enableSuggestions: false,
     autocorrect: false,
     textInputAction:
-        passwordRpFocus != null ? TextInputAction.next : TextInputAction.done,
+        nextFocus != null ? TextInputAction.next : TextInputAction.done,
     decoration: InputDecoration(
       labelText: pwtext,
       labelStyle: const TextStyle(
@@ -59,8 +92,8 @@ TextField passwordTextField(
         authButton.onPressed!();
         return;
       }
-      if (passwordRpFocus != null) {
-        FocusScope.of(context).requestFocus(passwordRpFocus);
+      if (nextFocus != null) {
+        FocusScope.of(context).requestFocus(nextFocus);
         return;
       }
     },

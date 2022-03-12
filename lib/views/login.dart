@@ -39,9 +39,7 @@ class Login extends StatelessWidget {
 }
 
 class EmailLogin extends StatelessWidget {
-  EmailLogin({Key? key, required this.redirectEnabled}) : super(key: key);
-
-  final bool redirectEnabled;
+  EmailLogin({Key? key}) : super(key: key);
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -53,7 +51,6 @@ class EmailLogin extends StatelessWidget {
       context,
       emailController,
       passwordController,
-      redirectEnabled,
     );
     return formPage(
       context,
@@ -62,28 +59,24 @@ class EmailLogin extends StatelessWidget {
         emailTextField(
           context: context,
           emailController: emailController,
-          passwordFocus: passwordFocus,
+          nextFocus: passwordFocus,
         ),
         passwordTextField(
           context: context,
           pwtext: AppLocalizations.of(context).password,
           passwordController: passwordController,
           authButton: loginBtnVar,
-          passwordFocus: passwordFocus,
+          prevFocus: passwordFocus,
         ),
         loginBtnVar,
         routeBtn(
           context,
-          ResetPassword(
-            redirectEnabled: redirectEnabled,
-          ),
+          ResetPassword(),
           AppLocalizations.of(context).reset_password,
         ),
         routeBtn(
           context,
-          EmailRegister(
-            redirectEnabled: redirectEnabled,
-          ),
+          EmailRegister(),
           AppLocalizations.of(context).register,
         ),
         backBtn(context),
@@ -93,13 +86,13 @@ class EmailLogin extends StatelessWidget {
 }
 
 class EmailRegister extends StatelessWidget {
-  EmailRegister({Key? key, required this.redirectEnabled}) : super(key: key);
-
-  final bool redirectEnabled;
+  EmailRegister({Key? key}) : super(key: key);
 
   final emailController = TextEditingController();
+  final nameController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordRpController = TextEditingController();
+  final nameFocus = FocusNode();
   final passwordFocus = FocusNode();
   final passwordRpFocus = FocusNode();
 
@@ -108,9 +101,9 @@ class EmailRegister extends StatelessWidget {
     final CustomAuthButton registerBtnVar = registerBtn(
       context,
       emailController,
+      nameController,
       passwordController,
       passwordRpController,
-      redirectEnabled,
     );
     return WillPopScope(
       onWillPop: () async {
@@ -124,21 +117,27 @@ class EmailRegister extends StatelessWidget {
           emailTextField(
             context: context,
             emailController: emailController,
-            passwordFocus: passwordFocus,
+            nextFocus: nameFocus,
+          ),
+          nameTextField(
+            context: context,
+            nameController: nameController,
+            prevFocus: nameFocus,
+            nextFocus: passwordFocus,
           ),
           passwordTextField(
             context: context,
             pwtext: AppLocalizations.of(context).password,
             passwordController: passwordController,
-            passwordFocus: passwordFocus,
-            passwordRpFocus: passwordRpFocus,
+            prevFocus: passwordFocus,
+            nextFocus: passwordRpFocus,
           ),
           passwordTextField(
             context: context,
             pwtext: AppLocalizations.of(context).password_repeat,
             passwordController: passwordRpController,
             authButton: registerBtnVar,
-            passwordFocus: passwordRpFocus,
+            prevFocus: passwordRpFocus,
           ),
           registerBtnVar,
           backBtn(
@@ -156,18 +155,14 @@ class EmailRegister extends StatelessWidget {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => EmailLogin(
-          redirectEnabled: redirectEnabled,
-        ),
+        builder: (context) => EmailLogin(),
       ),
     );
   }
 }
 
 class ResetPassword extends StatelessWidget {
-  ResetPassword({Key? key, required this.redirectEnabled}) : super(key: key);
-
-  final bool redirectEnabled;
+  ResetPassword({Key? key}) : super(key: key);
 
   final emailController = TextEditingController();
 
@@ -207,9 +202,7 @@ class ResetPassword extends StatelessWidget {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => EmailLogin(
-          redirectEnabled: redirectEnabled,
-        ),
+        builder: (context) => EmailLogin(),
       ),
     );
   }

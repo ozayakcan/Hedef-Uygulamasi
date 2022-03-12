@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -21,7 +22,25 @@ class Auth {
         idToken: googleAuth?.idToken,
       );
 
-      await _auth.signInWithCredential(credential);
+      UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+      if (googleUser != null) {
+        changeDisplayName(
+          context,
+          googleUser.displayName.toString(),
+          userCredential: userCredential,
+        ).then((value) {
+          if (value == null) {
+            if (kDebugMode) {
+              print("Kullanıcı adı güncellendi.");
+            }
+          } else {
+            if (kDebugMode) {
+              print("Kullanıcı adı güncellenemedi. Hata: " + value);
+            }
+          }
+        });
+      }
       return null;
     } on FirebaseAuthException catch (e) {
       return firebaseAuthMessages(context, e.code);
@@ -32,8 +51,26 @@ class Auth {
     try {
       GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
-      await _auth.signInWithPopup(googleProvider);
+      UserCredential userCredential =
+          await _auth.signInWithPopup(googleProvider);
       //await _auth.signInWithRedirect(googleProvider);
+      if (userCredential.user != null) {
+        changeDisplayName(
+          context,
+          userCredential.user!.displayName.toString(),
+          userCredential: userCredential,
+        ).then((value) {
+          if (value == null) {
+            if (kDebugMode) {
+              print("Kullanıcı adı güncellendi.");
+            }
+          } else {
+            if (kDebugMode) {
+              print("Kullanıcı adı güncellenemedi. Hata: " + value);
+            }
+          }
+        });
+      }
       return null;
     } on FirebaseAuthException catch (e) {
       return firebaseAuthMessages(context, e.code);
@@ -41,10 +78,29 @@ class Auth {
   }
 
   static Future signupWithEmail(
-      BuildContext context, String email, String password) async {
+      BuildContext context, String email, String name, String password) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      Auth.changeDisplayName(
+        context,
+        name,
+        userCredential: userCredential,
+      ).then((value) {
+        if (value == null) {
+          if (kDebugMode) {
+            print("Kullanıcı adı güncellendi.");
+            return;
+          }
+        } else {
+          if (kDebugMode) {
+            print("Kullanıcı adı güncellenemedi. Hata: " + value);
+          }
+        }
+      });
       return null;
     } on FirebaseAuthException catch (e) {
       return firebaseAuthMessages(context, e.code);
@@ -82,7 +138,27 @@ class Auth {
     }
   }
 
-  static void logout() {
-    _auth.signOut();
+  static Future changeDisplayName(BuildContext context, String name,
+      {UserCredential? userCredential, User? user}) async {
+    if (userCredential != null || user != null) {
+      try {
+        if (user != null) {
+          await user.updateDisplayName(name);
+          return null;
+        }
+        if (userCredential != null) {
+          await userCredential.user!.updateDisplayName(name);
+          return null;
+        }
+      } on FirebaseAuthException catch (e) {
+        return firebaseAuthMessages(context, e.code);
+      }
+    } else {
+      return "Kullanıcı adı güncellenemedi.";
+    }
+  }
+
+  static Future<User?> getUser(FirebaseAuth auth) async {
+    return auth.currentUser;
   }
 }
