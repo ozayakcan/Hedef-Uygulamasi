@@ -35,27 +35,32 @@ class _DrawerMenuState extends State<DrawerMenu> {
         color: MyColors.colorPrimary,
         child: ListView(
           children: [
-            SizedBox(
-              height: 48,
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: Center(
-                child: Column(children: [
-                  Text(
-                    user!.displayName.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: Variables.mediumFontSize,
+                child: Column(
+                  children: [
+                    Text(
+                      user!.displayName.toString(),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: Variables.mediumFontSize,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    user!.email.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: Variables.normalFontSize,
+                    const SizedBox(
+                      height: 4,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                ]),
+                    Text(
+                      user!.email.toString(),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: Variables.normalFontSize,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
             ),
             menuItem(
@@ -86,7 +91,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
 Widget menuItem(
     {required String text, required IconData icon, VoidCallback? action}) {
   const color = Colors.white;
-  const hoverColor = Colors.white70;
+  const hoverColor = Colors.white38;
   return ListTile(
     leading: Icon(
       icon,
