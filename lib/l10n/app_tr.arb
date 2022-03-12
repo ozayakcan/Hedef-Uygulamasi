@@ -29,6 +29,8 @@
     "password": "Şifre",
     "password_repeat": "Şifre Tekrar",
     "passwords_do_not_match": "Şifreler eşleşmiyor.",
+    "reset_password": "Şifre Sıfırla",
+    "reset_password_link_sent": "Şifre sıfırlama bağlantısı gönderildi. Şifrenizi sıfırlamak için epostanızı kontrol edin.",
     "active_up": "AKTİF",
     "completed_up": "TAMAMLANAN",
     "login_warning": "Bu işlem için giriş yapmalısınız!",

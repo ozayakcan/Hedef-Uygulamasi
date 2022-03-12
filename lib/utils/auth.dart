@@ -71,4 +71,14 @@ class Auth {
       return e.toString();
     }
   }
+
+  static Future resetPassword(BuildContext context, String email) async {
+    try {
+      _auth.setLanguageCode(AppLocalizations.of(context).localeName);
+      await _auth.sendPasswordResetEmail(email: email);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return firebaseAuthMessages(context, e.code);
+    }
+  }
 }

@@ -134,6 +134,26 @@ CustomAuthButton registerBtn(BuildContext context, TextEditingController email,
   );
 }
 
+CustomAuthButton resetPasswordBtn(
+    BuildContext context, TextEditingController email) {
+  return CustomAuthButton(
+    iconUrl: "",
+    style: secondaryButtonStyle(MediaQuery.of(context).size.width),
+    onPressed: () {
+      Auth.resetPassword(context, email.text).then((value) {
+        if (value == null) {
+          ScaffoldSnackbar.of(context)
+              .show(AppLocalizations.of(context).reset_password_link_sent);
+          email.text = "";
+        } else {
+          ScaffoldSnackbar.of(context).show(value);
+        }
+      });
+    },
+    text: AppLocalizations.of(context).reset_password,
+  );
+}
+
 CustomAuthButton routeBtn(BuildContext context, Widget widget, String text) {
   return CustomAuthButton(
     iconUrl: "",

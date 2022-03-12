@@ -29,6 +29,8 @@
     "password": "Password",
     "password_repeat": "Password Repeat",
     "passwords_do_not_match": "Passwords do not match.",
+    "reset_password": "Reset Password",
+    "reset_password_link_sent": "Password reset link has been sent. Check your email to reset your password.",
     "active_up": "ACTIVE",
     "completed_up": "COMPLETED",
     "login_warning": "Bu işlem için giriş yapmalısınız!",

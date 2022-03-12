@@ -85,6 +85,14 @@ class EmailLogin extends StatelessWidget {
                 ),
                 routeBtn(
                   context,
+                  ResetPassword(),
+                  AppLocalizations.of(context).reset_password,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                routeBtn(
+                  context,
                   EmailRegister(),
                   AppLocalizations.of(context).register,
                 ),
@@ -158,6 +166,58 @@ class EmailRegister extends StatelessWidget {
                   height: 10,
                 ),
                 registerBtnVar,
+                const SizedBox(
+                  height: 10,
+                ),
+                backBtn(context, action: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => EmailLogin()),
+                  );
+                }),
+                const SizedBox(
+                  height: 40,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ResetPassword extends StatelessWidget {
+  ResetPassword({Key? key}) : super(key: key);
+
+  final emailController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    final CustomAuthButton resetPasswordBtnVar = resetPasswordBtn(
+      context,
+      emailController,
+    );
+    return Scaffold(
+      appBar: appBarMain(AppLocalizations.of(context).reset_password),
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height - 50,
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                emailTextField(
+                  context: context,
+                  emailController: emailController,
+                  authButton: resetPasswordBtnVar,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                resetPasswordBtnVar,
                 const SizedBox(
                   height: 10,
                 ),
