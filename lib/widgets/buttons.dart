@@ -100,20 +100,6 @@ CustomAuthButton loginBtn(BuildContext context, TextEditingController email,
   );
 }
 
-CustomAuthButton registerRtBtn(BuildContext context) {
-  return CustomAuthButton(
-    iconUrl: "",
-    style: secondaryButtonStyle(MediaQuery.of(context).size.width),
-    onPressed: () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => EmailRegister()),
-      );
-    },
-    text: AppLocalizations.of(context).register,
-  );
-}
-
 CustomAuthButton registerBtn(BuildContext context, TextEditingController email,
     TextEditingController password, TextEditingController passwordRp) {
   return CustomAuthButton(
@@ -145,6 +131,20 @@ CustomAuthButton registerBtn(BuildContext context, TextEditingController email,
       }
     },
     text: AppLocalizations.of(context).register,
+  );
+}
+
+CustomAuthButton routeBtn(BuildContext context, Widget widget, String text) {
+  return CustomAuthButton(
+    iconUrl: "",
+    style: secondaryButtonStyle(MediaQuery.of(context).size.width),
+    onPressed: () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => widget),
+      );
+    },
+    text: text,
   );
 }
 

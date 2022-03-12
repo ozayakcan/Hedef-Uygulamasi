@@ -83,7 +83,11 @@ class EmailLogin extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                registerRtBtn(context),
+                routeBtn(
+                  context,
+                  EmailRegister(),
+                  AppLocalizations.of(context).register,
+                ),
                 const SizedBox(
                   height: 10,
                 ),
