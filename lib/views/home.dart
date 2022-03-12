@@ -1,14 +1,16 @@
 import 'dart:async';
 
+import 'package:auth_buttons/auth_buttons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hedef/widgets/menu.dart';
 
 import '../widgets/page_style.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
+  const HomePage({Key? key, required this.redirectEnabled}) : super(key: key);
+  final bool redirectEnabled;
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -73,22 +75,10 @@ class _HomePageState extends State<HomePage> {
                   " Üye Eposta:" +
                   user!.email!),
             ],
-            [
-              PopupMenuButton(
-                enabled: true,
-                onSelected: (value) {
-                  if (value == 1) {
-                    FirebaseAuth.instance.signOut();
-                  }
-                },
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    child: Text(AppLocalizations.of(context).logout),
-                    value: 1,
-                  ),
-                ],
-              ),
-            ],
+            drawer: DrawerMenu(
+              user: user,
+              redirectEnabled: widget.redirectEnabled,
+            ),
           ),
         )
       ],

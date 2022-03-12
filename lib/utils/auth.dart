@@ -81,4 +81,8 @@ class Auth {
       return firebaseAuthMessages(context, e.code);
     }
   }
+
+  static void logout() {
+    _auth.signOut();
+  }
 }

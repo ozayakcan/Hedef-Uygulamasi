@@ -42,9 +42,17 @@ class MyApp extends StatelessWidget {
           return homeMaterialApp(const SplashScreen());
         } else {
           if (snapshot1.hasData) {
-            return homeMaterialApp(const HomePage());
+            return homeMaterialApp(
+              const HomePage(
+                redirectEnabled: true,
+              ),
+            );
           } else {
-            return homeMaterialApp(const Login());
+            return homeMaterialApp(
+              const Login(
+                redirectEnabled: true,
+              ),
+            );
           }
         }
       },

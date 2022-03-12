@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hedef/views/home.dart';
 
 import '../utils/auth.dart';
 import '../utils/colors.dart';
@@ -41,20 +42,44 @@ AuthButtonStyle secondaryButtonStyle(double _width) {
   );
 }
 
-GoogleAuthButton googleAuthBtn(BuildContext context) {
+GoogleAuthButton googleAuthBtn(BuildContext context, bool redirectEnabled) {
   return GoogleAuthButton(
     style: defaultAuthButtonStyle(MediaQuery.of(context).size.width),
     onPressed: () {
       try {
         if (kIsWeb) {
           Auth.signInWithGoogleWeb(context).then((value) {
-            if (value != null) {
+            if (value == null) {
+              if (!redirectEnabled) {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomePage(
+                      redirectEnabled: redirectEnabled,
+                    ),
+                  ),
+                  (route) => false,
+                );
+              }
+            } else {
               ScaffoldSnackbar.of(context).show(value);
             }
           });
         } else {
           Auth.signInWithGoogle(context).then((value) {
-            if (value != null) {
+            if (value == null) {
+              if (!redirectEnabled) {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomePage(
+                      redirectEnabled: redirectEnabled,
+                    ),
+                  ),
+                  (route) => false,
+                );
+              }
+            } else {
               ScaffoldSnackbar.of(context).show(value);
             }
           });
@@ -69,13 +94,17 @@ GoogleAuthButton googleAuthBtn(BuildContext context) {
   );
 }
 
-EmailAuthButton emailLoginBtn(BuildContext context) {
+EmailAuthButton emailLoginBtn(BuildContext context, bool redirectEnabled) {
   return EmailAuthButton(
     style: defaultAuthButtonStyle(MediaQuery.of(context).size.width),
     onPressed: () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => EmailLogin()),
+        MaterialPageRoute(
+          builder: (context) => EmailLogin(
+            redirectEnabled: redirectEnabled,
+          ),
+        ),
       );
     },
     text: AppLocalizations.of(context).login_with_email,
@@ -83,14 +112,26 @@ EmailAuthButton emailLoginBtn(BuildContext context) {
 }
 
 CustomAuthButton loginBtn(BuildContext context, TextEditingController email,
-    TextEditingController password) {
+    TextEditingController password, bool redirectEnabled) {
   return CustomAuthButton(
     iconUrl: "",
     style: primaryButtonStyle(MediaQuery.of(context).size.width),
     onPressed: () {
       Auth.signInWithEmail(context, email.text, password.text).then((value) {
         if (value == null) {
-          Navigator.pop(context);
+          if (redirectEnabled) {
+            Navigator.pop(context);
+          } else {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomePage(
+                  redirectEnabled: redirectEnabled,
+                ),
+              ),
+              (route) => false,
+            );
+          }
         } else {
           ScaffoldSnackbar.of(context).show(value);
         }
@@ -100,8 +141,12 @@ CustomAuthButton loginBtn(BuildContext context, TextEditingController email,
   );
 }
 
-CustomAuthButton registerBtn(BuildContext context, TextEditingController email,
-    TextEditingController password, TextEditingController passwordRp) {
+CustomAuthButton registerBtn(
+    BuildContext context,
+    TextEditingController email,
+    TextEditingController password,
+    TextEditingController passwordRp,
+    bool redirectEnabled) {
   return CustomAuthButton(
     iconUrl: "",
     style: secondaryButtonStyle(MediaQuery.of(context).size.width),
@@ -120,7 +165,19 @@ CustomAuthButton registerBtn(BuildContext context, TextEditingController email,
                 }
               }
             });
-            Navigator.pop(context);
+            if (redirectEnabled) {
+              Navigator.pop(context);
+            } else {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomePage(
+                    redirectEnabled: redirectEnabled,
+                  ),
+                ),
+                (route) => false,
+              );
+            }
           } else {
             ScaffoldSnackbar.of(context).show(value);
           }
