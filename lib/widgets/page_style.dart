@@ -73,3 +73,15 @@ DefaultTabController defaultTabController(
     ),
   );
 }
+
+Scaffold defaultScaffold(BuildContext context, String title, Widget body,
+    {Widget? floatingActionButton, Widget? endDrawer}) {
+  return Scaffold(
+    appBar: AppBar(
+      title: appBarTitle(title),
+    ),
+    endDrawer: endDrawer,
+    floatingActionButton: floatingActionButton,
+    body: body,
+  );
+}
