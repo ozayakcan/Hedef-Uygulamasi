@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hedef/widgets/buttons.dart';
 import 'package:hedef/widgets/menu.dart';
 
 import '../utils/auth.dart';
@@ -56,7 +57,8 @@ class _HomePageState extends State<HomePage> {
                   " Üye Eposta:" +
                   user!.email!),
             ],
-            drawer: DrawerMenu(
+            floatingActionButton: const AddButton(),
+            endDrawer: DrawerMenu(
               redirectEnabled: widget.redirectEnabled,
             ),
           ),

@@ -6,4 +6,6 @@ class Variables {
   static double normalFontSize = 16;
   static double mediumFontSize = 17;
   static double bigFontSize = 18;
+
+  static String heroAddTag = "add-tag";
 }

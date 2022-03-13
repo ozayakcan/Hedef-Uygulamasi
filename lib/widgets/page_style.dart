@@ -47,7 +47,7 @@ Container appBarTitle(String title) {
 
 DefaultTabController defaultTabController(
     BuildContext context, List<Widget> tabList, List<Widget> tabContentList,
-    {Widget? drawer}) {
+    {Widget? floatingActionButton, Widget? endDrawer}) {
   return DefaultTabController(
     length: 2,
     child: Scaffold(
@@ -65,7 +65,8 @@ DefaultTabController defaultTabController(
           tabs: tabList,
         ),
       ),
-      endDrawer: drawer,
+      endDrawer: endDrawer,
+      floatingActionButton: floatingActionButton,
       body: TabBarView(
         children: tabContentList,
       ),
