@@ -1,5 +1,5 @@
 {
-    "app_name": "Hedef",
+    "app_name": "Sosyal Medya",
     "login_failed_error_msg": "Giriş Başarısız! Hata: %s",
     "invalid_email": "Eposta geçersiz! Lütfen geçerli bir Eposta adresi girin!",
     "expired_action_code": "Kod zaman aşımına uğradı! Lütfen yeni kod alın!",

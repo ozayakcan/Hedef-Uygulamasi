@@ -21,7 +21,7 @@ MaterialApp homeMaterialApp(Widget page) {
       GlobalWidgetsLocalizations.delegate,
     ],
     supportedLocales: AppLocalizations.supportedLocales,
-    title: "Hedef",
+    onGenerateTitle: (context) => AppLocalizations.of(context).app_name,
     home: page,
   );
 }

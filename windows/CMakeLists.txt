@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(hedef LANGUAGES CXX)
+project(sosyal LANGUAGES CXX)
 
-set(BINARY_NAME "hedef")
+set(BINARY_NAME "sosyal")
 
 cmake_policy(SET CMP0063 NEW)
 

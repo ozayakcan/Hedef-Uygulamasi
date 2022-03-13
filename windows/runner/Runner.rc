@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.ozayakcan" "\0"
-            VALUE "FileDescription", "hedef" "\0"
+            VALUE "FileDescription", "sosyal" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "hedef" "\0"
+            VALUE "InternalName", "sosyal" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2022 com.ozayakcan. All rights reserved." "\0"
-            VALUE "OriginalFilename", "hedef.exe" "\0"
-            VALUE "ProductName", "hedef" "\0"
+            VALUE "OriginalFilename", "sosyal.exe" "\0"
+            VALUE "ProductName", "sosyal" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
