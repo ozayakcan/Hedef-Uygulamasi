@@ -37,5 +37,6 @@
     "logout": "Logout",
     "active_up": "ACTIVE",
     "completed_up": "COMPLETED",
-    "add": "Add"
+    "add": "Add",
+    "settings": "Settings"
 }

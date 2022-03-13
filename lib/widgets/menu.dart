@@ -1,16 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:hedef/utils/colors.dart';
-import 'package:hedef/utils/variables.dart';
 
 import '../utils/auth.dart';
+import '../utils/colors.dart';
+import '../utils/variables.dart';
 import '../views/login.dart';
+import '../views/settings.dart';
 
 class DrawerMenu extends StatefulWidget {
-  const DrawerMenu({Key? key, required this.redirectEnabled}) : super(key: key);
+  const DrawerMenu(
+      {Key? key, required this.redirectEnabled, this.showSettings = true})
+      : super(key: key);
 
   final bool redirectEnabled;
+  final bool showSettings;
   @override
   State<DrawerMenu> createState() => _DrawerMenuState();
 }
@@ -63,6 +67,19 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 ),
               ),
             ),
+            if (widget.showSettings)
+              menuItem(
+                text: AppLocalizations.of(context).settings,
+                icon: Icons.settings,
+                action: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Settings(),
+                    ),
+                  );
+                },
+              ),
             menuItem(
               text: AppLocalizations.of(context).logout,
               icon: Icons.logout,

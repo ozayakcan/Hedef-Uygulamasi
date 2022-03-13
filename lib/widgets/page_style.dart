@@ -35,13 +35,21 @@ PreferredSizeWidget appBarMain(String title) {
   );
 }
 
-Container appBarTitle(String title) {
-  return Container(
-    margin: const EdgeInsets.only(left: 10),
-    child: Text(
-      title,
-      style: simpleTextStyleWhite(Variables.mediumFontSize),
+PreferredSizeWidget defaultAppBar(BuildContext context, String title) {
+  return AppBar(
+    iconTheme: const IconThemeData(
+      color: Colors.white,
     ),
+    title: appBarTitle(
+      title,
+    ),
+  );
+}
+
+Text appBarTitle(String title) {
+  return Text(
+    title,
+    style: simpleTextStyleWhite(Variables.mediumFontSize),
   );
 }
 
@@ -74,14 +82,15 @@ DefaultTabController defaultTabController(
   );
 }
 
-Scaffold defaultScaffold(
+Scaffold defaultScaffold(BuildContext context,
     {required String title,
     required Widget body,
     Widget? floatingActionButton,
     Widget? endDrawer}) {
   return Scaffold(
-    appBar: AppBar(
-      title: appBarTitle(title),
+    appBar: defaultAppBar(
+      context,
+      title,
     ),
     endDrawer: endDrawer,
     floatingActionButton: floatingActionButton,

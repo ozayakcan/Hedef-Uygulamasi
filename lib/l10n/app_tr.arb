@@ -37,5 +37,6 @@
     "logout": "Çıkış Yap",
     "active_up": "AKTİF",
     "completed_up": "TAMAMLANAN",
-    "add": "Ekle"
+    "add": "Ekle",
+    "settings": "Ayarlar"
 }
