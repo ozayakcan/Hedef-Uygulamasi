@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hedef/utils/colors.dart';
-import 'package:hedef/utils/variables.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../utils/colors.dart';
+import '../utils/variables.dart';
 import '../widgets/widgets.dart';
 
 class AddPage extends StatelessWidget {

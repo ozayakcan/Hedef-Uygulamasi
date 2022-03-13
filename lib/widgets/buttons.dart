@@ -3,12 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:hedef/views/add.dart';
-import 'package:hedef/views/home.dart';
 
 import '../utils/auth.dart';
 import '../utils/colors.dart';
 import '../utils/variables.dart';
+import '../views/add.dart';
+import '../views/home.dart';
 import '../views/login.dart';
 import 'widgets.dart';
 

@@ -2,8 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'page_style.dart';
-
 class ScaffoldSnackbar {
   ScaffoldSnackbar(this._context);
   final BuildContext _context;
