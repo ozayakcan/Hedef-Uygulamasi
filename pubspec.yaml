@@ -39,7 +39,7 @@ dependencies:
   firebase_core: ^1.13.1
   firebase_database: ^9.0.8
   firebase_app_check: ^0.0.6+7
-  firebase_auth: ^3.3.9
+  firebase_auth: ^3.3.10
   google_sign_in: ^5.2.4
   auth_buttons: ^2.0.4
   shared_preferences: ^2.0.13
