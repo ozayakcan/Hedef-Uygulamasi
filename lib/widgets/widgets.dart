@@ -20,9 +20,13 @@ class ScaffoldSnackbar {
   }
 }
 
-Scaffold formPage(BuildContext context, String title, List<Widget> list) {
+Scaffold formPage(
+  BuildContext context,
+  PreferredSizeWidget? appBar,
+  List<Widget> list,
+) {
   return Scaffold(
-    appBar: appBarMain(title),
+    appBar: appBar,
     body: SingleChildScrollView(
       child: Container(
         height: MediaQuery.of(context).size.height - 50,

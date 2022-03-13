@@ -26,8 +26,11 @@ MaterialApp homeMaterialApp(Widget page) {
   );
 }
 
-PreferredSizeWidget appBarMain(String title) {
+PreferredSizeWidget appBarLogin(BuildContext context, String title) {
   return AppBar(
+    iconTheme: const IconThemeData(
+      color: Colors.white,
+    ),
     title: appBarTitle(
       title,
     ),
@@ -40,9 +43,27 @@ PreferredSizeWidget defaultAppBar(BuildContext context, String title) {
     iconTheme: const IconThemeData(
       color: Colors.white,
     ),
+    leading: leadingBuilder(context),
     title: appBarTitle(
       title,
     ),
+    toolbarHeight: 50,
+  );
+}
+
+Builder leadingBuilder(BuildContext context) {
+  return Builder(
+    builder: (context) {
+      final ScaffoldState? scaffold = Scaffold.maybeOf(context);
+      final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
+      final bool hasEndDrawer = scaffold?.hasEndDrawer ?? false;
+      final bool canPop = parentRoute?.canPop ?? false;
+      if (hasEndDrawer && canPop) {
+        return const BackButton();
+      } else {
+        return const SizedBox.shrink();
+      }
+    },
   );
 }
 
