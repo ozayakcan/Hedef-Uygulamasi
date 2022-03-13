@@ -69,6 +69,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
             ),
             if (widget.showSettings)
               menuItem(
+                context,
                 text: AppLocalizations.of(context).settings,
                 icon: Icons.settings,
                 action: () {
@@ -81,6 +82,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 },
               ),
             menuItem(
+              context,
               text: AppLocalizations.of(context).logout,
               icon: Icons.logout,
               action: () {
@@ -106,7 +108,12 @@ class _DrawerMenuState extends State<DrawerMenu> {
 }
 
 Widget menuItem(
-    {required String text, required IconData icon, VoidCallback? action}) {
+  BuildContext context, {
+  required String text,
+  required IconData icon,
+  VoidCallback? action,
+  bool closeMenu = true,
+}) {
   const color = Colors.white;
   const hoverColor = Colors.white38;
   return ListTile(
@@ -120,6 +127,9 @@ Widget menuItem(
     ),
     hoverColor: hoverColor,
     onTap: () {
+      if (closeMenu) {
+        Navigator.pop(context);
+      }
       if (action != null) {
         action();
       }
