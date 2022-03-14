@@ -20,14 +20,12 @@ class ScaffoldSnackbar {
 
 Scaffold formPage(
   BuildContext context,
-  PreferredSizeWidget? appBar,
   List<Widget> list,
 ) {
   return Scaffold(
-    appBar: appBar,
     body: SingleChildScrollView(
       child: Container(
-        height: MediaQuery.of(context).size.height - 50,
+        height: MediaQuery.of(context).size.height,
         alignment: Alignment.bottomCenter,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 24),

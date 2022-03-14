@@ -14,7 +14,6 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarLogin(context, AppLocalizations.of(context).login),
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height - 50,
@@ -54,7 +53,6 @@ class EmailLogin extends StatelessWidget {
     );
     return formPage(
       context,
-      appBarLogin(context, AppLocalizations.of(context).login_with_email),
       [
         emailTextField(
           context: context,
@@ -112,7 +110,6 @@ class EmailRegister extends StatelessWidget {
       },
       child: formPage(
         context,
-        appBarLogin(context, AppLocalizations.of(context).register),
         [
           emailTextField(
             context: context,
@@ -179,7 +176,6 @@ class ResetPassword extends StatelessWidget {
       },
       child: formPage(
         context,
-        appBarLogin(context, AppLocalizations.of(context).reset_password),
         [
           emailTextField(
             context: context,

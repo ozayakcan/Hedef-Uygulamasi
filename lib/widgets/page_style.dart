@@ -27,18 +27,6 @@ MaterialApp homeMaterialApp(Widget page) {
   );
 }
 
-PreferredSizeWidget appBarLogin(BuildContext context, String title) {
-  return AppBar(
-    iconTheme: const IconThemeData(
-      color: Colors.white,
-    ),
-    title: appBarTitle(
-      title,
-    ),
-    toolbarHeight: 50,
-  );
-}
-
 PreferredSizeWidget defaultAppBar(BuildContext context, String title) {
   return AppBar(
     iconTheme: const IconThemeData(
