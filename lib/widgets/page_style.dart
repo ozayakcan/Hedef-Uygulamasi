@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:sosyal/widgets/menu.dart';
 
 import '../utils/colors.dart';
 import '../utils/variables.dart';
@@ -103,11 +104,14 @@ DefaultTabController defaultTabController(
   );
 }
 
-Scaffold defaultScaffold(BuildContext context,
-    {required String title,
-    required Widget body,
-    Widget? floatingActionButton,
-    Widget? endDrawer}) {
+Scaffold defaultScaffold(
+  BuildContext context, {
+  required String title,
+  required Widget body,
+  Widget? floatingActionButton,
+  Widget? endDrawer,
+  BottomNavigationBar? bottomNavigationBar,
+}) {
   return Scaffold(
     appBar: defaultAppBar(
       context,
@@ -115,6 +119,7 @@ Scaffold defaultScaffold(BuildContext context,
     ),
     endDrawer: endDrawer,
     floatingActionButton: floatingActionButton,
+    bottomNavigationBar: bottomNavigationBar,
     body: body,
   );
 }

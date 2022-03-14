@@ -35,8 +35,9 @@
     "reset_password_link_sent": "Şifre sıfırlama bağlantısı gönderildi. Şifrenizi sıfırlamak için epostanızı kontrol edin.",
     "login_warning": "Bu işlem için giriş yapmalısınız!",
     "logout": "Çıkış Yap",
-    "active_up": "AKTİF",
-    "completed_up": "TAMAMLANAN",
     "add": "Ekle",
-    "settings": "Ayarlar"
+    "settings": "Ayarlar",
+    "home": "Anasayfa",
+    "profile": "Profil",
+    "share": "Paylaş"
 }

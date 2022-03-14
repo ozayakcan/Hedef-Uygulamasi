@@ -35,8 +35,9 @@
     "reset_password_link_sent": "Password reset link has been sent. Check your email to reset your password.",
     "login_warning": "Bu işlem için giriş yapmalısınız!",
     "logout": "Logout",
-    "active_up": "ACTIVE",
-    "completed_up": "COMPLETED",
     "add": "Add",
-    "settings": "Settings"
+    "settings": "Settings",
+    "home": "Home",
+    "profile": "Profile",
+    "share": "Share"
 }
