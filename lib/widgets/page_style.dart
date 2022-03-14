@@ -106,7 +106,6 @@ Scaffold defaultScaffold(
     ),
     endDrawer: endDrawer,
     floatingActionButton: floatingActionButton,
-    extendBody: bottomNavigationBar != null,
     bottomNavigationBar: bottomNavigationBar,
     body: body,
   );

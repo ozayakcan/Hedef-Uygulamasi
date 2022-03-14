@@ -32,9 +32,11 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  List<WidgetModel> homeNavigations({bool redirectEnabled = true}) {
+  List<WidgetModel> homeNavigations(BuildContext context,
+      {bool redirectEnabled = true}) {
     return [
       WidgetModel(
+        context,
         Text(
           'Index 0: Anasayfa',
           style: simpleTextStyle(Variables.normalFontSize),
@@ -43,6 +45,7 @@ class _HomePageState extends State<HomePage> {
         false,
       ),
       WidgetModel(
+        context,
         Text(
           'Index 1: Paylaş',
           style: simpleTextStyle(Variables.normalFontSize),
@@ -51,6 +54,7 @@ class _HomePageState extends State<HomePage> {
         true,
       ),
       WidgetModel(
+        context,
         Text(
           'Index 1: Profil',
           style: simpleTextStyle(Variables.normalFontSize),
@@ -72,15 +76,18 @@ class _HomePageState extends State<HomePage> {
     return defaultScaffold(
       context,
       title: AppLocalizations.of(context).app_name,
-      body: homeNavigations(redirectEnabled: widget.redirectEnabled)
-          .elementAt(_selectedIndex)
-          .widget,
-      endDrawer: homeNavigations(redirectEnabled: widget.redirectEnabled)
-              .elementAt(_selectedIndex)
-              .showDrawer
-          ? homeNavigations(redirectEnabled: widget.redirectEnabled)
-              .elementAt(_selectedIndex)
-              .drawer
+      body: homeNavigations(
+        context,
+        redirectEnabled: widget.redirectEnabled,
+      ).elementAt(_selectedIndex).widget,
+      endDrawer: homeNavigations(
+        context,
+        redirectEnabled: widget.redirectEnabled,
+      ).elementAt(_selectedIndex).showDrawer
+          ? homeNavigations(
+              context,
+              redirectEnabled: widget.redirectEnabled,
+            ).elementAt(_selectedIndex).drawer
           : null,
       bottomNavigationBar: BottomNavigationBar(
         items: [
