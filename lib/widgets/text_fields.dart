@@ -16,11 +16,14 @@ TextField emailTextField(
     keyboardType: TextInputType.emailAddress,
     textInputAction:
         nextFocus != null ? TextInputAction.next : TextInputAction.done,
+    cursorColor: ThemeColor.cursor,
     decoration: InputDecoration(
       labelText: AppLocalizations.of(context).email,
       labelStyle: const TextStyle(
-        color: MyColors.colorPrimary,
+        color: ThemeColor.textPrimary,
       ),
+      enabledBorder: enabledInputBorder(),
+      focusedBorder: focusedInputBorder(),
     ),
     onSubmitted: (v) {
       if (authButton != null) {
@@ -47,11 +50,14 @@ TextField nameTextField(
     keyboardType: TextInputType.name,
     textInputAction:
         nextFocus != null ? TextInputAction.next : TextInputAction.done,
+    cursorColor: ThemeColor.cursor,
     decoration: InputDecoration(
       labelText: AppLocalizations.of(context).name,
       labelStyle: const TextStyle(
-        color: MyColors.colorPrimary,
+        color: ThemeColor.textPrimary,
       ),
+      enabledBorder: enabledInputBorder(),
+      focusedBorder: focusedInputBorder(),
     ),
     onSubmitted: (v) {
       if (authButton != null) {
@@ -81,11 +87,14 @@ TextField passwordTextField(
     autocorrect: false,
     textInputAction:
         nextFocus != null ? TextInputAction.next : TextInputAction.done,
+    cursorColor: ThemeColor.cursor,
     decoration: InputDecoration(
       labelText: pwtext,
       labelStyle: const TextStyle(
-        color: MyColors.colorPrimary,
+        color: ThemeColor.textPrimary,
       ),
+      enabledBorder: enabledInputBorder(),
+      focusedBorder: focusedInputBorder(),
     ),
     onSubmitted: (v) {
       if (authButton != null) {
@@ -97,5 +106,23 @@ TextField passwordTextField(
         return;
       }
     },
+  );
+}
+
+InputBorder enabledInputBorder() {
+  return const UnderlineInputBorder(
+    borderSide: BorderSide(
+      color: ThemeColor.textSecondary,
+      width: 0.0,
+    ),
+  );
+}
+
+InputBorder focusedInputBorder() {
+  return const UnderlineInputBorder(
+    borderSide: BorderSide(
+      color: ThemeColor.textSecondary,
+      width: 0.0,
+    ),
   );
 }

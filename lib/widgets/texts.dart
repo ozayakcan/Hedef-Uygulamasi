@@ -12,21 +12,14 @@ TextStyle titilliumWebTextStyle(Color color, double _fontSize) {
 
 TextStyle simpleTextStyle(double _fontSize) {
   return TextStyle(
-    color: Colors.black87,
-    fontSize: _fontSize,
-  );
-}
-
-TextStyle simpleTextStyleWhite(double _fontSize) {
-  return TextStyle(
-    color: Colors.white,
+    color: ThemeColor.textPrimary,
     fontSize: _fontSize,
   );
 }
 
 TextStyle linktTextStyle(double _fonstSize) {
   return TextStyle(
-    color: MyColors.colorPrimary,
+    color: ThemeColor.buttonPrimary,
     fontSize: _fonstSize,
   );
 }

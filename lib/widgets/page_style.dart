@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:sosyal/widgets/menu.dart';
 
 import '../utils/colors.dart';
 import '../utils/variables.dart';
@@ -11,8 +10,8 @@ MaterialApp homeMaterialApp(Widget page) {
   return MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
-      scaffoldBackgroundColor: Colors.white,
-      primarySwatch: MyColors.colorPrimary,
+      scaffoldBackgroundColor: ThemeColor.backgroundPrimary,
+      primarySwatch: ThemeColor.backgroundSecondary,
       visualDensity: VisualDensity.adaptivePlatformDensity,
     ),
     localizationsDelegates: const [
@@ -30,7 +29,7 @@ MaterialApp homeMaterialApp(Widget page) {
 PreferredSizeWidget defaultAppBar(BuildContext context, String title) {
   return AppBar(
     iconTheme: const IconThemeData(
-      color: Colors.white,
+      color: ThemeColor.textPrimary,
     ),
     leading: leadingBuilder(context),
     title: appBarTitle(
@@ -59,7 +58,7 @@ Builder leadingBuilder(BuildContext context) {
 Text appBarTitle(String title) {
   return Text(
     title,
-    style: simpleTextStyleWhite(Variables.mediumFontSize),
+    style: simpleTextStyle(Variables.mediumFontSize),
   );
 }
 
@@ -73,11 +72,11 @@ DefaultTabController defaultTabController(
         title: appBarTitle(AppLocalizations.of(context).app_name),
         bottom: TabBar(
           labelStyle: titilliumWebTextStyle(
-            Colors.white,
+            ThemeColor.textPrimary,
             Variables.normalFontSize,
           ),
           unselectedLabelStyle: titilliumWebTextStyle(
-            Colors.white70,
+            ThemeColor.textSecondary,
             Variables.normalFontSize,
           ),
           tabs: tabList,
@@ -107,6 +106,7 @@ Scaffold defaultScaffold(
     ),
     endDrawer: endDrawer,
     floatingActionButton: floatingActionButton,
+    extendBody: bottomNavigationBar != null,
     bottomNavigationBar: bottomNavigationBar,
     body: body,
   );

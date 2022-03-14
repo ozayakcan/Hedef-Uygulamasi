@@ -69,56 +69,46 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: user!.emailVerified
-              ? MediaQuery.of(context).size.height
-              : MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: defaultScaffold(
-            context,
-            title: AppLocalizations.of(context).app_name,
-            body: homeNavigations(redirectEnabled: widget.redirectEnabled)
-                .elementAt(_selectedIndex)
-                .widget,
-            endDrawer: homeNavigations(redirectEnabled: widget.redirectEnabled)
-                    .elementAt(_selectedIndex)
-                    .showDrawer
-                ? homeNavigations(redirectEnabled: widget.redirectEnabled)
-                    .elementAt(_selectedIndex)
-                    .drawer
-                : null,
-            bottomNavigationBar: BottomNavigationBar(
-              items: [
-                BottomNavigationBarItem(
-                  icon: const Icon(Icons.home_rounded),
-                  label: AppLocalizations.of(context).home,
-                  backgroundColor: MyColors.colorPrimary,
-                ),
-                BottomNavigationBarItem(
-                  icon: const Icon(Icons.add_circle_rounded),
-                  label: AppLocalizations.of(context).share,
-                  backgroundColor: MyColors.colorPrimary,
-                ),
-                BottomNavigationBarItem(
-                  icon: const Icon(Icons.account_circle_rounded),
-                  label: AppLocalizations.of(context).profile,
-                  backgroundColor: MyColors.colorPrimary,
-                ),
-              ],
-              type: BottomNavigationBarType.shifting,
-              showUnselectedLabels: false,
-              currentIndex: _selectedIndex,
-              selectedItemColor: Colors.white70,
-              unselectedItemColor: Colors.white,
-              onTap: (index) {
-                onItemTap(index);
-              },
-            ),
+    return defaultScaffold(
+      context,
+      title: AppLocalizations.of(context).app_name,
+      body: homeNavigations(redirectEnabled: widget.redirectEnabled)
+          .elementAt(_selectedIndex)
+          .widget,
+      endDrawer: homeNavigations(redirectEnabled: widget.redirectEnabled)
+              .elementAt(_selectedIndex)
+              .showDrawer
+          ? homeNavigations(redirectEnabled: widget.redirectEnabled)
+              .elementAt(_selectedIndex)
+              .drawer
+          : null,
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.home_rounded),
+            label: AppLocalizations.of(context).home,
+            backgroundColor: ThemeColor.backgroundSecondary,
           ),
-        ),
-      ],
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.add_circle_rounded),
+            label: AppLocalizations.of(context).share,
+            backgroundColor: ThemeColor.backgroundSecondary,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.account_circle_rounded),
+            label: AppLocalizations.of(context).profile,
+            backgroundColor: ThemeColor.backgroundSecondary,
+          ),
+        ],
+        type: BottomNavigationBarType.shifting,
+        showUnselectedLabels: false,
+        currentIndex: _selectedIndex,
+        selectedItemColor: ThemeColor.textSecondary,
+        unselectedItemColor: ThemeColor.textPrimary,
+        onTap: (index) {
+          onItemTap(index);
+        },
+      ),
     );
   }
 }

@@ -16,8 +16,8 @@ AuthButtonStyle defaultAuthButtonStyle(double _width) {
   return AuthButtonStyle(
     width: _width,
     height: Variables.defaultButtonHeight,
-    borderColor: MyColors.defaultBtnBorderColor,
-    splashColor: MyColors.defaultBtnSplashColor,
+    borderColor: ThemeColor.buttonBorder,
+    splashColor: ThemeColor.buttonBorder,
   );
 }
 
@@ -25,10 +25,10 @@ AuthButtonStyle primaryButtonStyle(double _width) {
   return AuthButtonStyle(
     width: _width,
     height: Variables.defaultButtonHeight,
-    borderColor: MyColors.defaultBtnBorderColor,
-    splashColor: MyColors.defaultBtnSplashColor,
-    buttonColor: MyColors.colorPrimary,
-    textStyle: const TextStyle(color: Colors.white),
+    borderColor: ThemeColor.buttonBorder,
+    splashColor: ThemeColor.buttonSplash,
+    buttonColor: ThemeColor.buttonPrimary,
+    textStyle: const TextStyle(color: ThemeColor.buttonText),
   );
 }
 
@@ -36,10 +36,10 @@ AuthButtonStyle secondaryButtonStyle(double _width) {
   return AuthButtonStyle(
     width: _width,
     height: Variables.defaultButtonHeight,
-    borderColor: MyColors.defaultBtnBorderColor,
-    splashColor: MyColors.defaultBtnSplashColor,
-    buttonColor: MyColors.colorSecondary,
-    textStyle: const TextStyle(color: Colors.white),
+    borderColor: ThemeColor.buttonBorder,
+    splashColor: ThemeColor.buttonSplash,
+    buttonColor: ThemeColor.buttonSecondary,
+    textStyle: const TextStyle(color: ThemeColor.buttonText),
   );
 }
 
@@ -257,14 +257,14 @@ class AddButton extends StatelessWidget {
             return CustomRectTween(begin: begin, end: end);
           },
           child: Material(
-            color: MyColors.colorSecondary,
+            color: ThemeColor.buttonSecondary,
             elevation: 2,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
             child: const Icon(
               Icons.add_rounded,
               size: 56,
-              color: Colors.white,
+              color: ThemeColor.buttonText,
             ),
           ),
         ),

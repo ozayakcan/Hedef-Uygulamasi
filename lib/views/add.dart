@@ -19,7 +19,7 @@ class AddPage extends StatelessWidget {
             return CustomRectTween(begin: begin, end: end);
           },
           child: Material(
-            color: MyColors.colorSecondary,
+            color: ThemeColor.backgroundPrimary,
             elevation: 2,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
@@ -33,7 +33,7 @@ class AddPage extends StatelessWidget {
                       onPressed: () {},
                       child: Text(
                         AppLocalizations.of(context).add,
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: ThemeColor.textPrimary),
                       ),
                     ),
                   ],

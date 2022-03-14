@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../utils/colors.dart';
+
 class ScaffoldSnackbar {
   ScaffoldSnackbar(this._context);
   final BuildContext _context;
@@ -75,7 +77,7 @@ class HeroDialogRoute<T> extends PageRoute<T> {
   bool get maintainState => true;
 
   @override
-  Color? get barrierColor => Colors.black54;
+  Color? get barrierColor => ThemeColor.textSecondary;
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,

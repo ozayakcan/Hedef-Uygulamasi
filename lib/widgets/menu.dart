@@ -36,7 +36,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
   Widget build(BuildContext context) {
     return Drawer(
       child: Material(
-        color: MyColors.colorPrimary,
+        color: ThemeColor.backgroundPrimary,
         child: ListView(
           children: [
             Container(
@@ -47,7 +47,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                     Text(
                       user!.displayName.toString(),
                       style: TextStyle(
-                        color: Colors.white,
+                        color: ThemeColor.textPrimary,
                         fontSize: Variables.mediumFontSize,
                       ),
                       textAlign: TextAlign.center,
@@ -58,7 +58,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                     Text(
                       user!.email.toString(),
                       style: TextStyle(
-                        color: Colors.white,
+                        color: ThemeColor.textPrimary,
                         fontSize: Variables.normalFontSize,
                       ),
                       textAlign: TextAlign.center,
@@ -114,8 +114,8 @@ Widget menuItem(
   VoidCallback? action,
   bool closeMenu = true,
 }) {
-  const color = Colors.white;
-  const hoverColor = Colors.white38;
+  const color = ThemeColor.textPrimary;
+  const hoverColor = ThemeColor.backgroundSecondary;
   return ListTile(
     leading: Icon(
       icon,
