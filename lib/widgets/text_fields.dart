@@ -2,6 +2,7 @@ import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sosyal/utils/variables.dart';
 
 import '../utils/colors.dart';
 
@@ -43,6 +44,7 @@ TextField customTextField(
     {required BuildContext context,
     required String labelText,
     required TextEditingController nameController,
+    int? maxLength,
     CustomAuthButton? authButton,
     FocusNode? prevFocus,
     FocusNode? nextFocus}) {
@@ -50,6 +52,7 @@ TextField customTextField(
     controller: nameController,
     focusNode: prevFocus,
     keyboardType: TextInputType.name,
+    maxLength: maxLength,
     textInputAction:
         nextFocus != null ? TextInputAction.next : TextInputAction.done,
     cursorColor: ThemeColor.cursor,
@@ -87,6 +90,7 @@ TextField passwordTextField(
     obscureText: true,
     enableSuggestions: false,
     autocorrect: false,
+    maxLength: Variables.maxLengthPassword,
     textInputAction:
         nextFocus != null ? TextInputAction.next : TextInputAction.done,
     cursorColor: ThemeColor.cursor,

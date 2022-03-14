@@ -7,5 +7,9 @@ class Variables {
   static double mediumFontSize = 17;
   static double bigFontSize = 18;
 
+  static int maxLengthName = 50;
+  static int maxLengthUsername = 50;
+  static int maxLengthPassword = 20;
+
   static String heroAddTag = "add-tag";
 }

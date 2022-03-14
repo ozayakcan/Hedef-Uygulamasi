@@ -1,6 +1,7 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sosyal/utils/variables.dart';
 
 import '../widgets/buttons.dart';
 import '../widgets/text_fields.dart';
@@ -121,6 +122,7 @@ class EmailRegister extends StatelessWidget {
           customTextField(
             context: context,
             labelText: AppLocalizations.of(context).username,
+            maxLength: Variables.maxLengthUsername,
             nameController: usernameController,
             prevFocus: usernameFocus,
             nextFocus: nameFocus,
@@ -128,6 +130,7 @@ class EmailRegister extends StatelessWidget {
           customTextField(
             context: context,
             labelText: AppLocalizations.of(context).name,
+            maxLength: Variables.maxLengthName,
             nameController: nameController,
             prevFocus: nameFocus,
             nextFocus: passwordFocus,
