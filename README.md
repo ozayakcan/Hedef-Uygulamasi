@@ -43,9 +43,16 @@ storeFile=../key/keystore.jks
   "rules": {
     ".read": false,
     ".write": false,
-    "$user_id": {
-      ".read": "auth != null && auth.uid == $user_id",
-      ".write": "auth != null && auth.uid == $user_id"
+    "Users": {
+      ".read": true,
+      "$user_id": {
+      	".read": true,
+      	".write": "auth != null && auth.uid == $user_id"
+    	},
+    },
+    "usernames": {
+      ".read": true,
+      ".write": "auth != null"
     }
   }
 }

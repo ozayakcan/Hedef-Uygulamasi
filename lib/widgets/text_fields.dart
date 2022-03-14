@@ -1,5 +1,6 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../utils/colors.dart';
@@ -38,8 +39,9 @@ TextField emailTextField(
   );
 }
 
-TextField nameTextField(
+TextField customTextField(
     {required BuildContext context,
+    required String labelText,
     required TextEditingController nameController,
     CustomAuthButton? authButton,
     FocusNode? prevFocus,
@@ -52,7 +54,7 @@ TextField nameTextField(
         nextFocus != null ? TextInputAction.next : TextInputAction.done,
     cursorColor: ThemeColor.cursor,
     decoration: InputDecoration(
-      labelText: AppLocalizations.of(context).name,
+      labelText: labelText,
       labelStyle: const TextStyle(
         color: ThemeColor.textPrimary,
       ),
@@ -126,3 +128,5 @@ InputBorder focusedInputBorder() {
     ),
   );
 }
+
+RegExp usernameRegExp = RegExp(r'^[A-Za-z0-9_]+$');

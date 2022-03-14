@@ -1,11 +1,14 @@
 import 'package:auth_buttons/auth_buttons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sosyal/widgets/text_fields.dart';
 
 import '../utils/auth.dart';
 import '../utils/colors.dart';
+import '../utils/database.dart';
 import '../utils/variables.dart';
 import '../views/add.dart';
 import '../views/home.dart';
@@ -139,6 +142,7 @@ CustomAuthButton loginBtn(BuildContext context, TextEditingController email,
 CustomAuthButton registerBtn(
   BuildContext context,
   TextEditingController email,
+  TextEditingController username,
   TextEditingController name,
   TextEditingController password,
   TextEditingController passwordRp,
@@ -147,42 +151,72 @@ CustomAuthButton registerBtn(
     iconUrl: "",
     style: secondaryButtonStyle(MediaQuery.of(context).size.width),
     onPressed: () {
-      if (name.text.isNotEmpty && name.text.length >= 3) {
-        if (password.text == passwordRp.text) {
-          Auth.signupWithEmail(context, email.text, name.text, password.text)
-              .then((value) {
-            if (value == null) {
-              Auth.sendEmailVerification(context).then((value) {
-                if (value == null) {
-                  if (kDebugMode) {
-                    print("Eposta onayı gönderildi.");
+      if (username.text.isNotEmpty && username.text.length >= 3) {
+        if (usernameRegExp.hasMatch(username.text)) {
+          Database.checkUsername(username.text).then((userNameValue) {
+            if (userNameValue != null) {
+              if (userNameValue == false) {
+                if (name.text.isNotEmpty && name.text.length >= 3) {
+                  if (password.text == passwordRp.text) {
+                    Auth.signupWithEmail(
+                            context, email.text, name.text, password.text)
+                        .then((registerValue) {
+                      if (registerValue == null) {
+                        User? user = Auth.user;
+                        Database.addUser(
+                                user!.uid, email.text, username.text, name.text)
+                            .then((value) {
+                          Auth.sendEmailVerification(context)
+                              .then((emailVerificationValue) {
+                            if (emailVerificationValue == null) {
+                              if (kDebugMode) {
+                                print("Eposta onayı gönderildi.");
+                              }
+                            } else {
+                              if (kDebugMode) {
+                                print("Eposta gönderilemedi. Hata: " +
+                                    emailVerificationValue);
+                              }
+                            }
+                          });
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomePage(
+                                redirectEnabled: false,
+                              ),
+                            ),
+                            (route) => false,
+                          );
+                        });
+                      } else {
+                        ScaffoldSnackbar.of(context).show(registerValue);
+                      }
+                    });
+                  } else {
+                    ScaffoldSnackbar.of(context).show(
+                        AppLocalizations.of(context).passwords_do_not_match);
                   }
                 } else {
-                  if (kDebugMode) {
-                    print("Eposta gönderilemedi. Hata: " + value);
-                  }
+                  ScaffoldSnackbar.of(context)
+                      .show(AppLocalizations.of(context).name_must_3_character);
                 }
-              });
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const HomePage(
-                    redirectEnabled: false,
-                  ),
-                ),
-                (route) => false,
-              );
+              } else {
+                ScaffoldSnackbar.of(context)
+                    .show(AppLocalizations.of(context).username_already_exists);
+              }
             } else {
-              ScaffoldSnackbar.of(context).show(value);
+              ScaffoldSnackbar.of(context)
+                  .show(AppLocalizations.of(context).an_error_occurred);
             }
           });
         } else {
           ScaffoldSnackbar.of(context)
-              .show(AppLocalizations.of(context).passwords_do_not_match);
+              .show(AppLocalizations.of(context).username_regmatch_error);
         }
       } else {
         ScaffoldSnackbar.of(context)
-            .show(AppLocalizations.of(context).name_must_3_character);
+            .show(AppLocalizations.of(context).username_must_3_character);
       }
     },
     text: AppLocalizations.of(context).register,

@@ -86,9 +86,11 @@ class EmailRegister extends StatelessWidget {
   EmailRegister({Key? key}) : super(key: key);
 
   final emailController = TextEditingController();
+  final usernameController = TextEditingController();
   final nameController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordRpController = TextEditingController();
+  final usernameFocus = FocusNode();
   final nameFocus = FocusNode();
   final passwordFocus = FocusNode();
   final passwordRpFocus = FocusNode();
@@ -98,6 +100,7 @@ class EmailRegister extends StatelessWidget {
     final CustomAuthButton registerBtnVar = registerBtn(
       context,
       emailController,
+      usernameController,
       nameController,
       passwordController,
       passwordRpController,
@@ -113,10 +116,18 @@ class EmailRegister extends StatelessWidget {
           emailTextField(
             context: context,
             emailController: emailController,
+            nextFocus: usernameFocus,
+          ),
+          customTextField(
+            context: context,
+            labelText: AppLocalizations.of(context).username,
+            nameController: usernameController,
+            prevFocus: usernameFocus,
             nextFocus: nameFocus,
           ),
-          nameTextField(
+          customTextField(
             context: context,
+            labelText: AppLocalizations.of(context).name,
             nameController: nameController,
             prevFocus: nameFocus,
             nextFocus: passwordFocus,

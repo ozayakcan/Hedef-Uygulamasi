@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sosyal/utils/widget_drawer_model.dart';
 
 import '../utils/auth.dart';
 import '../utils/colors.dart';
+import '../utils/shared_pref.dart';
 import '../utils/variables.dart';
 import '../widgets/menu.dart';
 import '../widgets/page_style.dart';
@@ -21,13 +23,24 @@ class _HomePageState extends State<HomePage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   late User? user;
 
-  int _selectedIndex = 0;
+  late SharedPreferences sp;
+
+  late int _selectedIndex = 0;
+
   @override
   void initState() {
     super.initState();
     Auth.getUser(auth).then((value) {
       setState(() {
         user = value;
+      });
+      SharedPreferences.getInstance().then((value) {
+        setState(() {
+          sp = value;
+        });
+      });
+      Future(() async {
+        await SharedPref.registerUser();
       });
     });
   }
