@@ -23,6 +23,19 @@ class Database {
     return database;
   }
 
+  static Future<DatabaseReference?> getReference(String ref,
+      {bool keepsynced = true}) async {
+    try {
+      FirebaseDatabase database = await getDatabase();
+      DatabaseReference reference = database.ref(ref);
+      setKeepSynced(reference, keepsynced);
+      return reference;
+    } catch (e) {
+      printError(e);
+      return null;
+    }
+  }
+
   static Future<bool?> checkUsername(String username) async {
     try {
       FirebaseDatabase database = await getDatabase().then((value) => value);

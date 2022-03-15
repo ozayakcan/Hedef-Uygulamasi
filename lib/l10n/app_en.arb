@@ -43,5 +43,6 @@
     "settings": "Settings",
     "home": "Home",
     "profile": "Profile",
-    "share": "Share"
+    "share": "Share",
+    "loading": "Loading"
 }

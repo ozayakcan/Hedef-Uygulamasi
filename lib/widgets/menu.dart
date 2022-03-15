@@ -1,9 +1,14 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sosyal/widgets/widgets.dart';
 
 import '../utils/auth.dart';
 import '../utils/colors.dart';
+import '../utils/database.dart';
 import '../utils/variables.dart';
 import '../views/login.dart';
 import '../views/settings.dart';
@@ -22,14 +27,51 @@ class DrawerMenu extends StatefulWidget {
 class _DrawerMenuState extends State<DrawerMenu> {
   FirebaseAuth auth = FirebaseAuth.instance;
   late User? user;
+  String username = "";
+  String name = "";
+  StreamSubscription<DatabaseEvent>? nameEvent;
+  StreamSubscription<DatabaseEvent>? usernameEvent;
   @override
   void initState() {
-    super.initState();
-    Auth.getUser(auth).then((value) {
-      setState(() {
-        user = value;
+    setState(() {
+      user = Auth.user;
+    });
+    Future(() async {
+      DatabaseReference? nameReference = await Database.getReference(
+          Database.usersString + "/" + user!.uid + "/" + Database.nameString);
+      nameEvent = nameReference!.onValue.listen((event) {
+        if (event.snapshot.exists) {
+          setState(() {
+            name = event.snapshot.value != null
+                ? event.snapshot.value.toString()
+                : "";
+          });
+        }
+      });
+      DatabaseReference? usernameReference = await Database.getReference(
+          Database.usersString +
+              "/" +
+              user!.uid +
+              "/" +
+              Database.usernameString);
+      usernameEvent = usernameReference!.onValue.listen((event) {
+        if (event.snapshot.exists) {
+          setState(() {
+            username = event.snapshot.value != null
+                ? event.snapshot.value.toString()
+                : "";
+          });
+        }
       });
     });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    nameEvent?.cancel();
+    usernameEvent?.cancel();
   }
 
   @override
@@ -44,25 +86,29 @@ class _DrawerMenuState extends State<DrawerMenu> {
               child: Center(
                 child: Column(
                   children: [
-                    Text(
-                      user!.displayName.toString(),
-                      style: TextStyle(
-                        color: ThemeColor.textPrimary,
-                        fontSize: Variables.mediumFontSize,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                    name == ""
+                        ? loadingRow(context)
+                        : Text(
+                            name,
+                            style: TextStyle(
+                              color: ThemeColor.textPrimary,
+                              fontSize: Variables.mediumFontSize,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                     const SizedBox(
                       height: 4,
                     ),
-                    Text(
-                      user!.email.toString(),
-                      style: TextStyle(
-                        color: ThemeColor.textPrimary,
-                        fontSize: Variables.normalFontSize,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                    username == ""
+                        ? loadingRow(context)
+                        : Text(
+                            "(@" + username + ")",
+                            style: TextStyle(
+                              color: ThemeColor.textPrimary,
+                              fontSize: Variables.normalFontSize,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                   ],
                 ),
               ),

@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../utils/colors.dart';
+import '../utils/variables.dart';
 
 class ScaffoldSnackbar {
   ScaffoldSnackbar(this._context);
@@ -112,4 +114,32 @@ class CustomRectTween extends RectTween {
       lerpDouble(begin!.bottom, end!.bottom, elasticCurveValue)!,
     );
   }
+}
+
+Widget loadingRow(BuildContext context,
+    {double width = 15, double height = 15}) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      SizedBox(
+        width: width,
+        height: height,
+        child: CircularProgressIndicator(
+          semanticsLabel: AppLocalizations.of(context).loading,
+          color: ThemeColor.textPrimary,
+        ),
+      ),
+      const SizedBox(
+        width: 5,
+      ),
+      Text(
+        AppLocalizations.of(context).loading,
+        style: TextStyle(
+          color: ThemeColor.textPrimary,
+          fontSize: Variables.mediumFontSize,
+        ),
+        textAlign: TextAlign.center,
+      )
+    ],
+  );
 }
