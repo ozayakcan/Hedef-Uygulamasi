@@ -29,7 +29,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    super.initState();
     Auth.getUser(auth).then((value) {
       setState(() {
         user = value;
@@ -43,6 +42,7 @@ class _HomePageState extends State<HomePage> {
         await SharedPref.registerUser();
       });
     });
+    super.initState();
   }
 
   List<WidgetModel> homeNavigations(BuildContext context,
