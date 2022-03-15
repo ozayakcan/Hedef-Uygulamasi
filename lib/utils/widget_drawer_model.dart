@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class WidgetModel {
-  WidgetModel(this.context, this._widget, this.drawer, this.showDrawer);
+  WidgetModel(this.context, this._widget);
   final BuildContext context;
   final Widget _widget;
   Widget get widget {
@@ -13,7 +13,4 @@ class WidgetModel {
       ),
     );
   }
-
-  Widget drawer;
-  bool showDrawer;
 }

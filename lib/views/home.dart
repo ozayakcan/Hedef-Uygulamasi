@@ -59,8 +59,6 @@ class _HomePageState extends State<HomePage> {
           'Index 0: Anasayfa',
           style: simpleTextStyle(Variables.normalFontSize, widget.darkTheme),
         ),
-        const SizedBox.shrink(),
-        false,
       ),
       WidgetModel(
         context,
@@ -68,11 +66,6 @@ class _HomePageState extends State<HomePage> {
           'Index 1: Paylaş',
           style: simpleTextStyle(Variables.normalFontSize, widget.darkTheme),
         ),
-        DrawerMenu(
-          redirectEnabled: redirectEnabled,
-          darkTheme: widget.darkTheme,
-        ),
-        true,
       ),
       WidgetModel(
         context,
@@ -80,11 +73,6 @@ class _HomePageState extends State<HomePage> {
           'Index 1: Profil',
           style: simpleTextStyle(Variables.normalFontSize, widget.darkTheme),
         ),
-        DrawerMenu(
-          redirectEnabled: redirectEnabled,
-          darkTheme: widget.darkTheme,
-        ),
-        true,
       ),
     ];
   }
@@ -105,15 +93,10 @@ class _HomePageState extends State<HomePage> {
         context,
         redirectEnabled: widget.redirectEnabled,
       ).elementAt(_selectedIndex).widget,
-      endDrawer: homeNavigations(
-        context,
+      endDrawer: DrawerMenu(
         redirectEnabled: widget.redirectEnabled,
-      ).elementAt(_selectedIndex).showDrawer
-          ? homeNavigations(
-              context,
-              redirectEnabled: widget.redirectEnabled,
-            ).elementAt(_selectedIndex).drawer
-          : null,
+        darkTheme: widget.darkTheme,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
