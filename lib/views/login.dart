@@ -51,35 +51,7 @@ class _LoginState extends State<Login> {
                 const SizedBox(
                   height: 30,
                 ),
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context).dark_theme,
-                        style: simpleTextStyle(
-                          Variables.normalFontSize,
-                          widget.darkTheme,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Switch(
-                        value: widget.darkTheme,
-                        onChanged: (value) {
-                          SharedPref.setDarkThemeRestart(context, value);
-                        },
-                        activeColor: widget.darkTheme
-                            ? ThemeColorDark.textPrimary
-                            : ThemeColor.textPrimary,
-                        activeTrackColor: widget.darkTheme
-                            ? ThemeColorDark.textSecondary
-                            : ThemeColor.textSecondary,
-                      ),
-                    ],
-                  ),
-                )
+                darkThemeSwitch(context, widget.darkTheme),
               ],
             ),
           ),

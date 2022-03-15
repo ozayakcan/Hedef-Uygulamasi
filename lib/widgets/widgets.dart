@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../utils/colors.dart';
+import '../utils/shared_pref.dart';
 import '../utils/variables.dart';
+import 'texts.dart';
 
 class ScaffoldSnackbar {
   ScaffoldSnackbar(this._context);
@@ -147,5 +149,36 @@ Widget loadingRow(BuildContext context, bool darkTheme,
         textAlign: TextAlign.center,
       )
     ],
+  );
+}
+
+Widget darkThemeSwitch(BuildContext context, bool darkTheme) {
+  return Center(
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          AppLocalizations.of(context).dark_theme,
+          style: simpleTextStyle(
+            Variables.mediumFontSize,
+            darkTheme,
+          ),
+        ),
+        const SizedBox(
+          width: 5,
+        ),
+        Switch(
+          value: darkTheme,
+          onChanged: (value) {
+            SharedPref.setDarkThemeRestart(context, value);
+          },
+          activeColor:
+              darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+          activeTrackColor: darkTheme
+              ? ThemeColorDark.textSecondary
+              : ThemeColor.textSecondary,
+        ),
+      ],
+    ),
   );
 }

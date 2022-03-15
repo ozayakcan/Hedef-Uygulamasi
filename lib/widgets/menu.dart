@@ -124,6 +124,10 @@ class _DrawerMenuState extends State<DrawerMenu> {
                             ),
                             textAlign: TextAlign.center,
                           ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    darkThemeSwitch(context, widget.darkTheme),
                   ],
                 ),
               ),
