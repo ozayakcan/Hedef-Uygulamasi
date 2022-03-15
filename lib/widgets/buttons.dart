@@ -54,6 +54,7 @@ GoogleAuthButton googleAuthBtn(BuildContext context, bool redirectEnabled) {
         if (kIsWeb) {
           Auth.signInWithGoogleWeb(context).then((value) {
             if (value == null) {
+              Database.addGoogleUser();
               if (!redirectEnabled) {
                 Navigator.pushAndRemoveUntil(
                   context,
@@ -72,6 +73,7 @@ GoogleAuthButton googleAuthBtn(BuildContext context, bool redirectEnabled) {
         } else {
           Auth.signInWithGoogle(context).then((value) {
             if (value == null) {
+              Database.addGoogleUser();
               if (!redirectEnabled) {
                 Navigator.pushAndRemoveUntil(
                   context,

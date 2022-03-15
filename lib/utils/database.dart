@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sosyal/utils/shared_pref.dart';
+
+import 'auth.dart';
 
 class Database {
   static String usersString = "Users";
@@ -36,6 +39,39 @@ class Database {
     } catch (e) {
       printError(e);
       return null;
+    }
+  }
+
+  static Future<bool?> checkUserRegistered(String userid) async {
+    try {
+      FirebaseDatabase database = await getDatabase().then((value) => value);
+      DatabaseReference databaseReference = database.ref(usersString);
+      setKeepSynced(databaseReference, true);
+      return databaseReference
+          .orderByChild(idString)
+          .equalTo(userid)
+          .limitToFirst(1)
+          .once()
+          .then((value) {
+        return value.snapshot.exists;
+      });
+    } catch (e) {
+      printError(e);
+      return null;
+    }
+  }
+
+  static void addGoogleUser() {
+    User? user = Auth.user;
+    if (user != null) {
+      Database.checkUserRegistered(user.uid).then((value) {
+        if (value != null) {
+          if (value == false) {
+            Database.addUser(user.uid, user.email!, user.uid, user.displayName!)
+                .then((value) {});
+          }
+        }
+      });
     }
   }
 
