@@ -40,33 +40,38 @@ class _DrawerMenuState extends State<DrawerMenu> {
     setState(() {
       user = Auth.user;
     });
-    Future(() async {
-      DatabaseReference? nameReference = await Database.getReference(
-          Database.usersString + "/" + user!.uid + "/" + Database.nameString);
-      nameEvent = nameReference!.onValue.listen((event) {
-        if (event.snapshot.exists) {
-          setState(() {
-            name = event.snapshot.value != null
-                ? event.snapshot.value.toString()
-                : "";
-          });
-        }
-      });
-      DatabaseReference? usernameReference = await Database.getReference(
-          Database.usersString +
-              "/" +
-              user!.uid +
-              "/" +
-              Database.usernameString);
-      usernameEvent = usernameReference!.onValue.listen((event) {
-        if (event.snapshot.exists) {
-          setState(() {
-            username = event.snapshot.value != null
-                ? event.snapshot.value.toString()
-                : "";
-          });
-        }
-      });
+    Database.getReference(
+            Database.usersString + "/" + user!.uid + "/" + Database.nameString)
+        .then((value) {
+      if (value != null) {
+        nameEvent = value.onValue.listen((event) {
+          if (event.snapshot.exists) {
+            setState(() {
+              name = event.snapshot.value != null
+                  ? event.snapshot.value.toString()
+                  : "";
+            });
+          }
+        });
+      }
+    });
+    Database.getReference(Database.usersString +
+            "/" +
+            user!.uid +
+            "/" +
+            Database.usernameString)
+        .then((value) {
+      if (value != null) {
+        usernameEvent = value.onValue.listen((event) {
+          if (event.snapshot.exists) {
+            setState(() {
+              username = event.snapshot.value != null
+                  ? event.snapshot.value.toString()
+                  : "";
+            });
+          }
+        });
+      }
     });
     super.initState();
   }
