@@ -13,8 +13,13 @@ import '../widgets/page_style.dart';
 import '../widgets/texts.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.redirectEnabled}) : super(key: key);
+  const HomePage({
+    Key? key,
+    required this.redirectEnabled,
+    required this.darkTheme,
+  }) : super(key: key);
   final bool redirectEnabled;
+  final bool darkTheme;
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -52,7 +57,7 @@ class _HomePageState extends State<HomePage> {
         context,
         Text(
           'Index 0: Anasayfa',
-          style: simpleTextStyle(Variables.normalFontSize),
+          style: simpleTextStyle(Variables.normalFontSize, widget.darkTheme),
         ),
         const SizedBox.shrink(),
         false,
@@ -61,18 +66,24 @@ class _HomePageState extends State<HomePage> {
         context,
         Text(
           'Index 1: Paylaş',
-          style: simpleTextStyle(Variables.normalFontSize),
+          style: simpleTextStyle(Variables.normalFontSize, widget.darkTheme),
         ),
-        DrawerMenu(redirectEnabled: redirectEnabled),
+        DrawerMenu(
+          redirectEnabled: redirectEnabled,
+          darkTheme: widget.darkTheme,
+        ),
         true,
       ),
       WidgetModel(
         context,
         Text(
           'Index 1: Profil',
-          style: simpleTextStyle(Variables.normalFontSize),
+          style: simpleTextStyle(Variables.normalFontSize, widget.darkTheme),
         ),
-        DrawerMenu(redirectEnabled: redirectEnabled),
+        DrawerMenu(
+          redirectEnabled: redirectEnabled,
+          darkTheme: widget.darkTheme,
+        ),
         true,
       ),
     ];
@@ -88,6 +99,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return defaultScaffold(
       context,
+      widget.darkTheme,
       title: AppLocalizations.of(context).app_name,
       body: homeNavigations(
         context,
@@ -107,24 +119,34 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: const Icon(Icons.home_rounded),
             label: AppLocalizations.of(context).home,
-            backgroundColor: ThemeColor.backgroundSecondary,
+            backgroundColor: widget.darkTheme
+                ? ThemeColorDark.backgroundSecondary
+                : ThemeColor.backgroundSecondary,
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.add_circle_rounded),
             label: AppLocalizations.of(context).share,
-            backgroundColor: ThemeColor.backgroundSecondary,
+            backgroundColor: widget.darkTheme
+                ? ThemeColorDark.backgroundSecondary
+                : ThemeColor.backgroundSecondary,
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.account_circle_rounded),
             label: AppLocalizations.of(context).profile,
-            backgroundColor: ThemeColor.backgroundSecondary,
+            backgroundColor: widget.darkTheme
+                ? ThemeColorDark.backgroundSecondary
+                : ThemeColor.backgroundSecondary,
           ),
         ],
         type: BottomNavigationBarType.shifting,
         showUnselectedLabels: false,
         currentIndex: _selectedIndex,
-        selectedItemColor: ThemeColor.textSecondary,
-        unselectedItemColor: ThemeColor.textPrimary,
+        selectedItemColor: widget.darkTheme
+            ? ThemeColorDark.textSecondary
+            : ThemeColor.textSecondary,
+        unselectedItemColor: widget.darkTheme
+            ? ThemeColorDark.textPrimary
+            : ThemeColor.textPrimary,
         onTap: (index) {
           onItemTap(index);
         },

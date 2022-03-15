@@ -1,16 +1,28 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sosyal/main.dart';
+import 'package:sosyal/utils/colors.dart';
+import 'package:sosyal/utils/shared_pref.dart';
 import 'package:sosyal/utils/variables.dart';
+import 'package:sosyal/widgets/texts.dart';
 
 import '../widgets/buttons.dart';
 import '../widgets/text_fields.dart';
 import '../widgets/widgets.dart';
 
-class Login extends StatelessWidget {
-  const Login({Key? key, required this.redirectEnabled}) : super(key: key);
+class Login extends StatefulWidget {
+  Login({Key? key, required this.redirectEnabled, required this.darkTheme})
+      : super(key: key);
 
   final bool redirectEnabled;
+  bool darkTheme;
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,11 +35,51 @@ class Login extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                googleAuthBtn(context, redirectEnabled),
+                googleAuthBtn(
+                  context,
+                  widget.redirectEnabled,
+                  widget.darkTheme,
+                ),
                 const SizedBox(
                   height: 10,
                 ),
-                emailLoginBtn(context, redirectEnabled),
+                emailLoginBtn(
+                  context,
+                  widget.redirectEnabled,
+                  widget.darkTheme,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context).dark_theme,
+                        style: simpleTextStyle(
+                          Variables.normalFontSize,
+                          widget.darkTheme,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Switch(
+                        value: widget.darkTheme,
+                        onChanged: (value) {
+                          SharedPref.setDarkThemeRestart(context, value);
+                        },
+                        activeColor: widget.darkTheme
+                            ? ThemeColorDark.textPrimary
+                            : ThemeColor.textPrimary,
+                        activeTrackColor: widget.darkTheme
+                            ? ThemeColorDark.textSecondary
+                            : ThemeColor.textSecondary,
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
@@ -38,7 +90,9 @@ class Login extends StatelessWidget {
 }
 
 class EmailLogin extends StatelessWidget {
-  EmailLogin({Key? key}) : super(key: key);
+  EmailLogin({Key? key, required this.darkTheme}) : super(key: key);
+
+  final bool darkTheme;
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -50,17 +104,20 @@ class EmailLogin extends StatelessWidget {
       context,
       emailController,
       passwordController,
+      darkTheme,
     );
     return formPage(
       context,
       [
         emailTextField(
-          context: context,
+          context,
+          darkTheme,
           emailController: emailController,
           nextFocus: passwordFocus,
         ),
         passwordTextField(
-          context: context,
+          context,
+          darkTheme,
           pwtext: AppLocalizations.of(context).password,
           passwordController: passwordController,
           authButton: loginBtnVar,
@@ -69,22 +126,30 @@ class EmailLogin extends StatelessWidget {
         loginBtnVar,
         routeBtn(
           context,
-          ResetPassword(),
+          ResetPassword(
+            darkTheme: darkTheme,
+          ),
           AppLocalizations.of(context).reset_password,
+          darkTheme,
         ),
         routeBtn(
           context,
-          EmailRegister(),
+          EmailRegister(
+            darkTheme: darkTheme,
+          ),
           AppLocalizations.of(context).register,
+          darkTheme,
         ),
-        backBtn(context),
+        backBtn(context, darkTheme),
       ],
     );
   }
 }
 
 class EmailRegister extends StatelessWidget {
-  EmailRegister({Key? key}) : super(key: key);
+  EmailRegister({Key? key, required this.darkTheme}) : super(key: key);
+
+  final bool darkTheme;
 
   final emailController = TextEditingController();
   final usernameController = TextEditingController();
@@ -105,6 +170,7 @@ class EmailRegister extends StatelessWidget {
       nameController,
       passwordController,
       passwordRpController,
+      darkTheme,
     );
     return WillPopScope(
       onWillPop: () async {
@@ -115,12 +181,14 @@ class EmailRegister extends StatelessWidget {
         context,
         [
           emailTextField(
-            context: context,
+            context,
+            darkTheme,
             emailController: emailController,
             nextFocus: usernameFocus,
           ),
           customTextField(
-            context: context,
+            context,
+            darkTheme,
             labelText: AppLocalizations.of(context).username,
             maxLength: Variables.maxLengthUsername,
             nameController: usernameController,
@@ -128,7 +196,8 @@ class EmailRegister extends StatelessWidget {
             nextFocus: nameFocus,
           ),
           customTextField(
-            context: context,
+            context,
+            darkTheme,
             labelText: AppLocalizations.of(context).name,
             maxLength: Variables.maxLengthName,
             nameController: nameController,
@@ -136,14 +205,16 @@ class EmailRegister extends StatelessWidget {
             nextFocus: passwordFocus,
           ),
           passwordTextField(
-            context: context,
+            context,
+            darkTheme,
             pwtext: AppLocalizations.of(context).password,
             passwordController: passwordController,
             prevFocus: passwordFocus,
             nextFocus: passwordRpFocus,
           ),
           passwordTextField(
-            context: context,
+            context,
+            darkTheme,
             pwtext: AppLocalizations.of(context).password_repeat,
             passwordController: passwordRpController,
             authButton: registerBtnVar,
@@ -152,6 +223,7 @@ class EmailRegister extends StatelessWidget {
           registerBtnVar,
           backBtn(
             context,
+            darkTheme,
             action: () {
               back(context);
             },
@@ -165,14 +237,18 @@ class EmailRegister extends StatelessWidget {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => EmailLogin(),
+        builder: (context) => EmailLogin(
+          darkTheme: darkTheme,
+        ),
       ),
     );
   }
 }
 
 class ResetPassword extends StatelessWidget {
-  ResetPassword({Key? key}) : super(key: key);
+  ResetPassword({Key? key, required this.darkTheme}) : super(key: key);
+
+  final bool darkTheme;
 
   final emailController = TextEditingController();
 
@@ -181,6 +257,7 @@ class ResetPassword extends StatelessWidget {
     final CustomAuthButton resetPasswordBtnVar = resetPasswordBtn(
       context,
       emailController,
+      darkTheme,
     );
     return WillPopScope(
       onWillPop: () async {
@@ -191,13 +268,15 @@ class ResetPassword extends StatelessWidget {
         context,
         [
           emailTextField(
-            context: context,
+            context,
+            darkTheme,
             emailController: emailController,
             authButton: resetPasswordBtnVar,
           ),
           resetPasswordBtnVar,
           backBtn(
             context,
+            darkTheme,
             action: () {
               back(context);
             },
@@ -211,7 +290,9 @@ class ResetPassword extends StatelessWidget {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => EmailLogin(),
+        builder: (context) => EmailLogin(
+          darkTheme: darkTheme,
+        ),
       ),
     );
   }

@@ -5,9 +5,8 @@ import 'package:sosyal/utils/variables.dart';
 
 import '../utils/colors.dart';
 
-TextField emailTextField(
-    {required BuildContext context,
-    required TextEditingController emailController,
+TextField emailTextField(BuildContext context, bool darkTheme,
+    {required TextEditingController emailController,
     CustomAuthButton? authButton,
     FocusNode? prevFocus,
     FocusNode? nextFocus}) {
@@ -17,14 +16,17 @@ TextField emailTextField(
     keyboardType: TextInputType.emailAddress,
     textInputAction:
         nextFocus != null ? TextInputAction.next : TextInputAction.done,
-    cursorColor: ThemeColor.cursor,
+    cursorColor: darkTheme ? ThemeColorDark.cursor : ThemeColor.cursor,
+    style: TextStyle(
+      color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+    ),
     decoration: InputDecoration(
       labelText: AppLocalizations.of(context).email,
-      labelStyle: const TextStyle(
-        color: ThemeColor.textPrimary,
+      labelStyle: TextStyle(
+        color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
       ),
-      enabledBorder: enabledInputBorder(),
-      focusedBorder: focusedInputBorder(),
+      enabledBorder: enabledInputBorder(darkTheme),
+      focusedBorder: focusedInputBorder(darkTheme),
     ),
     onSubmitted: (v) {
       if (authButton != null) {
@@ -39,9 +41,8 @@ TextField emailTextField(
   );
 }
 
-TextField customTextField(
-    {required BuildContext context,
-    required String labelText,
+TextField customTextField(BuildContext context, bool darkTheme,
+    {required String labelText,
     required TextEditingController nameController,
     int? maxLength,
     CustomAuthButton? authButton,
@@ -54,14 +55,17 @@ TextField customTextField(
     maxLength: maxLength,
     textInputAction:
         nextFocus != null ? TextInputAction.next : TextInputAction.done,
-    cursorColor: ThemeColor.cursor,
+    cursorColor: darkTheme ? ThemeColorDark.cursor : ThemeColor.cursor,
+    style: TextStyle(
+      color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+    ),
     decoration: InputDecoration(
       labelText: labelText,
-      labelStyle: const TextStyle(
-        color: ThemeColor.textPrimary,
+      labelStyle: TextStyle(
+        color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
       ),
-      enabledBorder: enabledInputBorder(),
-      focusedBorder: focusedInputBorder(),
+      enabledBorder: enabledInputBorder(darkTheme),
+      focusedBorder: focusedInputBorder(darkTheme),
     ),
     onSubmitted: (v) {
       if (authButton != null) {
@@ -76,9 +80,8 @@ TextField customTextField(
   );
 }
 
-TextField passwordTextField(
-    {required BuildContext context,
-    required String pwtext,
+TextField passwordTextField(BuildContext context, bool darkTheme,
+    {required String pwtext,
     required TextEditingController passwordController,
     CustomAuthButton? authButton,
     FocusNode? prevFocus,
@@ -92,14 +95,17 @@ TextField passwordTextField(
     maxLength: Variables.maxLengthPassword,
     textInputAction:
         nextFocus != null ? TextInputAction.next : TextInputAction.done,
-    cursorColor: ThemeColor.cursor,
+    cursorColor: darkTheme ? ThemeColorDark.cursor : ThemeColor.cursor,
+    style: TextStyle(
+      color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+    ),
     decoration: InputDecoration(
       labelText: pwtext,
-      labelStyle: const TextStyle(
-        color: ThemeColor.textPrimary,
+      labelStyle: TextStyle(
+        color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
       ),
-      enabledBorder: enabledInputBorder(),
-      focusedBorder: focusedInputBorder(),
+      enabledBorder: enabledInputBorder(darkTheme),
+      focusedBorder: focusedInputBorder(darkTheme),
     ),
     onSubmitted: (v) {
       if (authButton != null) {
@@ -114,19 +120,21 @@ TextField passwordTextField(
   );
 }
 
-InputBorder enabledInputBorder() {
-  return const UnderlineInputBorder(
+InputBorder enabledInputBorder(bool darkTheme) {
+  return UnderlineInputBorder(
     borderSide: BorderSide(
-      color: ThemeColor.textSecondary,
+      color:
+          darkTheme ? ThemeColorDark.textSecondary : ThemeColor.textSecondary,
       width: 0.0,
     ),
   );
 }
 
-InputBorder focusedInputBorder() {
-  return const UnderlineInputBorder(
+InputBorder focusedInputBorder(bool darkTheme) {
+  return UnderlineInputBorder(
     borderSide: BorderSide(
-      color: ThemeColor.textSecondary,
+      color:
+          darkTheme ? ThemeColorDark.textSecondary : ThemeColor.textSecondary,
       width: 0.0,
     ),
   );

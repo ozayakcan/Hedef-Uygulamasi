@@ -15,10 +15,14 @@ import '../views/settings.dart';
 
 class DrawerMenu extends StatefulWidget {
   const DrawerMenu(
-      {Key? key, required this.redirectEnabled, this.showSettings = true})
+      {Key? key,
+      required this.redirectEnabled,
+      required this.darkTheme,
+      this.showSettings = true})
       : super(key: key);
 
   final bool redirectEnabled;
+  final bool darkTheme;
   final bool showSettings;
   @override
   State<DrawerMenu> createState() => _DrawerMenuState();
@@ -78,7 +82,9 @@ class _DrawerMenuState extends State<DrawerMenu> {
   Widget build(BuildContext context) {
     return Drawer(
       child: Material(
-        color: ThemeColor.backgroundPrimary,
+        color: widget.darkTheme
+            ? ThemeColorDark.backgroundPrimary
+            : ThemeColor.backgroundPrimary,
         child: ListView(
           children: [
             Container(
@@ -87,11 +93,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 child: Column(
                   children: [
                     name == ""
-                        ? loadingRow(context)
+                        ? loadingRow(context, widget.darkTheme)
                         : Text(
                             name,
                             style: TextStyle(
-                              color: ThemeColor.textPrimary,
+                              color: widget.darkTheme
+                                  ? ThemeColorDark.textPrimary
+                                  : ThemeColor.textPrimary,
                               fontSize: Variables.mediumFontSize,
                             ),
                             textAlign: TextAlign.center,
@@ -100,11 +108,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
                       height: 4,
                     ),
                     username == ""
-                        ? loadingRow(context)
+                        ? loadingRow(context, widget.darkTheme)
                         : Text(
                             "(@" + username + ")",
                             style: TextStyle(
-                              color: ThemeColor.textPrimary,
+                              color: widget.darkTheme
+                                  ? ThemeColorDark.textPrimary
+                                  : ThemeColor.textPrimary,
                               fontSize: Variables.normalFontSize,
                             ),
                             textAlign: TextAlign.center,
@@ -116,19 +126,23 @@ class _DrawerMenuState extends State<DrawerMenu> {
             if (widget.showSettings)
               menuItem(
                 context,
+                widget.darkTheme,
                 text: AppLocalizations.of(context).settings,
                 icon: Icons.settings,
                 action: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Settings(),
+                      builder: (context) => Settings(
+                        darkTheme: widget.darkTheme,
+                      ),
                     ),
                   );
                 },
               ),
             menuItem(
               context,
+              widget.darkTheme,
               text: AppLocalizations.of(context).logout,
               icon: Icons.logout,
               action: () {
@@ -137,8 +151,9 @@ class _DrawerMenuState extends State<DrawerMenu> {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Login(
+                      builder: (context) => Login(
                         redirectEnabled: false,
+                        darkTheme: widget.darkTheme,
                       ),
                     ),
                     (route) => false,
@@ -154,24 +169,27 @@ class _DrawerMenuState extends State<DrawerMenu> {
 }
 
 Widget menuItem(
-  BuildContext context, {
+  BuildContext context,
+  bool darkTheme, {
   required String text,
   required IconData icon,
   VoidCallback? action,
   bool closeMenu = true,
 }) {
-  const color = ThemeColor.textPrimary;
-  const hoverColor = ThemeColor.backgroundSecondary;
   return ListTile(
     leading: Icon(
       icon,
-      color: color,
+      color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
     ),
     title: Text(
       text,
-      style: const TextStyle(color: color),
+      style: TextStyle(
+        color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+      ),
     ),
-    hoverColor: hoverColor,
+    hoverColor: darkTheme
+        ? ThemeColorDark.backgroundSecondary
+        : ThemeColor.backgroundSecondary,
     onTap: () {
       if (closeMenu) {
         Navigator.pop(context);

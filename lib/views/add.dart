@@ -6,8 +6,8 @@ import '../utils/variables.dart';
 import '../widgets/widgets.dart';
 
 class AddPage extends StatelessWidget {
-  const AddPage({Key? key}) : super(key: key);
-
+  const AddPage({Key? key, required this.darkTheme}) : super(key: key);
+  final bool darkTheme;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -19,7 +19,9 @@ class AddPage extends StatelessWidget {
             return CustomRectTween(begin: begin, end: end);
           },
           child: Material(
-            color: ThemeColor.backgroundPrimary,
+            color: darkTheme
+                ? ThemeColorDark.backgroundPrimary
+                : ThemeColor.backgroundPrimary,
             elevation: 2,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
@@ -33,7 +35,10 @@ class AddPage extends StatelessWidget {
                       onPressed: () {},
                       child: Text(
                         AppLocalizations.of(context).add,
-                        style: const TextStyle(color: ThemeColor.textPrimary),
+                        style: TextStyle(
+                            color: darkTheme
+                                ? ThemeColorDark.textPrimary
+                                : ThemeColor.textPrimary),
                       ),
                     ),
                   ],

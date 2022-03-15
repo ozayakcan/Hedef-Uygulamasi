@@ -59,12 +59,15 @@ List<Widget> formList(List<Widget> oldList) {
 class HeroDialogRoute<T> extends PageRoute<T> {
   HeroDialogRoute({
     required WidgetBuilder builder,
+    required bool darkTheme,
     RouteSettings? settings,
     bool fullscreenDialog = false,
   })  : _builder = builder,
+        _darkTheme = darkTheme,
         super(settings: settings, fullscreenDialog: fullscreenDialog);
 
   final WidgetBuilder _builder;
+  final bool _darkTheme;
 
   @override
   bool get opaque => false;
@@ -79,7 +82,8 @@ class HeroDialogRoute<T> extends PageRoute<T> {
   bool get maintainState => true;
 
   @override
-  Color? get barrierColor => ThemeColor.textSecondary;
+  Color? get barrierColor =>
+      _darkTheme ? ThemeColor.textSecondary : ThemeColor.textSecondary;
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,
@@ -116,7 +120,7 @@ class CustomRectTween extends RectTween {
   }
 }
 
-Widget loadingRow(BuildContext context,
+Widget loadingRow(BuildContext context, bool darkTheme,
     {double width = 15, double height = 15}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -126,7 +130,8 @@ Widget loadingRow(BuildContext context,
         height: height,
         child: CircularProgressIndicator(
           semanticsLabel: AppLocalizations.of(context).loading,
-          color: ThemeColor.textPrimary,
+          color:
+              darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
         ),
       ),
       const SizedBox(
@@ -135,7 +140,8 @@ Widget loadingRow(BuildContext context,
       Text(
         AppLocalizations.of(context).loading,
         style: TextStyle(
-          color: ThemeColor.textPrimary,
+          color:
+              darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
           fontSize: Variables.mediumFontSize,
         ),
         textAlign: TextAlign.center,

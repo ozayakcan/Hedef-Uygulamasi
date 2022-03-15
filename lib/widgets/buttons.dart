@@ -15,40 +15,51 @@ import '../views/home.dart';
 import '../views/login.dart';
 import 'widgets.dart';
 
-AuthButtonStyle defaultAuthButtonStyle(double _width) {
+AuthButtonStyle defaultAuthButtonStyle(double _width, bool darkTheme) {
   return AuthButtonStyle(
     width: _width,
     height: Variables.defaultButtonHeight,
-    borderColor: ThemeColor.buttonBorder,
-    splashColor: ThemeColor.buttonBorder,
+    borderColor:
+        darkTheme ? ThemeColorDark.buttonBorder : ThemeColor.buttonBorder,
+    splashColor:
+        darkTheme ? ThemeColorDark.buttonSplash : ThemeColor.buttonSplash,
   );
 }
 
-AuthButtonStyle primaryButtonStyle(double _width) {
+AuthButtonStyle primaryButtonStyle(double _width, bool darkTheme) {
   return AuthButtonStyle(
     width: _width,
     height: Variables.defaultButtonHeight,
-    borderColor: ThemeColor.buttonBorder,
-    splashColor: ThemeColor.buttonSplash,
-    buttonColor: ThemeColor.buttonPrimary,
-    textStyle: const TextStyle(color: ThemeColor.buttonText),
+    borderColor:
+        darkTheme ? ThemeColorDark.buttonBorder : ThemeColor.buttonBorder,
+    splashColor:
+        darkTheme ? ThemeColorDark.buttonSplash : ThemeColor.buttonSplash,
+    buttonColor:
+        darkTheme ? ThemeColorDark.buttonPrimary : ThemeColor.buttonPrimary,
+    textStyle: TextStyle(
+        color: darkTheme ? ThemeColorDark.buttonText : ThemeColor.buttonText),
   );
 }
 
-AuthButtonStyle secondaryButtonStyle(double _width) {
+AuthButtonStyle secondaryButtonStyle(double _width, bool darkTheme) {
   return AuthButtonStyle(
     width: _width,
     height: Variables.defaultButtonHeight,
-    borderColor: ThemeColor.buttonBorder,
-    splashColor: ThemeColor.buttonSplash,
-    buttonColor: ThemeColor.buttonSecondary,
-    textStyle: const TextStyle(color: ThemeColor.buttonText),
+    borderColor:
+        darkTheme ? ThemeColorDark.buttonBorder : ThemeColor.buttonBorder,
+    splashColor:
+        darkTheme ? ThemeColorDark.buttonSplash : ThemeColor.buttonSplash,
+    buttonColor:
+        darkTheme ? ThemeColorDark.buttonSecondary : ThemeColor.buttonSecondary,
+    textStyle: TextStyle(
+        color: darkTheme ? ThemeColorDark.buttonText : ThemeColor.buttonText),
   );
 }
 
-GoogleAuthButton googleAuthBtn(BuildContext context, bool redirectEnabled) {
+GoogleAuthButton googleAuthBtn(
+    BuildContext context, bool redirectEnabled, bool darkTheme) {
   return GoogleAuthButton(
-    style: defaultAuthButtonStyle(MediaQuery.of(context).size.width),
+    style: defaultAuthButtonStyle(MediaQuery.of(context).size.width, darkTheme),
     onPressed: () {
       try {
         if (kIsWeb) {
@@ -61,6 +72,7 @@ GoogleAuthButton googleAuthBtn(BuildContext context, bool redirectEnabled) {
                   MaterialPageRoute(
                     builder: (context) => HomePage(
                       redirectEnabled: redirectEnabled,
+                      darkTheme: darkTheme,
                     ),
                   ),
                   (route) => false,
@@ -80,6 +92,7 @@ GoogleAuthButton googleAuthBtn(BuildContext context, bool redirectEnabled) {
                   MaterialPageRoute(
                     builder: (context) => HomePage(
                       redirectEnabled: redirectEnabled,
+                      darkTheme: darkTheme,
                     ),
                   ),
                   (route) => false,
@@ -100,14 +113,17 @@ GoogleAuthButton googleAuthBtn(BuildContext context, bool redirectEnabled) {
   );
 }
 
-EmailAuthButton emailLoginBtn(BuildContext context, bool redirectEnabled) {
+EmailAuthButton emailLoginBtn(
+    BuildContext context, bool redirectEnabled, bool darkTheme) {
   return EmailAuthButton(
-    style: defaultAuthButtonStyle(MediaQuery.of(context).size.width),
+    style: defaultAuthButtonStyle(MediaQuery.of(context).size.width, darkTheme),
     onPressed: () {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => EmailLogin(),
+          builder: (context) => EmailLogin(
+            darkTheme: darkTheme,
+          ),
         ),
       );
     },
@@ -115,19 +131,24 @@ EmailAuthButton emailLoginBtn(BuildContext context, bool redirectEnabled) {
   );
 }
 
-CustomAuthButton loginBtn(BuildContext context, TextEditingController email,
-    TextEditingController password) {
+CustomAuthButton loginBtn(
+  BuildContext context,
+  TextEditingController email,
+  TextEditingController password,
+  bool darkTheme,
+) {
   return CustomAuthButton(
     iconUrl: "",
-    style: primaryButtonStyle(MediaQuery.of(context).size.width),
+    style: primaryButtonStyle(MediaQuery.of(context).size.width, darkTheme),
     onPressed: () {
       Auth.signInWithEmail(context, email.text, password.text).then((value) {
         if (value == null) {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) => const HomePage(
+              builder: (context) => HomePage(
                 redirectEnabled: false,
+                darkTheme: darkTheme,
               ),
             ),
             (route) => false,
@@ -148,10 +169,11 @@ CustomAuthButton registerBtn(
   TextEditingController name,
   TextEditingController password,
   TextEditingController passwordRp,
+  bool darkTheme,
 ) {
   return CustomAuthButton(
     iconUrl: "",
-    style: secondaryButtonStyle(MediaQuery.of(context).size.width),
+    style: secondaryButtonStyle(MediaQuery.of(context).size.width, darkTheme),
     onPressed: () {
       if (username.text.isNotEmpty && username.text.length >= 3) {
         if (usernameRegExp.hasMatch(username.text)) {
@@ -184,8 +206,9 @@ CustomAuthButton registerBtn(
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const HomePage(
+                              builder: (context) => HomePage(
                                 redirectEnabled: false,
+                                darkTheme: darkTheme,
                               ),
                             ),
                             (route) => false,
@@ -226,10 +249,10 @@ CustomAuthButton registerBtn(
 }
 
 CustomAuthButton resetPasswordBtn(
-    BuildContext context, TextEditingController email) {
+    BuildContext context, TextEditingController email, bool darkTheme) {
   return CustomAuthButton(
     iconUrl: "",
-    style: secondaryButtonStyle(MediaQuery.of(context).size.width),
+    style: secondaryButtonStyle(MediaQuery.of(context).size.width, darkTheme),
     onPressed: () {
       Auth.resetPassword(context, email.text).then((value) {
         if (value == null) {
@@ -245,10 +268,11 @@ CustomAuthButton resetPasswordBtn(
   );
 }
 
-CustomAuthButton routeBtn(BuildContext context, Widget widget, String text) {
+CustomAuthButton routeBtn(
+    BuildContext context, Widget widget, String text, bool darkTheme) {
   return CustomAuthButton(
     iconUrl: "",
-    style: secondaryButtonStyle(MediaQuery.of(context).size.width),
+    style: secondaryButtonStyle(MediaQuery.of(context).size.width, darkTheme),
     onPressed: () {
       Navigator.pushReplacement(
         context,
@@ -259,10 +283,11 @@ CustomAuthButton routeBtn(BuildContext context, Widget widget, String text) {
   );
 }
 
-CustomAuthButton backBtn(BuildContext context, {VoidCallback? action}) {
+CustomAuthButton backBtn(BuildContext context, bool darkTheme,
+    {VoidCallback? action}) {
   return CustomAuthButton(
     iconUrl: "",
-    style: defaultAuthButtonStyle(MediaQuery.of(context).size.width),
+    style: defaultAuthButtonStyle(MediaQuery.of(context).size.width, darkTheme),
     onPressed: () {
       if (action == null) {
         Navigator.pop(context);
@@ -275,17 +300,20 @@ CustomAuthButton backBtn(BuildContext context, {VoidCallback? action}) {
 }
 
 class AddButton extends StatelessWidget {
-  const AddButton({Key? key}) : super(key: key);
+  const AddButton({Key? key, required this.darkTheme}) : super(key: key);
 
+  final bool darkTheme;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(32.0),
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-            return const AddPage();
-          }));
+          Navigator.of(context).push(HeroDialogRoute(
+              darkTheme: darkTheme,
+              builder: (context) {
+                return AddPage(darkTheme: darkTheme);
+              }));
         },
         child: Hero(
           tag: Variables.heroAddTag,
@@ -293,14 +321,17 @@ class AddButton extends StatelessWidget {
             return CustomRectTween(begin: begin, end: end);
           },
           child: Material(
-            color: ThemeColor.buttonSecondary,
+            color: darkTheme
+                ? ThemeColorDark.buttonSecondary
+                : ThemeColor.buttonSecondary,
             elevation: 2,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-            child: const Icon(
+            child: Icon(
               Icons.add_rounded,
               size: 56,
-              color: ThemeColor.buttonText,
+              color:
+                  darkTheme ? ThemeColorDark.buttonText : ThemeColor.buttonText,
             ),
           ),
         ),

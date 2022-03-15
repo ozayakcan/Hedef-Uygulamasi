@@ -6,12 +6,16 @@ import '../utils/colors.dart';
 import '../utils/variables.dart';
 import 'texts.dart';
 
-MaterialApp homeMaterialApp(Widget page) {
+MaterialApp homeMaterialApp(Widget page, bool darkTheme) {
   return MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
-      scaffoldBackgroundColor: ThemeColor.backgroundPrimary,
-      primarySwatch: ThemeColor.backgroundSecondary,
+      scaffoldBackgroundColor: darkTheme
+          ? ThemeColorDark.backgroundPrimary
+          : ThemeColor.backgroundPrimary,
+      primarySwatch: darkTheme
+          ? ThemeColorDark.backgroundSecondary
+          : ThemeColor.backgroundSecondary,
       visualDensity: VisualDensity.adaptivePlatformDensity,
     ),
     localizationsDelegates: const [
@@ -26,14 +30,16 @@ MaterialApp homeMaterialApp(Widget page) {
   );
 }
 
-PreferredSizeWidget defaultAppBar(BuildContext context, String title) {
+PreferredSizeWidget defaultAppBar(
+    BuildContext context, String title, bool darkTheme) {
   return AppBar(
-    iconTheme: const IconThemeData(
-      color: ThemeColor.textPrimary,
+    iconTheme: IconThemeData(
+      color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
     ),
     leading: leadingBuilder(context),
     title: appBarTitle(
       title,
+      darkTheme,
     ),
     toolbarHeight: 50,
   );
@@ -55,28 +61,28 @@ Builder leadingBuilder(BuildContext context) {
   );
 }
 
-Text appBarTitle(String title) {
+Text appBarTitle(String title, bool darkTheme) {
   return Text(
     title,
-    style: simpleTextStyle(Variables.mediumFontSize),
+    style: simpleTextStyle(Variables.mediumFontSize, darkTheme),
   );
 }
 
-DefaultTabController defaultTabController(
-    BuildContext context, List<Widget> tabList, List<Widget> tabContentList,
+DefaultTabController defaultTabController(BuildContext context,
+    List<Widget> tabList, List<Widget> tabContentList, bool darkTheme,
     {Widget? floatingActionButton, Widget? endDrawer}) {
   return DefaultTabController(
     length: 2,
     child: Scaffold(
       appBar: AppBar(
-        title: appBarTitle(AppLocalizations.of(context).app_name),
+        title: appBarTitle(AppLocalizations.of(context).app_name, darkTheme),
         bottom: TabBar(
           labelStyle: titilliumWebTextStyle(
-            ThemeColor.textPrimary,
+            darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
             Variables.normalFontSize,
           ),
           unselectedLabelStyle: titilliumWebTextStyle(
-            ThemeColor.textSecondary,
+            darkTheme ? ThemeColorDark.textSecondary : ThemeColor.textSecondary,
             Variables.normalFontSize,
           ),
           tabs: tabList,
@@ -92,7 +98,8 @@ DefaultTabController defaultTabController(
 }
 
 Scaffold defaultScaffold(
-  BuildContext context, {
+  BuildContext context,
+  bool darkTheme, {
   required String title,
   required Widget body,
   Widget? floatingActionButton,
@@ -103,6 +110,7 @@ Scaffold defaultScaffold(
     appBar: defaultAppBar(
       context,
       title,
+      darkTheme,
     ),
     endDrawer: endDrawer,
     floatingActionButton: floatingActionButton,
