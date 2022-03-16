@@ -1,22 +1,16 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:sosyal/main.dart';
-import 'package:sosyal/utils/colors.dart';
-import 'package:sosyal/utils/shared_pref.dart';
 import 'package:sosyal/utils/variables.dart';
-import 'package:sosyal/widgets/texts.dart';
 
 import '../widgets/buttons.dart';
 import '../widgets/text_fields.dart';
 import '../widgets/widgets.dart';
 
 class Login extends StatefulWidget {
-  Login({Key? key, required this.redirectEnabled, required this.darkTheme})
-      : super(key: key);
+  const Login({Key? key, required this.darkTheme}) : super(key: key);
 
-  final bool redirectEnabled;
-  bool darkTheme;
+  final bool darkTheme;
 
   @override
   State<Login> createState() => _LoginState();
@@ -37,7 +31,6 @@ class _LoginState extends State<Login> {
               children: [
                 googleAuthBtn(
                   context,
-                  widget.redirectEnabled,
                   widget.darkTheme,
                 ),
                 const SizedBox(
@@ -45,7 +38,6 @@ class _LoginState extends State<Login> {
                 ),
                 emailLoginBtn(
                   context,
-                  widget.redirectEnabled,
                   widget.darkTheme,
                 ),
                 const SizedBox(
@@ -81,10 +73,12 @@ class EmailLogin extends StatelessWidget {
     return formPage(
       context,
       [
-        emailTextField(
+        customTextField(
           context,
           darkTheme,
-          emailController: emailController,
+          labelText: AppLocalizations.of(context).email,
+          textController: emailController,
+          inputType: TextInputType.emailAddress,
           nextFocus: passwordFocus,
         ),
         passwordTextField(
@@ -152,18 +146,20 @@ class EmailRegister extends StatelessWidget {
       child: formPage(
         context,
         [
-          emailTextField(
+          customTextField(
             context,
             darkTheme,
-            emailController: emailController,
-            nextFocus: usernameFocus,
+            labelText: AppLocalizations.of(context).email,
+            textController: emailController,
+            inputType: TextInputType.emailAddress,
+            nextFocus: passwordFocus,
           ),
           customTextField(
             context,
             darkTheme,
             labelText: AppLocalizations.of(context).username,
             maxLength: Variables.maxLengthUsername,
-            nameController: usernameController,
+            textController: usernameController,
             prevFocus: usernameFocus,
             nextFocus: nameFocus,
           ),
@@ -172,7 +168,7 @@ class EmailRegister extends StatelessWidget {
             darkTheme,
             labelText: AppLocalizations.of(context).name,
             maxLength: Variables.maxLengthName,
-            nameController: nameController,
+            textController: nameController,
             prevFocus: nameFocus,
             nextFocus: passwordFocus,
           ),
@@ -239,11 +235,13 @@ class ResetPassword extends StatelessWidget {
       child: formPage(
         context,
         [
-          emailTextField(
+          customTextField(
             context,
             darkTheme,
-            emailController: emailController,
+            labelText: AppLocalizations.of(context).email,
+            textController: emailController,
             authButton: resetPasswordBtnVar,
+            inputType: TextInputType.emailAddress,
           ),
           resetPasswordBtnVar,
           backBtn(

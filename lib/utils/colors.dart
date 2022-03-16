@@ -238,18 +238,18 @@ class ThemeColorDark {
     },
   );
   static const MaterialColor buttonPrimary = MaterialColor(
-    0xFF0A027C,
+    0xFF5A5A5A,
     <int, Color>{
-      50: Color(0xFF0A027C),
-      100: Color(0xFF0A027C),
-      200: Color(0xFF0A027C),
-      300: Color(0xFF0A027C),
-      400: Color(0xFF0A027C),
-      500: Color(0xFF0A027C),
-      600: Color(0xFF0A027C),
-      700: Color(0xFF0A027C),
-      800: Color(0xFF0A027C),
-      900: Color(0xFF0A027C),
+      50: Color(0xFF5A5A5A),
+      100: Color(0xFF5A5A5A),
+      200: Color(0xFF5A5A5A),
+      300: Color(0xFF5A5A5A),
+      400: Color(0xFF5A5A5A),
+      500: Color(0xFF5A5A5A),
+      600: Color(0xFF5A5A5A),
+      700: Color(0xFF5A5A5A),
+      800: Color(0xFF5A5A5A),
+      900: Color(0xFF5A5A5A),
     },
   );
   static const MaterialColor buttonText = MaterialColor(
@@ -268,18 +268,18 @@ class ThemeColorDark {
     },
   );
   static const MaterialColor buttonSecondary = MaterialColor(
-    0xFF03002e,
+    0xFF3A3A3A,
     <int, Color>{
-      50: Color(0xFF03002e),
-      100: Color(0xFF03002e),
-      200: Color(0xFF03002e),
-      300: Color(0xFF03002e),
-      400: Color(0xFF03002e),
-      500: Color(0xFF03002e),
-      600: Color(0xFF03002e),
-      700: Color(0xFF03002e),
-      800: Color(0xFF03002e),
-      900: Color(0xFF03002e),
+      50: Color(0xFF3A3A3A),
+      100: Color(0xFF3A3A3A),
+      200: Color(0xFF3A3A3A),
+      300: Color(0xFF3A3A3A),
+      400: Color(0xFF3A3A3A),
+      500: Color(0xFF3A3A3A),
+      600: Color(0xFF3A3A3A),
+      700: Color(0xFF3A3A3A),
+      800: Color(0xFF3A3A3A),
+      900: Color(0xFF3A3A3A),
     },
   );
 

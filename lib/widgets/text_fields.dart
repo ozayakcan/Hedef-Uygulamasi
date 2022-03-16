@@ -1,57 +1,21 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:sosyal/utils/variables.dart';
 
 import '../utils/colors.dart';
 
-TextField emailTextField(BuildContext context, bool darkTheme,
-    {required TextEditingController emailController,
-    CustomAuthButton? authButton,
-    FocusNode? prevFocus,
-    FocusNode? nextFocus}) {
-  return TextField(
-    controller: emailController,
-    focusNode: prevFocus,
-    keyboardType: TextInputType.emailAddress,
-    textInputAction:
-        nextFocus != null ? TextInputAction.next : TextInputAction.done,
-    cursorColor: darkTheme ? ThemeColorDark.cursor : ThemeColor.cursor,
-    style: TextStyle(
-      color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
-    ),
-    decoration: InputDecoration(
-      labelText: AppLocalizations.of(context).email,
-      labelStyle: TextStyle(
-        color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
-      ),
-      enabledBorder: enabledInputBorder(darkTheme),
-      focusedBorder: focusedInputBorder(darkTheme),
-    ),
-    onSubmitted: (v) {
-      if (authButton != null) {
-        authButton.onPressed!();
-        return;
-      }
-      if (nextFocus != null) {
-        FocusScope.of(context).requestFocus(nextFocus);
-        return;
-      }
-    },
-  );
-}
-
 TextField customTextField(BuildContext context, bool darkTheme,
     {required String labelText,
-    required TextEditingController nameController,
+    required TextEditingController textController,
+    TextInputType? inputType,
     int? maxLength,
     CustomAuthButton? authButton,
     FocusNode? prevFocus,
     FocusNode? nextFocus}) {
   return TextField(
-    controller: nameController,
+    controller: textController,
     focusNode: prevFocus,
-    keyboardType: TextInputType.name,
+    keyboardType: inputType ?? TextInputType.name,
     maxLength: maxLength,
     textInputAction:
         nextFocus != null ? TextInputAction.next : TextInputAction.done,

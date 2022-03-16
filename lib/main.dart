@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -21,16 +23,16 @@ void main() async {
     webRecaptchaSiteKey: Secrets.webRecaptchaSiteKey,
   );
   await FirebaseAppCheck.instance.setTokenAutoRefreshEnabled(true);
-  FirebaseAppCheck.instance.onTokenChange.listen((token) {
+  /*FirebaseAppCheck.instance.onTokenChange.listen((token) {
     if (kDebugMode) {
       print("Token değişti. Yeni token: " + token!);
     }
-  });
+  });*/
   if (kIsWeb) {
     await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
   }
   runApp(
-    const RestartApp(
+    const RestartAppWidget(
       child: MyApp(),
     ),
   );
@@ -45,7 +47,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool darkTheme = false;
-
+  FirebaseAuth auth = FirebaseAuth.instance;
+  bool? isLogged;
+  StreamSubscription<User?>? firebaseAuthEvent;
   @override
   void initState() {
     super.initState();
@@ -54,11 +58,55 @@ class _MyAppState extends State<MyApp> {
         darkTheme = value;
       });
     });
+    firebaseAuthEvent =
+        FirebaseAuth.instance.authStateChanges().listen((event) {
+      if (isLogged == null) {
+        if (event != null) {
+          setState(() {
+            isLogged = true;
+          });
+        } else {
+          setState(() {
+            isLogged = false;
+          });
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    firebaseAuthEvent?.cancel();
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
+    if (isLogged != null) {
+      if (isLogged!) {
+        return homeMaterialApp(
+          HomePage(
+            darkTheme: darkTheme,
+          ),
+          darkTheme,
+        );
+      } else {
+        return homeMaterialApp(
+          Login(
+            darkTheme: darkTheme,
+          ),
+          darkTheme,
+        );
+      }
+    } else {
+      return homeMaterialApp(
+        SplashScreen(
+          darkTheme: darkTheme,
+        ),
+        darkTheme,
+      );
+    }
+    /*return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, snapshot1) {
         if (snapshot1.connectionState == ConnectionState.waiting) {
@@ -70,7 +118,6 @@ class _MyAppState extends State<MyApp> {
           if (snapshot1.hasData) {
             return homeMaterialApp(
               HomePage(
-                redirectEnabled: true,
                 darkTheme: darkTheme,
               ),
               darkTheme,
@@ -78,7 +125,6 @@ class _MyAppState extends State<MyApp> {
           } else {
             return homeMaterialApp(
               Login(
-                redirectEnabled: true,
                 darkTheme: darkTheme,
               ),
               darkTheme,
@@ -86,24 +132,25 @@ class _MyAppState extends State<MyApp> {
           }
         }
       },
-    );
+    );*/
   }
 }
 
-class RestartApp extends StatefulWidget {
-  const RestartApp({required this.child});
+class RestartAppWidget extends StatefulWidget {
+  // ignore: use_key_in_widget_constructors
+  const RestartAppWidget({required this.child});
 
   final Widget child;
 
   static void restartApp(BuildContext context) {
-    context.findAncestorStateOfType<_RestartAppState>()!.restartApp();
+    context.findAncestorStateOfType<_RestartAppWidgetState>()!.restartApp();
   }
 
   @override
-  _RestartAppState createState() => _RestartAppState();
+  _RestartAppWidgetState createState() => _RestartAppWidgetState();
 }
 
-class _RestartAppState extends State<RestartApp> {
+class _RestartAppWidgetState extends State<RestartAppWidget> {
   Key key = UniqueKey();
 
   void restartApp() {

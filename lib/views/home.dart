@@ -15,10 +15,8 @@ import '../widgets/texts.dart';
 class HomePage extends StatefulWidget {
   const HomePage({
     Key? key,
-    required this.redirectEnabled,
     required this.darkTheme,
   }) : super(key: key);
-  final bool redirectEnabled;
   final bool darkTheme;
   @override
   _HomePageState createState() => _HomePageState();
@@ -50,8 +48,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  List<WidgetModel> homeNavigations(BuildContext context,
-      {bool redirectEnabled = true}) {
+  List<WidgetModel> homeNavigations(BuildContext context) {
     return [
       WidgetModel(
         context,
@@ -91,10 +88,8 @@ class _HomePageState extends State<HomePage> {
       title: AppLocalizations.of(context).app_name,
       body: homeNavigations(
         context,
-        redirectEnabled: widget.redirectEnabled,
       ).elementAt(_selectedIndex).widget,
       endDrawer: DrawerMenu(
-        redirectEnabled: widget.redirectEnabled,
         darkTheme: widget.darkTheme,
       ),
       bottomNavigationBar: BottomNavigationBar(

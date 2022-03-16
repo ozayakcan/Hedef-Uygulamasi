@@ -4,24 +4,21 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sosyal/models/user.dart';
+import 'package:sosyal/utils/database/user_database.dart';
 import 'package:sosyal/widgets/widgets.dart';
 
 import '../utils/auth.dart';
 import '../utils/colors.dart';
-import '../utils/database.dart';
 import '../utils/variables.dart';
 import '../views/login.dart';
 import '../views/settings.dart';
 
 class DrawerMenu extends StatefulWidget {
   const DrawerMenu(
-      {Key? key,
-      required this.redirectEnabled,
-      required this.darkTheme,
-      this.showSettings = true})
+      {Key? key, required this.darkTheme, this.showSettings = true})
       : super(key: key);
 
-  final bool redirectEnabled;
   final bool darkTheme;
   final bool showSettings;
   @override
@@ -33,43 +30,20 @@ class _DrawerMenuState extends State<DrawerMenu> {
   late User? user;
   String username = "";
   String name = "";
-  StreamSubscription<DatabaseEvent>? nameEvent;
-  StreamSubscription<DatabaseEvent>? usernameEvent;
+  StreamSubscription<DatabaseEvent>? userEvent;
   @override
   void initState() {
     setState(() {
       user = Auth.user;
     });
-    Database.getReference(
-            Database.usersString + "/" + user!.uid + "/" + Database.nameString)
-        .then((value) {
-      if (value != null) {
-        nameEvent = value.onValue.listen((event) {
-          if (event.snapshot.exists) {
-            setState(() {
-              name = event.snapshot.value != null
-                  ? event.snapshot.value.toString()
-                  : "";
-            });
-          }
-        });
-      }
-    });
-    Database.getReference(Database.usersString +
-            "/" +
-            user!.uid +
-            "/" +
-            Database.usernameString)
-        .then((value) {
-      if (value != null) {
-        usernameEvent = value.onValue.listen((event) {
-          if (event.snapshot.exists) {
-            setState(() {
-              username = event.snapshot.value != null
-                  ? event.snapshot.value.toString()
-                  : "";
-            });
-          }
+    DatabaseReference databaseReference = UserDB.getUserRef(user!.uid);
+    userEvent = databaseReference.onValue.listen((event) {
+      if (event.snapshot.exists) {
+        final json = event.snapshot.value as Map<dynamic, dynamic>;
+        final userModel = UserModel.fromJson(json);
+        setState(() {
+          name = userModel.name;
+          username = userModel.username;
         });
       }
     });
@@ -79,8 +53,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
   @override
   void dispose() {
     super.dispose();
-    nameEvent?.cancel();
-    usernameEvent?.cancel();
+    userEvent?.cancel();
   }
 
   @override
@@ -156,18 +129,15 @@ class _DrawerMenuState extends State<DrawerMenu> {
               icon: Icons.logout,
               action: () {
                 auth.signOut();
-                if (!widget.redirectEnabled) {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Login(
-                        redirectEnabled: false,
-                        darkTheme: widget.darkTheme,
-                      ),
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Login(
+                      darkTheme: widget.darkTheme,
                     ),
-                    (route) => false,
-                  );
-                }
+                  ),
+                  (route) => false,
+                );
               },
             ),
           ],

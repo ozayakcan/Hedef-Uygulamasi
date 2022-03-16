@@ -27,7 +27,6 @@ class _SettingsState extends State<Settings> {
         style: simpleTextStyle(Variables.normalFontSize, widget.darkTheme),
       ),
       endDrawer: DrawerMenu(
-        redirectEnabled: false,
         darkTheme: widget.darkTheme,
         showSettings: false,
       ),

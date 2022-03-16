@@ -4,11 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sosyal/models/user.dart';
+import 'package:sosyal/utils/database/user_database.dart';
 import 'package:sosyal/widgets/text_fields.dart';
 
 import '../utils/auth.dart';
 import '../utils/colors.dart';
-import '../utils/database.dart';
+import '../utils/images.dart';
 import '../utils/variables.dart';
 import '../views/add.dart';
 import '../views/home.dart';
@@ -56,28 +58,25 @@ AuthButtonStyle secondaryButtonStyle(double _width, bool darkTheme) {
   );
 }
 
-GoogleAuthButton googleAuthBtn(
-    BuildContext context, bool redirectEnabled, bool darkTheme) {
+GoogleAuthButton googleAuthBtn(BuildContext context, bool darkTheme) {
   return GoogleAuthButton(
     style: defaultAuthButtonStyle(MediaQuery.of(context).size.width, darkTheme),
+    darkMode: darkTheme,
     onPressed: () {
       try {
         if (kIsWeb) {
           Auth.signInWithGoogleWeb(context).then((value) {
             if (value == null) {
-              Database.addGoogleUser();
-              if (!redirectEnabled) {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomePage(
-                      redirectEnabled: redirectEnabled,
-                      darkTheme: darkTheme,
-                    ),
+              UserDB.addGoogleUser();
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomePage(
+                    darkTheme: darkTheme,
                   ),
-                  (route) => false,
-                );
-              }
+                ),
+                (route) => false,
+              );
             } else {
               ScaffoldSnackbar.of(context).show(value);
             }
@@ -85,19 +84,16 @@ GoogleAuthButton googleAuthBtn(
         } else {
           Auth.signInWithGoogle(context).then((value) {
             if (value == null) {
-              Database.addGoogleUser();
-              if (!redirectEnabled) {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomePage(
-                      redirectEnabled: redirectEnabled,
-                      darkTheme: darkTheme,
-                    ),
+              UserDB.addGoogleUser();
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomePage(
+                    darkTheme: darkTheme,
                   ),
-                  (route) => false,
-                );
-              }
+                ),
+                (route) => false,
+              );
             } else {
               ScaffoldSnackbar.of(context).show(value);
             }
@@ -113,10 +109,10 @@ GoogleAuthButton googleAuthBtn(
   );
 }
 
-EmailAuthButton emailLoginBtn(
-    BuildContext context, bool redirectEnabled, bool darkTheme) {
+EmailAuthButton emailLoginBtn(BuildContext context, bool darkTheme) {
   return EmailAuthButton(
     style: defaultAuthButtonStyle(MediaQuery.of(context).size.width, darkTheme),
+    darkMode: darkTheme,
     onPressed: () {
       Navigator.push(
         context,
@@ -138,8 +134,9 @@ CustomAuthButton loginBtn(
   bool darkTheme,
 ) {
   return CustomAuthButton(
-    iconUrl: "",
+    iconUrl: AssetsImages.empty,
     style: primaryButtonStyle(MediaQuery.of(context).size.width, darkTheme),
+    darkMode: darkTheme,
     onPressed: () {
       Auth.signInWithEmail(context, email.text, password.text).then((value) {
         if (value == null) {
@@ -147,7 +144,6 @@ CustomAuthButton loginBtn(
             context,
             MaterialPageRoute(
               builder: (context) => HomePage(
-                redirectEnabled: false,
                 darkTheme: darkTheme,
               ),
             ),
@@ -172,12 +168,13 @@ CustomAuthButton registerBtn(
   bool darkTheme,
 ) {
   return CustomAuthButton(
-    iconUrl: "",
+    iconUrl: AssetsImages.empty,
     style: secondaryButtonStyle(MediaQuery.of(context).size.width, darkTheme),
+    darkMode: darkTheme,
     onPressed: () {
       if (username.text.isNotEmpty && username.text.length >= 3) {
         if (usernameRegExp.hasMatch(username.text)) {
-          Database.checkUsername(username.text).then((userNameValue) {
+          UserDB.checkUsername(username.text).then((userNameValue) {
             if (userNameValue != null) {
               if (userNameValue == false) {
                 if (name.text.isNotEmpty && name.text.length >= 3) {
@@ -187,9 +184,9 @@ CustomAuthButton registerBtn(
                         .then((registerValue) {
                       if (registerValue == null) {
                         User? user = Auth.user;
-                        Database.addUser(
-                                user!.uid, email.text, username.text, name.text)
-                            .then((value) {
+                        UserModel userModel = UserModel(user!.uid, email.text,
+                            username.text, name.text, DateTime.now());
+                        UserDB.addUser(userModel).then((value) {
                           Auth.sendEmailVerification(context)
                               .then((emailVerificationValue) {
                             if (emailVerificationValue == null) {
@@ -207,7 +204,6 @@ CustomAuthButton registerBtn(
                             context,
                             MaterialPageRoute(
                               builder: (context) => HomePage(
-                                redirectEnabled: false,
                                 darkTheme: darkTheme,
                               ),
                             ),
@@ -251,8 +247,9 @@ CustomAuthButton registerBtn(
 CustomAuthButton resetPasswordBtn(
     BuildContext context, TextEditingController email, bool darkTheme) {
   return CustomAuthButton(
-    iconUrl: "",
+    iconUrl: AssetsImages.empty,
     style: secondaryButtonStyle(MediaQuery.of(context).size.width, darkTheme),
+    darkMode: darkTheme,
     onPressed: () {
       Auth.resetPassword(context, email.text).then((value) {
         if (value == null) {
@@ -271,8 +268,9 @@ CustomAuthButton resetPasswordBtn(
 CustomAuthButton routeBtn(
     BuildContext context, Widget widget, String text, bool darkTheme) {
   return CustomAuthButton(
-    iconUrl: "",
+    iconUrl: AssetsImages.empty,
     style: secondaryButtonStyle(MediaQuery.of(context).size.width, darkTheme),
+    darkMode: darkTheme,
     onPressed: () {
       Navigator.pushReplacement(
         context,
@@ -286,7 +284,7 @@ CustomAuthButton routeBtn(
 CustomAuthButton backBtn(BuildContext context, bool darkTheme,
     {VoidCallback? action}) {
   return CustomAuthButton(
-    iconUrl: "",
+    iconUrl: AssetsImages.empty,
     style: defaultAuthButtonStyle(MediaQuery.of(context).size.width, darkTheme),
     onPressed: () {
       if (action == null) {
