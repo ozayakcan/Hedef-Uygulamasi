@@ -11,7 +11,6 @@ import '../utils/colors.dart';
 import '../utils/database/user_database.dart';
 import '../utils/images.dart';
 import '../utils/variables.dart';
-import '../views/add.dart';
 import '../views/home.dart';
 import '../views/login.dart';
 import 'text_fields.dart';
@@ -295,45 +294,4 @@ CustomAuthButton backBtn(BuildContext context, bool darkTheme,
     },
     text: AppLocalizations.of(context).back,
   );
-}
-
-class AddButton extends StatelessWidget {
-  const AddButton({Key? key, required this.darkTheme}) : super(key: key);
-
-  final bool darkTheme;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(32.0),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.of(context).push(HeroDialogRoute(
-              darkTheme: darkTheme,
-              builder: (context) {
-                return AddPage(darkTheme: darkTheme);
-              }));
-        },
-        child: Hero(
-          tag: Variables.heroAddTag,
-          createRectTween: (begin, end) {
-            return CustomRectTween(begin: begin, end: end);
-          },
-          child: Material(
-            color: darkTheme
-                ? ThemeColorDark.buttonSecondary
-                : ThemeColor.buttonSecondary,
-            elevation: 2,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-            child: Icon(
-              Icons.add_rounded,
-              size: 56,
-              color:
-                  darkTheme ? ThemeColorDark.buttonText : ThemeColor.buttonText,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }
