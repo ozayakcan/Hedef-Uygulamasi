@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sosyal/models/user.dart';
+
 import '../main.dart';
+import '../models/user.dart';
 import 'database/user_database.dart';
 
 class SharedPref {

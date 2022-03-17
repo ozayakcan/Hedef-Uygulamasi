@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sosyal/utils/widget_drawer_model.dart';
 
 import '../utils/auth.dart';
 import '../utils/colors.dart';
 import '../utils/shared_pref.dart';
 import '../utils/variables.dart';
+import '../utils/widget_drawer_model.dart';
 import '../widgets/menu.dart';
 import '../widgets/page_style.dart';
 import '../widgets/texts.dart';

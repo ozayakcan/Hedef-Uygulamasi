@@ -4,15 +4,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:sosyal/models/user.dart';
-import 'package:sosyal/utils/database/user_database.dart';
-import 'package:sosyal/widgets/widgets.dart';
 
+import '../models/user.dart';
 import '../utils/auth.dart';
 import '../utils/colors.dart';
+import '../utils/database/user_database.dart';
 import '../utils/variables.dart';
 import '../views/login.dart';
 import '../views/settings.dart';
+import 'widgets.dart';
 
 class DrawerMenu extends StatefulWidget {
   const DrawerMenu(

@@ -1,8 +1,8 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:sosyal/utils/variables.dart';
 
 import '../utils/colors.dart';
+import '../utils/variables.dart';
 
 TextField customTextField(BuildContext context, bool darkTheme,
     {required String labelText,

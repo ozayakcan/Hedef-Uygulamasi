@@ -4,17 +4,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:sosyal/models/user.dart';
-import 'package:sosyal/utils/database/user_database.dart';
-import 'package:sosyal/widgets/text_fields.dart';
 
+import '../models/user.dart';
 import '../utils/auth.dart';
 import '../utils/colors.dart';
+import '../utils/database/user_database.dart';
 import '../utils/images.dart';
 import '../utils/variables.dart';
 import '../views/add.dart';
 import '../views/home.dart';
 import '../views/login.dart';
+import 'text_fields.dart';
 import 'widgets.dart';
 
 AuthButtonStyle defaultAuthButtonStyle(double _width, bool darkTheme) {

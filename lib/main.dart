@@ -5,10 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sosyal/utils/shared_pref.dart';
 
 import 'firebase_options.dart';
 import 'secrets.dart';
+import 'utils/shared_pref.dart';
 import 'views/home.dart';
 import 'views/login.dart';
 import 'views/splash_screen.dart';

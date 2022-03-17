@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sosyal/utils/database/database.dart';
 
 import '../../models/user.dart';
 import '../auth.dart';
 import '../shared_pref.dart';
+import 'database.dart';
 
 class UserDB {
   static Future<bool?> checkUsername(String username) async {
