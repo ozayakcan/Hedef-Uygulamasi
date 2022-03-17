@@ -20,11 +20,16 @@ flutter.minSdkVersion=19
 
 - key.properties örneği
 ```
-storePassword=şifre
-keyPassword=şifre
-keyAlias=release
-storeFile=../key/keystore.jks
+releaseStorePassword=sifre
+releaseKeyPassword=sifre
+releaseKeyAlias=release
+releaseStoreFile=../key/keystore.jks
 #Konum android/key/keystore.jks
+debugStorePassword=android
+debugKeyPassword=android
+debugKeyAlias=androiddebugkey
+debugStoreFile=C:\\Users\\Proje\\\.android\\debug.keystore
+#Konum C > Kullanıcılar > Kullanıcı Dosyası > .android > debug.keystore
 ```
 
 -Firebase Realtime Database kuralları
