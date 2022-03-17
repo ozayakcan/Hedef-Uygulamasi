@@ -8,13 +8,8 @@ dart pub global activate flutterfire_cli
 flutterfire configure
 ```
 
-- local.properties örneği
+- android/local.properties dosyasına eklenecek
 ```
-sdk.dir=C:\\Users\\Proje\\AppData\\Local\\Android\\sdk
-flutter.sdk=C:\\Users\\Proje\\flutter
-flutter.buildMode=release
-flutter.versionName=1.0.0
-flutter.versionCode=1
 flutter.minSdkVersion=19
 ```
 
