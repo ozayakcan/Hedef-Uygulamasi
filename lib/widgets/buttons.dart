@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sosyal/utils/database/database.dart';
 
 import '../models/user.dart';
 import '../utils/auth.dart';
@@ -16,8 +17,10 @@ import '../views/login.dart';
 import 'text_fields.dart';
 import 'widgets.dart';
 
-AuthButtonStyle defaultAuthButtonStyle(double width, bool darkTheme) {
+AuthButtonStyle defaultAuthButtonStyle(double width, bool darkTheme,
+    {double? borderRadius}) {
   return AuthButtonStyle(
+    borderRadius: borderRadius ?? Variables.defaultButtonRadius,
     width: width,
     height: Variables.defaultButtonHeight,
     borderColor:
@@ -27,8 +30,10 @@ AuthButtonStyle defaultAuthButtonStyle(double width, bool darkTheme) {
   );
 }
 
-AuthButtonStyle primaryButtonStyle(double width, bool darkTheme) {
+AuthButtonStyle primaryButtonStyle(double width, bool darkTheme,
+    {double? borderRadius}) {
   return AuthButtonStyle(
+    borderRadius: borderRadius ?? Variables.defaultButtonRadius,
     width: width,
     height: Variables.defaultButtonHeight,
     borderColor:
@@ -42,8 +47,10 @@ AuthButtonStyle primaryButtonStyle(double width, bool darkTheme) {
   );
 }
 
-AuthButtonStyle secondaryButtonStyle(double width, bool darkTheme) {
+AuthButtonStyle secondaryButtonStyle(double width, bool darkTheme,
+    {double? borderRadius}) {
   return AuthButtonStyle(
+    borderRadius: borderRadius ?? Variables.defaultButtonRadius,
     width: width,
     height: Variables.defaultButtonHeight,
     borderColor:
@@ -183,8 +190,14 @@ CustomAuthButton registerBtn(
                         .then((registerValue) {
                       if (registerValue == null) {
                         User? user = Auth.user;
-                        UserModel userModel = UserModel(user!.uid, email.text,
-                            username.text, name.text, DateTime.now());
+                        UserModel userModel = UserModel(
+                          user!.uid,
+                          email.text,
+                          username.text,
+                          name.text,
+                          DateTime.now(),
+                          Database.defaultValue,
+                        );
                         UserDB.addUser(userModel).then((value) {
                           Auth.sendEmailVerification(context)
                               .then((emailVerificationValue) {
@@ -294,4 +307,47 @@ CustomAuthButton backBtn(BuildContext context, bool darkTheme,
     },
     text: AppLocalizations.of(context).back,
   );
+}
+
+CustomAuthButton customButton(
+  BuildContext context, {
+  required String text,
+  required ButtonStyleEnum buttonStyle,
+  double? width,
+  double? borderRadius,
+  bool darkTheme = false,
+  VoidCallback? action,
+}) {
+  return CustomAuthButton(
+    iconUrl: AImages.empty,
+    style: buttonStyle == ButtonStyleEnum.primaryButton
+        ? primaryButtonStyle(
+            width ?? MediaQuery.of(context).size.width,
+            darkTheme,
+            borderRadius: borderRadius,
+          )
+        : buttonStyle == ButtonStyleEnum.secondaryButton
+            ? secondaryButtonStyle(
+                width ?? MediaQuery.of(context).size.width,
+                darkTheme,
+                borderRadius: borderRadius,
+              )
+            : defaultAuthButtonStyle(
+                width ?? MediaQuery.of(context).size.width,
+                darkTheme,
+                borderRadius: borderRadius,
+              ),
+    onPressed: () {
+      if (action != null) {
+        action();
+      }
+    },
+    text: text,
+  );
+}
+
+enum ButtonStyleEnum {
+  defaultButton,
+  primaryButton,
+  secondaryButton,
 }

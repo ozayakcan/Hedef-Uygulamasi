@@ -45,5 +45,7 @@
     "home": "Anasayfa",
     "profile": "Profil",
     "share": "Paylaş",
-    "loading": "Yükleniyor..."
+    "loading": "Yükleniyor...",
+    "edit_profile": "Profili Düzenle",
+    "follow": "Takip Et"
 }

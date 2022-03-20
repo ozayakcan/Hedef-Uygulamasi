@@ -7,6 +7,9 @@ class Database {
   static String emailString = "email";
   static String usernameString = "username";
   static String nameString = "name";
+  static String registeredDateString = "registeredDate";
+  static String profileImageString = "profileImage";
+  static String defaultValue = "default";
 
   static FirebaseDatabase getDatabase() {
     FirebaseDatabase database = FirebaseDatabase.instance;

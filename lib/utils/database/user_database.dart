@@ -53,7 +53,7 @@ class UserDB {
         if (value != null) {
           if (value == false) {
             UserModel userModel = UserModel(user.uid, user.email!, user.uid,
-                user.displayName!, DateTime.now());
+                user.displayName!, DateTime.now(), Database.defaultValue);
             addUser(userModel).then((value) {});
           }
         }
@@ -78,5 +78,12 @@ class UserDB {
 
   static DatabaseReference getUserRef(String userid) {
     return Database.getReference(Database.usersString + "/" + userid);
+  }
+
+  static Query getUserQuery(String username) {
+    return Database.getReference(Database.usersString)
+        .orderByChild(Database.usernameString)
+        .equalTo(username)
+        .limitToFirst(1);
   }
 }

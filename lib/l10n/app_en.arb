@@ -45,5 +45,7 @@
     "home": "Home",
     "profile": "Profile",
     "share": "Share",
-    "loading": "Loading"
+    "loading": "Loading",
+    "edit_profile": "Edit Profile",
+    "follow": "Follow"
 }

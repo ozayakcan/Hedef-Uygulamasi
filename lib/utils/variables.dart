@@ -2,6 +2,8 @@ class Variables {
   static double defaultButtonHeight = 50;
   static double defaultButtonPadding = 15;
   static double defaultButtonBorderSize = 1.0;
+  static double defaultButtonRadius = 8.0;
+  static double roundButtonRadius = 50;
 
   static double normalFontSize = 16;
   static double mediumFontSize = 17;
