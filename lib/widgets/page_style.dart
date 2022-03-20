@@ -64,7 +64,7 @@ Builder leadingBuilder(BuildContext context) {
 Text appBarTitle(String title, bool darkTheme) {
   return Text(
     title,
-    style: simpleTextStyle(Variables.mediumFontSize, darkTheme),
+    style: simpleTextStyle(Variables.fontSizeMedium, darkTheme),
   );
 }
 
@@ -79,11 +79,11 @@ DefaultTabController defaultTabController(BuildContext context,
         bottom: TabBar(
           labelStyle: titilliumWebTextStyle(
             darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
-            Variables.normalFontSize,
+            Variables.fontSizeNormal,
           ),
           unselectedLabelStyle: titilliumWebTextStyle(
             darkTheme ? ThemeColorDark.textSecondary : ThemeColor.textSecondary,
-            Variables.normalFontSize,
+            Variables.fontSizeNormal,
           ),
           tabs: tabList,
         ),

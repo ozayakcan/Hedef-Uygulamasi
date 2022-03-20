@@ -76,7 +76,7 @@ class _ProfileState extends State<Profile> {
                 child: Text(
                   userModel.name,
                   style: simpleTextStyle(
-                    Variables.mediumFontSize,
+                    Variables.fontSizeMedium,
                     widget.darkTheme,
                   ),
                 ),
@@ -86,7 +86,7 @@ class _ProfileState extends State<Profile> {
               child: Text(
                 userModel.getUserName,
                 style: simpleTextStyle(
-                  Variables.mediumFontSize,
+                  Variables.fontSizeMedium,
                   widget.darkTheme,
                 ),
               ),
@@ -102,14 +102,14 @@ class _ProfileState extends State<Profile> {
                         text: AppLocalizations.of(context).edit_profile,
                         buttonStyle: ButtonStyleEnum.defaultButton,
                         width: MediaQuery.of(context).size.width - 20,
-                        borderRadius: Variables.roundButtonRadius,
+                        borderRadius: Variables.buttonRadiusRound,
                       )
                     : customButton(
                         context,
                         text: AppLocalizations.of(context).follow,
                         buttonStyle: ButtonStyleEnum.primaryButton,
                         width: MediaQuery.of(context).size.width - 20,
-                        borderRadius: Variables.roundButtonRadius,
+                        borderRadius: Variables.buttonRadiusRound,
                       ),
               ),
             ),
@@ -120,7 +120,7 @@ class _ProfileState extends State<Profile> {
               child: Text(
                 "Paylaşımlar",
                 style: simpleTextStyle(
-                  Variables.mediumFontSize,
+                  Variables.fontSizeMedium,
                   widget.darkTheme,
                 ),
               ),

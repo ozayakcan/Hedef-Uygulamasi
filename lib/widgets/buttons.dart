@@ -20,9 +20,9 @@ import 'widgets.dart';
 AuthButtonStyle defaultAuthButtonStyle(double width, bool darkTheme,
     {double? borderRadius}) {
   return AuthButtonStyle(
-    borderRadius: borderRadius ?? Variables.defaultButtonRadius,
+    borderRadius: borderRadius ?? Variables.buttonRadiusDefault,
     width: width,
-    height: Variables.defaultButtonHeight,
+    height: Variables.buttonHeightDefault,
     borderColor:
         darkTheme ? ThemeColorDark.buttonBorder : ThemeColor.buttonBorder,
     splashColor:
@@ -33,9 +33,9 @@ AuthButtonStyle defaultAuthButtonStyle(double width, bool darkTheme,
 AuthButtonStyle primaryButtonStyle(double width, bool darkTheme,
     {double? borderRadius}) {
   return AuthButtonStyle(
-    borderRadius: borderRadius ?? Variables.defaultButtonRadius,
+    borderRadius: borderRadius ?? Variables.buttonRadiusDefault,
     width: width,
-    height: Variables.defaultButtonHeight,
+    height: Variables.buttonHeightDefault,
     borderColor:
         darkTheme ? ThemeColorDark.buttonBorder : ThemeColor.buttonBorder,
     splashColor:
@@ -50,9 +50,9 @@ AuthButtonStyle primaryButtonStyle(double width, bool darkTheme,
 AuthButtonStyle secondaryButtonStyle(double width, bool darkTheme,
     {double? borderRadius}) {
   return AuthButtonStyle(
-    borderRadius: borderRadius ?? Variables.defaultButtonRadius,
+    borderRadius: borderRadius ?? Variables.buttonRadiusDefault,
     width: width,
-    height: Variables.defaultButtonHeight,
+    height: Variables.buttonHeightDefault,
     borderColor:
         darkTheme ? ThemeColorDark.buttonBorder : ThemeColor.buttonBorder,
     splashColor:

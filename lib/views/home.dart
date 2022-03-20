@@ -77,14 +77,14 @@ class _HomePageState extends State<HomePage> {
         context,
         Text(
           'Index 0: Anasayfa',
-          style: simpleTextStyle(Variables.normalFontSize, widget.darkTheme),
+          style: simpleTextStyle(Variables.fontSizeNormal, widget.darkTheme),
         ),
       ),
       WidgetModel(
         context,
         Text(
           'Index 1: Paylaş',
-          style: simpleTextStyle(Variables.normalFontSize, widget.darkTheme),
+          style: simpleTextStyle(Variables.fontSizeNormal, widget.darkTheme),
         ),
       ),
       WidgetModel(

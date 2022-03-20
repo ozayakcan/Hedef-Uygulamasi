@@ -75,7 +75,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                               color: widget.darkTheme
                                   ? ThemeColorDark.textPrimary
                                   : ThemeColor.textPrimary,
-                              fontSize: Variables.mediumFontSize,
+                              fontSize: Variables.fontSizeMedium,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -90,7 +90,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                               color: widget.darkTheme
                                   ? ThemeColorDark.textPrimary
                                   : ThemeColor.textPrimary,
-                              fontSize: Variables.normalFontSize,
+                              fontSize: Variables.fontSizeNormal,
                             ),
                             textAlign: TextAlign.center,
                           ),

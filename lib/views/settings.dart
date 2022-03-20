@@ -24,7 +24,7 @@ class _SettingsState extends State<Settings> {
       title: AppLocalizations.of(context).settings,
       body: Text(
         "Ayarlar Sayfası",
-        style: simpleTextStyle(Variables.normalFontSize, widget.darkTheme),
+        style: simpleTextStyle(Variables.fontSizeNormal, widget.darkTheme),
       ),
       endDrawer: DrawerMenu(
         darkTheme: widget.darkTheme,

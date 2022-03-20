@@ -78,7 +78,7 @@ Widget loadingRow(BuildContext context, bool darkTheme,
         style: TextStyle(
           color:
               darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
-          fontSize: Variables.mediumFontSize,
+          fontSize: Variables.fontSizeMedium,
         ),
         textAlign: TextAlign.center,
       )
@@ -94,7 +94,7 @@ Widget darkThemeSwitch(BuildContext context, bool darkTheme) {
         Text(
           AppLocalizations.of(context).dark_theme,
           style: simpleTextStyle(
-            Variables.mediumFontSize,
+            Variables.fontSizeMedium,
             darkTheme,
           ),
         ),
