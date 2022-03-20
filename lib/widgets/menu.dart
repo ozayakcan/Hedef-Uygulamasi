@@ -28,8 +28,7 @@ class DrawerMenu extends StatefulWidget {
 class _DrawerMenuState extends State<DrawerMenu> {
   FirebaseAuth auth = FirebaseAuth.instance;
   late User? user;
-  String username = "";
-  String name = "";
+  UserModel userModel = UserModel.empty();
   StreamSubscription<DatabaseEvent>? userEvent;
   @override
   void initState() {
@@ -40,10 +39,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
     userEvent = databaseReference.onValue.listen((event) {
       if (event.snapshot.exists) {
         final json = event.snapshot.value as Map<dynamic, dynamic>;
-        final userModel = UserModel.fromJson(json);
         setState(() {
-          name = userModel.name;
-          username = userModel.username;
+          userModel = UserModel.fromJson(json);
         });
       }
     });
@@ -70,10 +67,10 @@ class _DrawerMenuState extends State<DrawerMenu> {
               child: Center(
                 child: Column(
                   children: [
-                    name == ""
+                    userModel.name == ""
                         ? loadingRow(context, widget.darkTheme)
                         : Text(
-                            name,
+                            userModel.name,
                             style: TextStyle(
                               color: widget.darkTheme
                                   ? ThemeColorDark.textPrimary
@@ -85,10 +82,10 @@ class _DrawerMenuState extends State<DrawerMenu> {
                     const SizedBox(
                       height: 4,
                     ),
-                    username == ""
+                    userModel.username == ""
                         ? loadingRow(context, widget.darkTheme)
                         : Text(
-                            "(@" + username + ")",
+                            userModel.getUserName,
                             style: TextStyle(
                               color: widget.darkTheme
                                   ? ThemeColorDark.textPrimary
