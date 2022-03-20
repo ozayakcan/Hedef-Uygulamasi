@@ -9,7 +9,7 @@ import '../models/user.dart';
 import '../utils/auth.dart';
 import '../utils/colors.dart';
 import '../utils/database/user_database.dart';
-import '../utils/images.dart';
+import '../utils/assets.dart';
 import '../utils/variables.dart';
 import '../views/home.dart';
 import '../views/login.dart';
@@ -133,7 +133,7 @@ CustomAuthButton loginBtn(
   bool darkTheme,
 ) {
   return CustomAuthButton(
-    iconUrl: AssetsImages.empty,
+    iconUrl: AImages.empty,
     style: primaryButtonStyle(MediaQuery.of(context).size.width, darkTheme),
     darkMode: darkTheme,
     onPressed: () {
@@ -167,7 +167,7 @@ CustomAuthButton registerBtn(
   bool darkTheme,
 ) {
   return CustomAuthButton(
-    iconUrl: AssetsImages.empty,
+    iconUrl: AImages.empty,
     style: secondaryButtonStyle(MediaQuery.of(context).size.width, darkTheme),
     darkMode: darkTheme,
     onPressed: () {
@@ -246,7 +246,7 @@ CustomAuthButton registerBtn(
 CustomAuthButton resetPasswordBtn(
     BuildContext context, TextEditingController email, bool darkTheme) {
   return CustomAuthButton(
-    iconUrl: AssetsImages.empty,
+    iconUrl: AImages.empty,
     style: secondaryButtonStyle(MediaQuery.of(context).size.width, darkTheme),
     darkMode: darkTheme,
     onPressed: () {
@@ -267,7 +267,7 @@ CustomAuthButton resetPasswordBtn(
 CustomAuthButton routeBtn(
     BuildContext context, Widget widget, String text, bool darkTheme) {
   return CustomAuthButton(
-    iconUrl: AssetsImages.empty,
+    iconUrl: AImages.empty,
     style: secondaryButtonStyle(MediaQuery.of(context).size.width, darkTheme),
     darkMode: darkTheme,
     onPressed: () {
@@ -283,7 +283,7 @@ CustomAuthButton routeBtn(
 CustomAuthButton backBtn(BuildContext context, bool darkTheme,
     {VoidCallback? action}) {
   return CustomAuthButton(
-    iconUrl: AssetsImages.empty,
+    iconUrl: AImages.empty,
     style: defaultAuthButtonStyle(MediaQuery.of(context).size.width, darkTheme),
     onPressed: () {
       if (action == null) {

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../utils/images.dart';
+import '../utils/assets.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key, required this.darkTheme}) : super(key: key);
@@ -15,8 +15,12 @@ class SplashScreen extends StatelessWidget {
         body: Center(
           child: Image.asset(
             darkTheme
-                ? AssetsImages.getAsset(AssetsImages.logoDark)
-                : AssetsImages.getAsset(AssetsImages.logo),
+                ? AImages.getAssetFolder(
+                    path: AImages.logoDark,
+                  )
+                : AImages.getAssetFolder(
+                    path: AImages.logo,
+                  ),
             height: 40,
             width: 40,
           ),
