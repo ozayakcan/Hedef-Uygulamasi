@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class WidgetModel {
-  WidgetModel(this.context, this._widget);
+  WidgetModel(this.context, this.name, this._widget);
   final BuildContext context;
+  final String name;
   final Widget _widget;
   Widget get widget {
     return SingleChildScrollView(

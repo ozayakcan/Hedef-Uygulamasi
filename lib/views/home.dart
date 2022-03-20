@@ -31,12 +31,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   late User? user;
-  late String username;
   StreamSubscription<DatabaseEvent>? userEvent;
   UserModel userModel = UserModel.empty();
   late SharedPreferences sp;
 
-  late int selectedIndex = 0;
+  int selectedIndex = 0;
+  String title = "";
 
   @override
   void initState() {
@@ -75,6 +75,7 @@ class _HomePageState extends State<HomePage> {
     return [
       WidgetModel(
         context,
+        AppLocalizations.of(context).app_name,
         Text(
           'Index 0: Anasayfa',
           style: simpleTextStyle(Variables.fontSizeNormal, widget.darkTheme),
@@ -82,6 +83,7 @@ class _HomePageState extends State<HomePage> {
       ),
       WidgetModel(
         context,
+        AppLocalizations.of(context).share,
         Text(
           'Index 1: Paylaş',
           style: simpleTextStyle(Variables.fontSizeNormal, widget.darkTheme),
@@ -89,6 +91,7 @@ class _HomePageState extends State<HomePage> {
       ),
       WidgetModel(
         context,
+        AppLocalizations.of(context).profile,
         Profile(darkTheme: darkTheme, username: username),
       ),
     ];
@@ -100,12 +103,21 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  updateTitle(BuildContext context, String username, bool darkTheme) {
+    setState(() {
+      title = homeNavigations(context, username, darkTheme)
+          .elementAt(selectedIndex)
+          .name;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    updateTitle(context, userModel.username, widget.darkTheme);
     return defaultScaffold(
       context,
       widget.darkTheme,
-      title: AppLocalizations.of(context).app_name,
+      title: title,
       body: homeNavigations(
         context,
         userModel.username,
@@ -149,6 +161,7 @@ class _HomePageState extends State<HomePage> {
             : ThemeColor.textPrimary,
         onTap: (index) {
           onItemTap(index);
+          updateTitle(context, userModel.username, widget.darkTheme);
         },
       ),
     );
