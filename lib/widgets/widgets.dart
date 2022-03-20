@@ -7,14 +7,14 @@ import '../utils/variables.dart';
 import 'texts.dart';
 
 class ScaffoldSnackbar {
-  ScaffoldSnackbar(this._context);
-  final BuildContext _context;
+  ScaffoldSnackbar(this.context);
+  final BuildContext context;
 
   factory ScaffoldSnackbar.of(BuildContext context) {
     return ScaffoldSnackbar(context);
   }
   void show(String message) {
-    ScaffoldMessenger.of(_context)
+    ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(content: Text(message)),

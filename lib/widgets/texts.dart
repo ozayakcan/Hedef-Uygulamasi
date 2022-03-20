@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 
 import '../utils/colors.dart';
 
-TextStyle titilliumWebTextStyle(Color color, double _fontSize) {
+TextStyle titilliumWebTextStyle(Color color, double fontSize) {
   return TextStyle(
     color: color,
-    fontSize: _fontSize,
+    fontSize: fontSize,
     fontFamily: "TitilliumWeb",
   );
 }
 
-TextStyle simpleTextStyle(double _fontSize, bool darkTheme) {
+TextStyle simpleTextStyle(double fontSize, bool darkTheme) {
   return TextStyle(
     color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
-    fontSize: _fontSize,
+    fontSize: fontSize,
   );
 }
 
-TextStyle linktTextStyle(double _fonstSize, bool darkTheme) {
+TextStyle linktTextStyle(double fonstSize, bool darkTheme) {
   return TextStyle(
     color: darkTheme ? ThemeColorDark.buttonPrimary : ThemeColor.buttonPrimary,
-    fontSize: _fonstSize,
+    fontSize: fonstSize,
   );
 }

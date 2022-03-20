@@ -7,8 +7,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'errors.dart';
 
 class Auth {
-  static final FirebaseAuth _auth = FirebaseAuth.instance;
-  static get user => _auth.currentUser;
+  static final FirebaseAuth auth = FirebaseAuth.instance;
+  static get user => auth.currentUser;
 
   static Future signInWithGoogle(BuildContext context) async {
     try {
@@ -23,7 +23,7 @@ class Auth {
       );
 
       UserCredential userCredential =
-          await _auth.signInWithCredential(credential);
+          await auth.signInWithCredential(credential);
       if (googleUser != null) {
         changeDisplayName(
           context,
@@ -52,8 +52,8 @@ class Auth {
       GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
       UserCredential userCredential =
-          await _auth.signInWithPopup(googleProvider);
-      //await _auth.signInWithRedirect(googleProvider);
+          await auth.signInWithPopup(googleProvider);
+      //await auth.signInWithRedirect(googleProvider);
       if (userCredential.user != null) {
         changeDisplayName(
           context,
@@ -80,8 +80,7 @@ class Auth {
   static Future signupWithEmail(
       BuildContext context, String email, String name, String password) async {
     try {
-      UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -110,7 +109,7 @@ class Auth {
   static Future signInWithEmail(
       BuildContext context, String email, String password) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      await auth.signInWithEmailAndPassword(email: email, password: password);
       return null;
     } on FirebaseAuthException catch (e) {
       return firebaseAuthMessages(context, e.code);
@@ -119,7 +118,7 @@ class Auth {
 
   static Future sendEmailVerification(BuildContext context) async {
     try {
-      _auth.setLanguageCode(AppLocalizations.of(context).localeName);
+      auth.setLanguageCode(AppLocalizations.of(context).localeName);
       final user = FirebaseAuth.instance.currentUser!;
       await user.sendEmailVerification();
       return null;
@@ -130,8 +129,8 @@ class Auth {
 
   static Future resetPassword(BuildContext context, String email) async {
     try {
-      _auth.setLanguageCode(AppLocalizations.of(context).localeName);
-      await _auth.sendPasswordResetEmail(email: email);
+      auth.setLanguageCode(AppLocalizations.of(context).localeName);
+      await auth.sendPasswordResetEmail(email: email);
       return null;
     } on FirebaseAuthException catch (e) {
       return firebaseAuthMessages(context, e.code);

@@ -16,9 +16,9 @@ import '../views/login.dart';
 import 'text_fields.dart';
 import 'widgets.dart';
 
-AuthButtonStyle defaultAuthButtonStyle(double _width, bool darkTheme) {
+AuthButtonStyle defaultAuthButtonStyle(double width, bool darkTheme) {
   return AuthButtonStyle(
-    width: _width,
+    width: width,
     height: Variables.defaultButtonHeight,
     borderColor:
         darkTheme ? ThemeColorDark.buttonBorder : ThemeColor.buttonBorder,
@@ -27,9 +27,9 @@ AuthButtonStyle defaultAuthButtonStyle(double _width, bool darkTheme) {
   );
 }
 
-AuthButtonStyle primaryButtonStyle(double _width, bool darkTheme) {
+AuthButtonStyle primaryButtonStyle(double width, bool darkTheme) {
   return AuthButtonStyle(
-    width: _width,
+    width: width,
     height: Variables.defaultButtonHeight,
     borderColor:
         darkTheme ? ThemeColorDark.buttonBorder : ThemeColor.buttonBorder,
@@ -42,9 +42,9 @@ AuthButtonStyle primaryButtonStyle(double _width, bool darkTheme) {
   );
 }
 
-AuthButtonStyle secondaryButtonStyle(double _width, bool darkTheme) {
+AuthButtonStyle secondaryButtonStyle(double width, bool darkTheme) {
   return AuthButtonStyle(
-    width: _width,
+    width: width,
     height: Variables.defaultButtonHeight,
     borderColor:
         darkTheme ? ThemeColorDark.buttonBorder : ThemeColor.buttonBorder,

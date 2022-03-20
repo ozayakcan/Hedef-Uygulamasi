@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
 
   late SharedPreferences sp;
 
-  late int _selectedIndex = 0;
+  late int selectedIndex = 0;
 
   @override
   void initState() {
@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
 
   void onItemTap(int index) {
     setState(() {
-      _selectedIndex = index;
+      selectedIndex = index;
     });
   }
 
@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
       title: AppLocalizations.of(context).app_name,
       body: homeNavigations(
         context,
-      ).elementAt(_selectedIndex).widget,
+      ).elementAt(selectedIndex).widget,
       endDrawer: DrawerMenu(
         darkTheme: widget.darkTheme,
       ),
@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
         ],
         type: BottomNavigationBarType.shifting,
         showUnselectedLabels: false,
-        currentIndex: _selectedIndex,
+        currentIndex: selectedIndex,
         selectedItemColor: widget.darkTheme
             ? ThemeColorDark.textSecondary
             : ThemeColor.textSecondary,
