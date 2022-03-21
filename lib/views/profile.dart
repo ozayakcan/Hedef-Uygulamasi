@@ -150,7 +150,7 @@ class _ProfileState extends State<Profile> {
                             context,
                             darkTheme: widget.darkTheme,
                             iconUrl: AImages.check,
-                            text: AppLocalizations.of(context).follow,
+                            text: AppLocalizations.of(context).following,
                             buttonStyle: ButtonStyleEnum.primaryButton,
                             width: MediaQuery.of(context).size.width - 20,
                             borderRadius: Variables.buttonRadiusRound,
@@ -158,7 +158,7 @@ class _ProfileState extends State<Profile> {
                         : customButton(
                             context,
                             darkTheme: widget.darkTheme,
-                            text: AppLocalizations.of(context).following,
+                            text: AppLocalizations.of(context).follow,
                             buttonStyle: ButtonStyleEnum.secondaryButton,
                             width: MediaQuery.of(context).size.width - 20,
                             borderRadius: Variables.buttonRadiusRound,
