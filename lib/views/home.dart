@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -80,31 +79,30 @@ class _HomePageState extends State<HomePage> {
             text: "Örnek Profil",
             buttonStyle: ButtonStyleEnum.primaryButton,
             darkTheme: darkTheme, action: () {
-          if (kDebugMode) {
-            print("Kullanıcı ADI: " + userModel.username);
-          }
-          if (userModel.username == "ozayakcan") {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Profile(
-                  darkTheme: darkTheme,
-                  username: "Hel7cFNt6FYN4f1CQExEu187GT92",
-                  showAppBar: true,
+          if (userModel.id != "") {
+            if (userModel.username == "ozayakcan") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Profile(
+                    darkTheme: darkTheme,
+                    username: "Hel7cFNt6FYN4f1CQExEu187GT92",
+                    showAppBar: true,
+                  ),
                 ),
-              ),
-            );
-          } else {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Profile(
-                  darkTheme: darkTheme,
-                  username: "ozayakcan",
-                  showAppBar: true,
+              );
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Profile(
+                    darkTheme: darkTheme,
+                    username: "ozayakcan",
+                    showAppBar: true,
+                  ),
                 ),
-              ),
-            );
+              );
+            }
           }
         }),
       ),
