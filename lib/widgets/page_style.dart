@@ -52,7 +52,7 @@ Builder leadingBuilder(BuildContext context) {
       final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
       final bool hasEndDrawer = scaffold?.hasEndDrawer ?? false;
       final bool canPop = parentRoute?.canPop ?? false;
-      if (hasEndDrawer && canPop) {
+      if ((hasEndDrawer && canPop) || canPop) {
         return const BackButton();
       } else {
         return const SizedBox.shrink();
