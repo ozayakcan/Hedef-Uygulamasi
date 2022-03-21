@@ -4,11 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:sosyal/utils/database/database.dart';
 
 import '../models/user.dart';
 import '../utils/auth.dart';
 import '../utils/colors.dart';
+import '../utils/database/database.dart';
 import '../utils/database/user_database.dart';
 import '../utils/assets.dart';
 import '../utils/variables.dart';
@@ -17,12 +17,17 @@ import '../views/login.dart';
 import 'text_fields.dart';
 import 'widgets.dart';
 
-AuthButtonStyle defaultAuthButtonStyle(double width, bool darkTheme,
-    {double? borderRadius}) {
+AuthButtonStyle defaultAuthButtonStyle(
+  double width,
+  bool darkTheme, {
+  double? borderRadius,
+  double iconSize = Variables.buttonIconSizeDefault,
+}) {
   return AuthButtonStyle(
     borderRadius: borderRadius ?? Variables.buttonRadiusDefault,
     width: width,
     height: Variables.buttonHeightDefault,
+    iconSize: iconSize,
     borderColor:
         darkTheme ? ThemeColorDark.buttonBorder : ThemeColor.buttonBorder,
     splashColor:
@@ -30,12 +35,17 @@ AuthButtonStyle defaultAuthButtonStyle(double width, bool darkTheme,
   );
 }
 
-AuthButtonStyle primaryButtonStyle(double width, bool darkTheme,
-    {double? borderRadius}) {
+AuthButtonStyle primaryButtonStyle(
+  double width,
+  bool darkTheme, {
+  double? borderRadius,
+  double iconSize = Variables.buttonIconSizeDefault,
+}) {
   return AuthButtonStyle(
     borderRadius: borderRadius ?? Variables.buttonRadiusDefault,
     width: width,
     height: Variables.buttonHeightDefault,
+    iconSize: iconSize,
     borderColor:
         darkTheme ? ThemeColorDark.buttonBorder : ThemeColor.buttonBorder,
     splashColor:
@@ -47,12 +57,17 @@ AuthButtonStyle primaryButtonStyle(double width, bool darkTheme,
   );
 }
 
-AuthButtonStyle secondaryButtonStyle(double width, bool darkTheme,
-    {double? borderRadius}) {
+AuthButtonStyle secondaryButtonStyle(
+  double width,
+  bool darkTheme, {
+  double? borderRadius,
+  double iconSize = Variables.buttonIconSizeDefault,
+}) {
   return AuthButtonStyle(
     borderRadius: borderRadius ?? Variables.buttonRadiusDefault,
     width: width,
     height: Variables.buttonHeightDefault,
+    iconSize: iconSize,
     borderColor:
         darkTheme ? ThemeColorDark.buttonBorder : ThemeColor.buttonBorder,
     splashColor:
@@ -313,29 +328,33 @@ CustomAuthButton customButton(
   BuildContext context, {
   required String text,
   required ButtonStyleEnum buttonStyle,
+  required bool darkTheme,
   double? width,
   double? borderRadius,
-  bool darkTheme = false,
+  String iconUrl = AImages.empty,
   VoidCallback? action,
 }) {
   return CustomAuthButton(
-    iconUrl: AImages.empty,
+    iconUrl: iconUrl,
     style: buttonStyle == ButtonStyleEnum.primaryButton
         ? primaryButtonStyle(
             width ?? MediaQuery.of(context).size.width,
             darkTheme,
             borderRadius: borderRadius,
+            iconSize: Variables.buttonIconSizeSmall,
           )
         : buttonStyle == ButtonStyleEnum.secondaryButton
             ? secondaryButtonStyle(
                 width ?? MediaQuery.of(context).size.width,
                 darkTheme,
                 borderRadius: borderRadius,
+                iconSize: Variables.buttonIconSizeSmall,
               )
             : defaultAuthButtonStyle(
                 width ?? MediaQuery.of(context).size.width,
                 darkTheme,
                 borderRadius: borderRadius,
+                iconSize: Variables.buttonIconSizeSmall,
               ),
     onPressed: () {
       if (action != null) {

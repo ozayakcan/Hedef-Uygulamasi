@@ -47,5 +47,6 @@
     "share": "Share",
     "loading": "Loading",
     "edit_profile": "Edit Profile",
-    "follow": "Follow"
+    "follow": "Follow",
+    "following": "Following"
 }

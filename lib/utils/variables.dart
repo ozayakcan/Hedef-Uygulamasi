@@ -4,6 +4,8 @@ class Variables {
   static double buttonBorderSizeDefault = 1.0;
   static double buttonRadiusDefault = 8.0;
   static double buttonRadiusRound = 50;
+  static const double buttonIconSizeDefault = 30;
+  static double buttonIconSizeSmall = 20;
 
   static double fontSizeNormal = 16;
   static double fontSizeMedium = 17;

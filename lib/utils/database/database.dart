@@ -9,6 +9,11 @@ class Database {
   static String nameString = "name";
   static String registeredDateString = "registeredDate";
   static String profileImageString = "profileImage";
+
+  static String followersString = "Followers";
+  static String followerString = "follower";
+  static String followedString = "followed";
+
   static String defaultValue = "default";
 
   static FirebaseDatabase getDatabase() {
