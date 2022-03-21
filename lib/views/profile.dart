@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sosyal/widgets/page_style.dart';
 
 import '../models/user.dart';
 import '../utils/assets.dart';
@@ -15,15 +16,21 @@ import '../utils/database/user_database.dart';
 import '../utils/variables.dart';
 import '../widgets/buttons.dart';
 import '../widgets/images.dart';
+import '../widgets/menu.dart';
 import '../widgets/texts.dart';
 import '../widgets/widgets.dart';
 import 'edit_profile.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({Key? key, required this.darkTheme, required this.username})
+  const Profile(
+      {Key? key,
+      required this.darkTheme,
+      required this.showAppBar,
+      required this.username})
       : super(key: key);
 
   final bool darkTheme;
+  final bool showAppBar;
   final String username;
   @override
   State<Profile> createState() => _ProfileState();
@@ -81,8 +88,7 @@ class _ProfileState extends State<Profile> {
     followingEvent?.cancel();
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget profileContent(BuildContext context) {
     if (userModel.id != "" && userModelMe.id != "") {
       return Container(
         padding: const EdgeInsets.only(top: 10),
@@ -178,6 +184,24 @@ class _ProfileState extends State<Profile> {
       return Center(
         child: loadingRow(context, widget.darkTheme),
       );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.showAppBar) {
+      return defaultScaffold(
+        context,
+        widget.darkTheme,
+        title: userModel.getUserName,
+        body: profileContent(context),
+        endDrawer: DrawerMenu(
+          darkTheme: widget.darkTheme,
+          showSettings: false,
+        ),
+      );
+    } else {
+      return profileContent(context);
     }
   }
 }

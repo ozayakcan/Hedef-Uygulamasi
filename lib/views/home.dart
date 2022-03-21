@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sosyal/widgets/buttons.dart';
 
 import '../models/user.dart';
 import '../utils/auth.dart';
@@ -40,26 +42,24 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    Auth.getUser(auth).then((value) {
-      setState(() {
-        user = value;
-      });
-      userEvent = UserDB.getUserRef(user!.uid).onValue.listen((event) {
-        if (event.snapshot.exists) {
-          final json = event.snapshot.value as Map<dynamic, dynamic>;
-          setState(() {
-            userModel = UserModel.fromJson(json);
-          });
-        }
-      });
-      SharedPreferences.getInstance().then((value) {
+    setState(() {
+      user = Auth.user;
+    });
+    userEvent = UserDB.getUserRef(user!.uid).onValue.listen((event) {
+      if (event.snapshot.exists) {
+        final json = event.snapshot.value as Map<dynamic, dynamic>;
         setState(() {
-          sp = value;
+          userModel = UserModel.fromJson(json);
         });
+      }
+    });
+    SharedPreferences.getInstance().then((value) {
+      setState(() {
+        sp = value;
       });
-      Future(() async {
-        await SharedPref.registerUser();
-      });
+    });
+    Future(() async {
+      await SharedPref.registerUser();
     });
     super.initState();
   }
@@ -76,10 +76,37 @@ class _HomePageState extends State<HomePage> {
       WidgetModel(
         context,
         AppLocalizations.of(context).app_name,
-        Text(
-          'Index 0: Anasayfa',
-          style: simpleTextStyle(Variables.fontSizeNormal, widget.darkTheme),
-        ),
+        customButton(context,
+            text: "Örnek Profil",
+            buttonStyle: ButtonStyleEnum.primaryButton,
+            darkTheme: darkTheme, action: () {
+          if (kDebugMode) {
+            print("Kullanıcı ADI: " + userModel.username);
+          }
+          if (userModel.username == "ozayakcan") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Profile(
+                  darkTheme: darkTheme,
+                  username: "Hel7cFNt6FYN4f1CQExEu187GT92",
+                  showAppBar: true,
+                ),
+              ),
+            );
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Profile(
+                  darkTheme: darkTheme,
+                  username: "ozayakcan",
+                  showAppBar: true,
+                ),
+              ),
+            );
+          }
+        }),
       ),
       WidgetModel(
         context,
@@ -92,7 +119,11 @@ class _HomePageState extends State<HomePage> {
       WidgetModel(
         context,
         AppLocalizations.of(context).profile,
-        Profile(darkTheme: darkTheme, username: username),
+        Profile(
+          darkTheme: darkTheme,
+          username: username,
+          showAppBar: false,
+        ),
       ),
     ];
   }
