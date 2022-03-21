@@ -134,17 +134,15 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  updateTitle(BuildContext context, String username, bool darkTheme) {
-    setState(() {
-      title = homeNavigations(context, username, darkTheme)
-          .elementAt(selectedIndex)
-          .name;
-    });
+  String getTitle(BuildContext context, String username, bool darkTheme) {
+    return homeNavigations(context, username, darkTheme)
+        .elementAt(selectedIndex)
+        .name;
   }
 
   @override
   Widget build(BuildContext context) {
-    updateTitle(context, userModel.username, widget.darkTheme);
+    title = getTitle(context, userModel.username, widget.darkTheme);
     return defaultScaffold(
       context,
       widget.darkTheme,
@@ -192,7 +190,9 @@ class _HomePageState extends State<HomePage> {
             : ThemeColor.textPrimary,
         onTap: (index) {
           onItemTap(index);
-          updateTitle(context, userModel.username, widget.darkTheme);
+          setState(() {
+            title = getTitle(context, userModel.username, widget.darkTheme);
+          });
         },
       ),
     );
