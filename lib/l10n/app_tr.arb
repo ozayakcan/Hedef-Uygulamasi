@@ -46,14 +46,14 @@
     "profile": "Profil",
     "share": "Paylaş",
     "loading": "Yükleniyor...",
-    "edit_profile": "Profili Düzenle",
-    "follow": "Takip Et",
-    "unfollow": "Takipten Çık",
-    "unfollow_warn": "%s kullanıcısını takipten çıkmak istediğinize emin misiniz?",
-    "following": "Takip Ediliyor",
     "wait_a_moment": "Lütfen biraz bekleyin!",
     "yes": "Evet",
     "no": "Hayır",
     "ok": "Tamam",
-    "cancel": "İptal"
+    "cancel": "İptal",
+    "edit_profile": "Profili Düzenle",
+    "follow": "Takip Et",
+    "unfollow": "Takipten Çık",
+    "unfollow_warn": "%s kullanıcısını takipten çıkmak istediğinize emin misiniz?",
+    "following": "Takip Ediliyor"
 }

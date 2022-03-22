@@ -46,14 +46,14 @@
     "profile": "Profile",
     "share": "Share",
     "loading": "Loading",
-    "edit_profile": "Edit Profile",
-    "follow": "Follow",
-    "unfollow": "UnFollow",
-    "unfollow_warn": "Are you sure you want to unfollow %s?",
-    "following": "Following",
     "wait_a_moment": "Please wait a moment!",
     "yes": "Yes",
     "no": "No",
     "ok": "OK",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "edit_profile": "Edit Profile",
+    "follow": "Follow",
+    "unfollow": "UnFollow",
+    "unfollow_warn": "Are you sure you want to unfollow %s?",
+    "following": "Following"
 }
