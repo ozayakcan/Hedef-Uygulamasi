@@ -1,35 +1,61 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
+import 'package:sosyal/models/follower.dart';
 
 import 'database.dart';
 
 class FollowersDB {
-  static Query getFollowQuery(
-    String userid, {
-    required bool isFollower,
-    bool singleValue = false,
-    String seconUserId = "",
+  static DatabaseReference getFollowersRef(String userid) {
+    return Database.getReference(Database.followersString + "/" + userid);
+  }
+
+  static Query getSingleFollowerQuery({
+    required String follower,
+    required String followed,
   }) {
-    Query followQuery = Database.getReference(Database.followersString);
-    if (isFollower) {
-      followQuery =
-          followQuery.orderByChild(Database.followerString).equalTo(userid);
-    } else {
-      followQuery =
-          followQuery.orderByChild(Database.followedString).equalTo(userid);
-    }
-    if (singleValue && seconUserId != "") {
-      if (isFollower) {
-        followQuery = followQuery
-            .orderByChild(Database.followedString)
-            .equalTo(seconUserId)
-            .limitToFirst(1);
-      } else {
-        followQuery = followQuery
-            .orderByChild(Database.followerString)
-            .equalTo(seconUserId)
-            .limitToFirst(1);
+    return Database.getReference(Database.followersString + "/" + followed)
+        .orderByChild(Database.followerString)
+        .equalTo(follower)
+        .limitToFirst(1);
+  }
+
+  static Future<bool> checkFollowing(
+      {required String follower, required String followed}) async {
+    DatabaseEvent databaseEvent =
+        await getSingleFollowerQuery(follower: follower, followed: followed)
+            .once();
+    return databaseEvent.snapshot.exists;
+  }
+
+  static Future follow(
+      {required String follower, required String followed}) async {
+    try {
+      await getFollowersRef(followed).push().set(Follower(follower).toJson());
+      return null;
+    } catch (e) {
+      if (kDebugMode) {
+        print("Follow Hata: " + e.toString());
       }
+      return e.toString();
     }
-    return followQuery;
+  }
+
+  static Future unfollow(
+      {required String follower, required String followed}) async {
+    try {
+      getSingleFollowerQuery(follower: follower, followed: followed)
+          .once()
+          .then((value) async {
+        if (value.snapshot.exists) {
+          await value.snapshot.children.first.ref.remove();
+        }
+      });
+      return null;
+    } catch (e) {
+      if (kDebugMode) {
+        print("Unfollow Hata: " + e.toString());
+      }
+      return e.toString();
+    }
   }
 }

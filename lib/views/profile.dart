@@ -40,10 +40,10 @@ class _ProfileState extends State<Profile> {
   late User? user;
   StreamSubscription<DatabaseEvent>? userEvent;
   StreamSubscription<DatabaseEvent>? userEventMe;
-  StreamSubscription<DatabaseEvent>? followingEvent;
   UserModel userModel = UserModel.empty();
   UserModel userModelMe = UserModel.empty();
   bool isFollowing = false;
+  bool isButtonsEnabled = true;
   @override
   void initState() {
     setState(() {
@@ -67,15 +67,13 @@ class _ProfileState extends State<Profile> {
         setState(() {
           userModel = UserModel.fromJson(json);
         });
+        FollowersDB.checkFollowing(follower: user!.uid, followed: userModel.id)
+            .then((value) {
+          setState(() {
+            isFollowing = value;
+          });
+        });
       }
-    });
-    followingEvent = FollowersDB.getFollowQuery(user!.uid,
-            isFollower: true, singleValue: true, seconUserId: userModel.id)
-        .onValue
-        .listen((event) {
-      setState(() {
-        isFollowing = event.snapshot.exists;
-      });
     });
     super.initState();
   }
@@ -85,7 +83,6 @@ class _ProfileState extends State<Profile> {
     super.dispose();
     userEvent?.cancel();
     userEventMe?.cancel();
-    followingEvent?.cancel();
   }
 
   Widget profileContent(BuildContext context) {
@@ -154,6 +151,27 @@ class _ProfileState extends State<Profile> {
                             buttonStyle: ButtonStyleEnum.primaryButton,
                             width: MediaQuery.of(context).size.width - 20,
                             borderRadius: Variables.buttonRadiusRound,
+                            action: () {
+                              if (isButtonsEnabled) {
+                                setState(() {
+                                  isButtonsEnabled = false;
+                                });
+                                FollowersDB.unfollow(
+                                        follower: user!.uid,
+                                        followed: userModel.id)
+                                    .then((value) {
+                                  if (value == null) {
+                                    setState(() {
+                                      isFollowing = false;
+                                      isButtonsEnabled = true;
+                                    });
+                                  }
+                                });
+                              } else {
+                                ScaffoldSnackbar.of(context).show(
+                                    AppLocalizations.of(context).wait_a_moment);
+                              }
+                            },
                           )
                         : customButton(
                             context,
@@ -162,6 +180,27 @@ class _ProfileState extends State<Profile> {
                             buttonStyle: ButtonStyleEnum.secondaryButton,
                             width: MediaQuery.of(context).size.width - 20,
                             borderRadius: Variables.buttonRadiusRound,
+                            action: () {
+                              if (isButtonsEnabled) {
+                                setState(() {
+                                  isButtonsEnabled = false;
+                                });
+                                FollowersDB.follow(
+                                        follower: user!.uid,
+                                        followed: userModel.id)
+                                    .then((value) {
+                                  if (value == null) {
+                                    setState(() {
+                                      isFollowing = true;
+                                      isButtonsEnabled = true;
+                                    });
+                                  }
+                                });
+                              } else {
+                                ScaffoldSnackbar.of(context).show(
+                                    AppLocalizations.of(context).wait_a_moment);
+                              }
+                            },
                           ),
               ),
             ),

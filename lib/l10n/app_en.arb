@@ -48,5 +48,6 @@
     "loading": "Loading",
     "edit_profile": "Edit Profile",
     "follow": "Follow",
-    "following": "Following"
+    "following": "Following",
+    "wait_a_moment": "Please wait a moment!"
 }
