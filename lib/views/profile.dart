@@ -43,7 +43,6 @@ class _ProfileState extends State<Profile> {
   UserModel userModel = UserModel.empty();
   UserModel userModelMe = UserModel.empty();
   bool isFollowing = false;
-  bool isButtonsEnabled = true;
   @override
   void initState() {
     setState(() {
@@ -152,51 +151,38 @@ class _ProfileState extends State<Profile> {
                             width: MediaQuery.of(context).size.width - 20,
                             borderRadius: Variables.buttonRadiusRound,
                             action: () {
-                              if (isButtonsEnabled) {
-                                setState(() {
-                                  isButtonsEnabled = false;
-                                });
-                                defaultAlertbox(
-                                  context,
-                                  title: AppLocalizations.of(context).unfollow,
-                                  dismissible: false,
-                                  descriptions: [
-                                    Text(
-                                      AppLocalizations.of(context)
-                                          .unfollow_warn
-                                          .replaceAll(
-                                              "%s",
-                                              userModel.name +
-                                                  " " +
-                                                  userModel.getUserName),
-                                      style: simpleTextStyle(
-                                          Variables.fontSizeNormal,
-                                          widget.darkTheme),
-                                    ),
-                                  ],
-                                  darkTheme: widget.darkTheme,
-                                  actionYes: () async {
-                                    final unfollowResult =
-                                        await FollowersDB.unfollow(
-                                            follower: user!.uid,
-                                            followed: userModel.id);
-                                    if (unfollowResult == null) {
-                                      setState(() {
-                                        isFollowing = false;
-                                        isButtonsEnabled = true;
-                                      });
-                                    }
-                                  },
-                                  actionNo: () {
+                              defaultAlertbox(
+                                context,
+                                title: AppLocalizations.of(context).unfollow,
+                                dismissible: false,
+                                descriptions: [
+                                  Text(
+                                    AppLocalizations.of(context)
+                                        .unfollow_warn
+                                        .replaceAll(
+                                            "%s",
+                                            userModel.name +
+                                                " " +
+                                                userModel.getUserName),
+                                    style: simpleTextStyle(
+                                        Variables.fontSizeNormal,
+                                        widget.darkTheme),
+                                  ),
+                                ],
+                                darkTheme: widget.darkTheme,
+                                actionYes: () async {
+                                  final unfollowResult =
+                                      await FollowersDB.unfollow(
+                                          follower: user!.uid,
+                                          followed: userModel.id);
+                                  if (unfollowResult == null) {
                                     setState(() {
-                                      isButtonsEnabled = true;
+                                      isFollowing = false;
                                     });
-                                  },
-                                );
-                              } else {
-                                ScaffoldSnackbar.of(context).show(
-                                    AppLocalizations.of(context).wait_a_moment);
-                              }
+                                  }
+                                },
+                                actionNo: () {},
+                              );
                             },
                           )
                         : customButton(
@@ -206,25 +192,13 @@ class _ProfileState extends State<Profile> {
                             buttonStyle: ButtonStyleEnum.secondaryButton,
                             width: MediaQuery.of(context).size.width - 20,
                             borderRadius: Variables.buttonRadiusRound,
-                            action: () {
-                              if (isButtonsEnabled) {
+                            action: () async {
+                              final followResult = await FollowersDB.follow(
+                                  follower: user!.uid, followed: userModel.id);
+                              if (followResult == null) {
                                 setState(() {
-                                  isButtonsEnabled = false;
+                                  isFollowing = true;
                                 });
-                                FollowersDB.follow(
-                                        follower: user!.uid,
-                                        followed: userModel.id)
-                                    .then((value) {
-                                  if (value == null) {
-                                    setState(() {
-                                      isFollowing = true;
-                                      isButtonsEnabled = true;
-                                    });
-                                  }
-                                });
-                              } else {
-                                ScaffoldSnackbar.of(context).show(
-                                    AppLocalizations.of(context).wait_a_moment);
                               }
                             },
                           ),
