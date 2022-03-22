@@ -116,3 +116,79 @@ Widget darkThemeSwitch(BuildContext context, bool darkTheme) {
     ),
   );
 }
+
+Future<void> defaultAlertbox(
+  BuildContext _context, {
+  required String title,
+  required List<Widget> descriptions,
+  required bool darkTheme,
+  bool dismissible = true,
+  VoidCallback? actionOk,
+  VoidCallback? actionYes,
+  VoidCallback? actionNo,
+  VoidCallback? actionCancel,
+}) {
+  return showDialog(
+    context: _context,
+    barrierDismissible: dismissible,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(
+          title,
+          style: simpleTextStyle(Variables.fontSizeMedium, darkTheme),
+        ),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: descriptions,
+          ),
+        ),
+        actions: [
+          if (actionOk != null)
+            TextButton(
+              onPressed: () {
+                actionOk();
+                Navigator.pop(context);
+              },
+              child: Text(
+                AppLocalizations.of(context).ok,
+                style: simpleTextStyle(Variables.fontSizeNormal, darkTheme),
+              ),
+            ),
+          if (actionYes != null)
+            TextButton(
+              onPressed: () {
+                actionYes();
+                Navigator.pop(context);
+              },
+              child: Text(
+                AppLocalizations.of(context).yes,
+                style: simpleTextStyle(Variables.fontSizeNormal, darkTheme),
+              ),
+            ),
+          if (actionNo != null)
+            TextButton(
+              onPressed: () {
+                actionNo();
+                Navigator.pop(context);
+              },
+              child: Text(
+                AppLocalizations.of(context).no,
+                style: simpleTextStyle(Variables.fontSizeNormal, darkTheme),
+              ),
+            ),
+          if (actionCancel != null)
+            TextButton(
+              onPressed: () {
+                actionCancel();
+                Navigator.pop(context);
+              },
+              child: Text(
+                AppLocalizations.of(context).cancel,
+                style: simpleTextStyle(Variables.fontSizeNormal, darkTheme),
+              ),
+            ),
+        ],
+      );
+    },
+  );
+}

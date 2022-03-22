@@ -156,17 +156,43 @@ class _ProfileState extends State<Profile> {
                                 setState(() {
                                   isButtonsEnabled = false;
                                 });
-                                FollowersDB.unfollow(
-                                        follower: user!.uid,
-                                        followed: userModel.id)
-                                    .then((value) {
-                                  if (value == null) {
+                                defaultAlertbox(
+                                  context,
+                                  title: AppLocalizations.of(context).unfollow,
+                                  dismissible: false,
+                                  descriptions: [
+                                    Text(
+                                      AppLocalizations.of(context)
+                                          .unfollow_warn
+                                          .replaceAll(
+                                              "%s",
+                                              userModel.name +
+                                                  " " +
+                                                  userModel.getUserName),
+                                      style: simpleTextStyle(
+                                          Variables.fontSizeNormal,
+                                          widget.darkTheme),
+                                    ),
+                                  ],
+                                  darkTheme: widget.darkTheme,
+                                  actionYes: () async {
+                                    final unfollowResult =
+                                        await FollowersDB.unfollow(
+                                            follower: user!.uid,
+                                            followed: userModel.id);
+                                    if (unfollowResult == null) {
+                                      setState(() {
+                                        isFollowing = false;
+                                        isButtonsEnabled = true;
+                                      });
+                                    }
+                                  },
+                                  actionNo: () {
                                     setState(() {
-                                      isFollowing = false;
                                       isButtonsEnabled = true;
                                     });
-                                  }
-                                });
+                                  },
+                                );
                               } else {
                                 ScaffoldSnackbar.of(context).show(
                                     AppLocalizations.of(context).wait_a_moment);
