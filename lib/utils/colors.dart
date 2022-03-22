@@ -156,6 +156,21 @@ class ThemeColor {
       900: Colors.black12,
     },
   );
+  static const MaterialColor alertBoxBackground = MaterialColor(
+    0xFFFFFFFF,
+    <int, Color>{
+      50: Colors.white,
+      100: Colors.white,
+      200: Colors.white,
+      300: Colors.white,
+      400: Colors.white,
+      500: Colors.white,
+      600: Colors.white,
+      700: Colors.white,
+      800: Colors.white,
+      900: Colors.white,
+    },
+  );
 }
 
 class ThemeColorDark {
@@ -312,6 +327,21 @@ class ThemeColorDark {
       700: Colors.black12,
       800: Colors.black12,
       900: Colors.black12,
+    },
+  );
+  static const MaterialColor alertBoxBackground = MaterialColor(
+    0xFF1F1F1F,
+    <int, Color>{
+      50: Color(0xFF1F1F1F),
+      100: Color(0xFF1F1F1F),
+      200: Color(0xFF1F1F1F),
+      300: Color(0xFF1F1F1F),
+      400: Color(0xFF1F1F1F),
+      500: Color(0xFF1F1F1F),
+      600: Color(0xFF1F1F1F),
+      700: Color(0xFF1F1F1F),
+      800: Color(0xFF1F1F1F),
+      900: Color(0xFF1F1F1F),
     },
   );
 }

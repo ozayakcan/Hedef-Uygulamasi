@@ -133,6 +133,9 @@ Future<void> defaultAlertbox(
     barrierDismissible: dismissible,
     builder: (context) {
       return AlertDialog(
+        backgroundColor: darkTheme
+            ? ThemeColorDark.alertBoxBackground
+            : ThemeColor.alertBoxBackground,
         title: Text(
           title,
           style: simpleTextStyle(Variables.fontSizeMedium, darkTheme),
