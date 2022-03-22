@@ -10,9 +10,11 @@ class Database {
   static String registeredDateString = "registeredDate";
   static String profileImageString = "profileImage";
 
+  static String followString = "Follow";
   static String followersString = "Followers";
-  static String followerString = "follower";
-  static String followedString = "followed";
+  static String followingString = "Following";
+
+  static String keyString = "key";
 
   static String defaultValue = "default";
 

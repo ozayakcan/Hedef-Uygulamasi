@@ -52,8 +52,13 @@
     "ok": "Tamam",
     "cancel": "İptal",
     "edit_profile": "Profili Düzenle",
-    "follow": "Takip Et",
     "unfollow": "Takipten Çık",
     "unfollow_warn": "%s kullanıcısını takipten çıkmak istediğinize emin misiniz?",
-    "following": "Takip Ediliyor"
+    "follow_btn": "Takip Et",
+    "following_btn": "Takip Ediliyor",
+    "followers_profile": "Takipçi",
+    "following_profile": "Takip Edilen",
+    "thousand_convert": "%sbin",
+    "million_convert": "%smlyn",
+    "billion_convert": "%smlyr"
 }

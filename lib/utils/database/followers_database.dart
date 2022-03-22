@@ -1,59 +1,106 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
-import 'package:sosyal/models/follower.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../models/key.dart';
 import 'database.dart';
 
 class FollowersDB {
   static DatabaseReference getFollowersRef(String userid) {
-    return Database.getReference(Database.followersString + "/" + userid);
+    return Database.getReference(
+        Database.followString + "/" + Database.followersString + "/" + userid);
   }
 
-  static Query getSingleFollowerQuery({
-    required String follower,
-    required String followed,
-  }) {
-    return Database.getReference(Database.followersString + "/" + followed)
-        .orderByChild(Database.followerString)
-        .equalTo(follower)
-        .limitToFirst(1);
+  static DatabaseReference getFollowingRef(String userid) {
+    return Database.getReference(
+        Database.followString + "/" + Database.followingString + "/" + userid);
   }
 
   static Future<bool> checkFollowing(
-      {required String follower, required String followed}) async {
+      {required String follower, required String following}) async {
     DatabaseEvent databaseEvent =
-        await getSingleFollowerQuery(follower: follower, followed: followed)
-            .once();
+        await getFollowersRef(following).child(follower).once();
     return databaseEvent.snapshot.exists;
   }
 
-  static Future follow(
-      {required String follower, required String followed}) async {
+  static Future<int?> getFollowerCount(String userID) async {
     try {
-      await getFollowersRef(followed).push().set(Follower(follower).toJson());
+      DatabaseReference databaseReference = getFollowersRef(userID);
+      DatabaseEvent databaseEvent = await databaseReference.once();
+      return databaseEvent.snapshot.children.length;
+    } catch (e) {
+      if (kDebugMode) {
+        print("Takipçi sayısı alınamadı. Hata: " + e.toString());
+      }
+      return null;
+    }
+  }
+
+  static Future<int?> getFollowCount(String userID) async {
+    try {
+      DatabaseReference databaseReference = getFollowingRef(userID);
+      DatabaseEvent databaseEvent = await databaseReference.once();
+      return databaseEvent.snapshot.children.length;
+    } catch (e) {
+      if (kDebugMode) {
+        print("Takip edilen sayısı alınamadı. Hata: " + e.toString());
+      }
+      return null;
+    }
+  }
+
+  static String convertFollowNumbers(BuildContext context, int number) {
+    if (number > 999) {
+      double convertedNumber = number / 1000;
+      return AppLocalizations.of(context).thousand_convert.replaceAll(
+            "%s",
+            convertedNumber.toString(),
+          );
+    } else if (number > 999999) {
+      double convertedNumber = number / 1000000;
+      return AppLocalizations.of(context).million_convert.replaceAll(
+            "%s",
+            convertedNumber.toString(),
+          );
+    } else if (number > 999999999) {
+      double convertedNumber = number / 1000000000;
+      return AppLocalizations.of(context).billion_convert.replaceAll(
+            "%s",
+            convertedNumber.toString(),
+          );
+    } else {
+      return number.toString();
+    }
+  }
+
+  static Future follow(
+      {required String follower, required String following}) async {
+    try {
+      await getFollowersRef(following)
+          .child(follower)
+          .set(KeyModel(follower).toJson());
+      await getFollowingRef(follower)
+          .child(following)
+          .set(KeyModel(following).toJson());
       return null;
     } catch (e) {
       if (kDebugMode) {
-        print("Follow Hata: " + e.toString());
+        print("Takip Edilemedi! Hata: " + e.toString());
       }
       return e.toString();
     }
   }
 
   static Future unfollow(
-      {required String follower, required String followed}) async {
+      {required String follower, required String following}) async {
     try {
-      getSingleFollowerQuery(follower: follower, followed: followed)
-          .once()
-          .then((value) async {
-        if (value.snapshot.exists) {
-          await value.snapshot.children.first.ref.remove();
-        }
-      });
+      getFollowersRef(following).child(follower).remove();
+      getFollowingRef(follower).child(following).remove();
       return null;
     } catch (e) {
       if (kDebugMode) {
-        print("Unfollow Hata: " + e.toString());
+        print("Takipten Çıkılamadı! Hata: " + e.toString());
       }
       return e.toString();
     }

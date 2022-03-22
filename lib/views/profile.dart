@@ -43,6 +43,10 @@ class _ProfileState extends State<Profile> {
   UserModel userModel = UserModel.empty();
   UserModel userModelMe = UserModel.empty();
   bool isFollowing = false;
+
+  int followerCount = 0;
+  int followCount = 0;
+
   @override
   void initState() {
     setState(() {
@@ -66,12 +70,14 @@ class _ProfileState extends State<Profile> {
         setState(() {
           userModel = UserModel.fromJson(json);
         });
-        FollowersDB.checkFollowing(follower: user!.uid, followed: userModel.id)
+        FollowersDB.checkFollowing(follower: user!.uid, following: userModel.id)
             .then((value) {
           setState(() {
             isFollowing = value;
           });
         });
+        setFollowerCount();
+        setFollowCount();
       }
     });
     super.initState();
@@ -82,6 +88,26 @@ class _ProfileState extends State<Profile> {
     super.dispose();
     userEvent?.cancel();
     userEventMe?.cancel();
+  }
+
+  void setFollowerCount() {
+    FollowersDB.getFollowerCount(userModel.id).then((value) {
+      if (value != null) {
+        setState(() {
+          followerCount = value;
+        });
+      }
+    });
+  }
+
+  void setFollowCount() {
+    FollowersDB.getFollowCount(userModel.id).then((value) {
+      if (value != null) {
+        setState(() {
+          followCount = value;
+        });
+      }
+    });
   }
 
   Widget profileContent(BuildContext context) {
@@ -117,6 +143,55 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context).followers_profile,
+                        style: simpleTextStyle(
+                            Variables.fontSizeMedium, widget.darkTheme),
+                      ),
+                      Text(
+                        FollowersDB.convertFollowNumbers(
+                          context,
+                          followerCount,
+                        ),
+                        style: simpleTextStyle(
+                            Variables.fontSizeNormal, widget.darkTheme),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 40,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context).following_profile,
+                        style: simpleTextStyle(
+                            Variables.fontSizeMedium, widget.darkTheme),
+                      ),
+                      Text(
+                        FollowersDB.convertFollowNumbers(
+                          context,
+                          followCount,
+                        ),
+                        style: simpleTextStyle(
+                            Variables.fontSizeNormal, widget.darkTheme),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
             Center(
               child: Container(
                 padding: const EdgeInsets.only(
@@ -146,7 +221,7 @@ class _ProfileState extends State<Profile> {
                             context,
                             darkTheme: widget.darkTheme,
                             iconUrl: AImages.check,
-                            text: AppLocalizations.of(context).following,
+                            text: AppLocalizations.of(context).following_btn,
                             buttonStyle: ButtonStyleEnum.primaryButton,
                             width: MediaQuery.of(context).size.width - 20,
                             borderRadius: Variables.buttonRadiusRound,
@@ -174,11 +249,12 @@ class _ProfileState extends State<Profile> {
                                   final unfollowResult =
                                       await FollowersDB.unfollow(
                                           follower: user!.uid,
-                                          followed: userModel.id);
+                                          following: userModel.id);
                                   if (unfollowResult == null) {
                                     setState(() {
                                       isFollowing = false;
                                     });
+                                    setFollowerCount();
                                   }
                                 },
                                 actionNo: () {},
@@ -188,17 +264,18 @@ class _ProfileState extends State<Profile> {
                         : customButton(
                             context,
                             darkTheme: widget.darkTheme,
-                            text: AppLocalizations.of(context).follow,
+                            text: AppLocalizations.of(context).follow_btn,
                             buttonStyle: ButtonStyleEnum.secondaryButton,
                             width: MediaQuery.of(context).size.width - 20,
                             borderRadius: Variables.buttonRadiusRound,
                             action: () async {
                               final followResult = await FollowersDB.follow(
-                                  follower: user!.uid, followed: userModel.id);
+                                  follower: user!.uid, following: userModel.id);
                               if (followResult == null) {
                                 setState(() {
                                   isFollowing = true;
                                 });
+                                setFollowerCount();
                               }
                             },
                           ),

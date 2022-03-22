@@ -52,8 +52,13 @@
     "ok": "OK",
     "cancel": "Cancel",
     "edit_profile": "Edit Profile",
-    "follow": "Follow",
     "unfollow": "UnFollow",
     "unfollow_warn": "Are you sure you want to unfollow %s?",
-    "following": "Following"
+    "follow_btn": "Follow",
+    "following_btn": "Following",
+    "followers_profile": "Followers",
+    "following_profile": "Following",
+    "thousand_convert": "%sk",
+    "million_convert": "%sm",
+    "billion_convert": "%sb"
 }
