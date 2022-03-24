@@ -79,7 +79,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
         context,
         title: AppLocalizations.of(context).share,
         child: Text(
-          'Index 1: Paylaş',
+          'Paylaşım Sayfası',
           style: simpleTextStyle(Variables.fontSizeNormal, widget.darkTheme),
         ),
         showBackButton: false,
