@@ -5,7 +5,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sosyal/widgets/page_style.dart';
 
 import '../models/user.dart';
 import '../utils/assets.dart';
@@ -14,11 +13,12 @@ import '../utils/database/database.dart';
 import '../utils/database/followers_database.dart';
 import '../utils/database/user_database.dart';
 import '../utils/variables.dart';
+import '../utils/widget_drawer_model.dart';
 import '../widgets/buttons.dart';
 import '../widgets/images.dart';
-import '../widgets/menu.dart';
 import '../widgets/texts.dart';
 import '../widgets/widgets.dart';
+import 'bottom_navigation.dart';
 import 'edit_profile.dart';
 
 class Profile extends StatefulWidget {
@@ -306,14 +306,12 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     if (widget.showAppBar) {
-      return defaultScaffold(
-        context,
-        widget.darkTheme,
-        title: userModel.getUserName,
-        body: profileContent(context),
-        endDrawer: DrawerMenu(
-          darkTheme: widget.darkTheme,
-          showSettings: false,
+      return BottomNavigationPage(
+        darkTheme: widget.darkTheme,
+        widgetModel: WidgetModel(
+          context,
+          title: widget.username,
+          child: profileContent(context),
         ),
       );
     } else {

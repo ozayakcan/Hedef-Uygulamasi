@@ -31,12 +31,16 @@ MaterialApp homeMaterialApp(Widget page, bool darkTheme) {
 }
 
 PreferredSizeWidget defaultAppBar(
-    BuildContext context, String title, bool darkTheme) {
+  BuildContext context,
+  String title,
+  bool darkTheme,
+  bool showBackButton,
+) {
   return AppBar(
     iconTheme: IconThemeData(
       color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
     ),
-    leading: leadingBuilder(context),
+    leading: leadingBuilder(context, showBackButton),
     title: appBarTitle(
       title,
       darkTheme,
@@ -45,15 +49,19 @@ PreferredSizeWidget defaultAppBar(
   );
 }
 
-Builder leadingBuilder(BuildContext context) {
+Builder leadingBuilder(BuildContext context, bool showBackButton) {
   return Builder(
     builder: (context) {
       final ScaffoldState? scaffold = Scaffold.maybeOf(context);
       final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
       final bool hasEndDrawer = scaffold?.hasEndDrawer ?? false;
       final bool canPop = parentRoute?.canPop ?? false;
-      if ((hasEndDrawer && canPop) || canPop) {
-        return const BackButton();
+      if (showBackButton) {
+        if ((hasEndDrawer && canPop) || canPop) {
+          return const BackButton();
+        } else {
+          return const SizedBox.shrink();
+        }
       } else {
         return const SizedBox.shrink();
       }
@@ -102,6 +110,7 @@ Scaffold defaultScaffold(
   bool darkTheme, {
   required String title,
   required Widget body,
+  required bool showBackButton,
   Widget? floatingActionButton,
   Widget? endDrawer,
   BottomNavigationBar? bottomNavigationBar,
@@ -111,6 +120,7 @@ Scaffold defaultScaffold(
       context,
       title,
       darkTheme,
+      showBackButton,
     ),
     endDrawer: endDrawer,
     floatingActionButton: floatingActionButton,
