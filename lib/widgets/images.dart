@@ -6,7 +6,9 @@ Widget defaultProfileImage({double width = 100, double height = 100}) {
     width: width,
     height: height,
     child: CircleAvatar(
-      backgroundImage: AssetImage(AImages.profileImage),
+      backgroundImage: AssetImage(
+        AImages.profileImage,
+      ),
     ),
   );
 }

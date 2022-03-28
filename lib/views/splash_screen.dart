@@ -14,13 +14,7 @@ class SplashScreen extends StatelessWidget {
       return Scaffold(
         body: Center(
           child: Image.asset(
-            darkTheme
-                ? AImages.getAssetFolder(
-                    path: AImages.logoDark,
-                  )
-                : AImages.getAssetFolder(
-                    path: AImages.logo,
-                  ),
+            darkTheme ? AImages.logoDark : AImages.logo,
             height: 40,
             width: 40,
           ),

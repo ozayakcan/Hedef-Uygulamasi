@@ -331,11 +331,11 @@ CustomAuthButton customButton(
   required bool darkTheme,
   double? width,
   double? borderRadius,
-  String iconUrl = AImages.empty,
+  String? iconUrl,
   VoidCallback? action,
 }) {
   return CustomAuthButton(
-    iconUrl: iconUrl,
+    iconUrl: iconUrl ?? AImages.empty,
     style: buttonStyle == ButtonStyleEnum.primaryButton
         ? primaryButtonStyle(
             width ?? MediaQuery.of(context).size.width,
