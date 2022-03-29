@@ -60,5 +60,6 @@
     "following_profile": "Takip Edilen",
     "thousand_convert": "%sbin",
     "million_convert": "%smlyn",
-    "billion_convert": "%smlyr"
+    "billion_convert": "%smlyr",
+    "s_profile_image": "%s kullanıcısının fotoğrafı"
 }

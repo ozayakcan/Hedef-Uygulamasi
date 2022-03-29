@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 import '../models/user.dart';
 import '../utils/assets.dart';
 import '../utils/auth.dart';
-import '../utils/database/database.dart';
 import '../utils/database/followers_database.dart';
 import '../utils/database/user_database.dart';
+import '../utils/transitions.dart';
 import '../utils/variables.dart';
 import '../utils/widget_drawer_model.dart';
 import '../widgets/buttons.dart';
@@ -20,6 +20,7 @@ import '../widgets/texts.dart';
 import '../widgets/widgets.dart';
 import 'bottom_navigation.dart';
 import 'edit_profile.dart';
+import 'profile_image.dart';
 
 class Profile extends StatefulWidget {
   const Profile(
@@ -110,6 +111,20 @@ class _ProfileState extends State<Profile> {
     });
   }
 
+  void displayProfileImage(String username, String imageUrl) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => ProfileImage(
+          darkTheme: widget.darkTheme,
+          username: username,
+          imageUrl: imageUrl,
+        ),
+      ),
+    );
+  }
+
   Widget profileContent(BuildContext context) {
     if (userModel.id != "" && userModelMe.id != "") {
       return Container(
@@ -121,21 +136,24 @@ class _ProfileState extends State<Profile> {
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  userModel.profileImage == Database.defaultValue
-                      ? defaultProfileImage(
-                          darkTheme: widget.darkTheme,
-                          onPressed: () {},
-                        )
-                      : profileImage(
-                          userModel.profileImage,
-                          darkTheme: widget.darkTheme,
-                          onPressed: () {},
-                        ),
+                  Hero(
+                    tag: Transitions.profileImage,
+                    child: profileImage(
+                      userModel.profileImage,
+                      darkTheme: widget.darkTheme,
+                      rounded: true,
+                      onPressed: () {
+                        displayProfileImage(
+                            userModel.username, userModel.profileImage);
+                      },
+                    ),
+                  ),
                   if (userModel.id != "" &&
                       userModelMe.id != "" &&
                       userModel.id == userModelMe.id)
                     cameraIcon(
                       darkTheme: widget.darkTheme,
+                      rounded: true,
                       onPressed: () {},
                     ),
                 ],
