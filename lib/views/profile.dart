@@ -118,9 +118,28 @@ class _ProfileState extends State<Profile> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: userModel.profileImage == Database.defaultValue
-                  ? defaultProfileImage()
-                  : profileImage(userModel.profileImage),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  userModel.profileImage == Database.defaultValue
+                      ? defaultProfileImage(
+                          darkTheme: widget.darkTheme,
+                          onPressed: () {},
+                        )
+                      : profileImage(
+                          userModel.profileImage,
+                          darkTheme: widget.darkTheme,
+                          onPressed: () {},
+                        ),
+                  if (userModel.id != "" &&
+                      userModelMe.id != "" &&
+                      userModel.id == userModelMe.id)
+                    cameraIcon(
+                      darkTheme: widget.darkTheme,
+                      onPressed: () {},
+                    ),
+                ],
+              ),
             ),
             Center(
               child: Container(
