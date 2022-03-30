@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(
                     builder: (context) => Profile(
                       darkTheme: widget.darkTheme,
-                      username: "Hel7cFNt6FYN4f1CQExEu187GT92",
+                      username: "ozay_akcan",
                       showAppBar: true,
                     ),
                   ),
