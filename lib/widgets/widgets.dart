@@ -195,3 +195,26 @@ Future<void> defaultAlertbox(
     },
   );
 }
+
+loadingAlert(BuildContext context, bool darkTheme) {
+  AlertDialog alert = AlertDialog(
+    backgroundColor: darkTheme
+        ? ThemeColorDark.backgroundPrimary
+        : ThemeColor.backgroundPrimary,
+    elevation: 0,
+    content: SingleChildScrollView(
+      child: ListBody(
+        children: [
+          loadingRow(context, darkTheme),
+        ],
+      ),
+    ),
+  );
+  showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}

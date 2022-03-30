@@ -11,6 +11,7 @@ import '../utils/assets.dart';
 import '../utils/auth.dart';
 import '../utils/database/followers_database.dart';
 import '../utils/database/user_database.dart';
+import '../utils/storage.dart';
 import '../utils/transitions.dart';
 import '../utils/variables.dart';
 import '../utils/widget_drawer_model.dart';
@@ -47,6 +48,8 @@ class _ProfileState extends State<Profile> {
 
   int followerCount = 0;
   int followCount = 0;
+
+  bool alertDialogVisible = false;
 
   @override
   void initState() {
@@ -154,7 +157,53 @@ class _ProfileState extends State<Profile> {
                     cameraIcon(
                       darkTheme: widget.darkTheme,
                       rounded: true,
-                      onPressed: () {},
+                      onPressed: () {
+                        if (userModelMe.id == userModel.id) {
+                          UploadProfileImage(
+                            userModelMe.id,
+                            beforeUpload: () {
+                              if (!alertDialogVisible) {
+                                loadingAlert(context, widget.darkTheme);
+                                setState(() {
+                                  alertDialogVisible = true;
+                                });
+                              }
+                            },
+                            onError: () {
+                              if (alertDialogVisible) {
+                                Navigator.pop(context);
+                              }
+                              ScaffoldSnackbar.of(context).show(
+                                  AppLocalizations.of(context)
+                                      .an_error_occurred);
+                            },
+                            whenComplete: (downloadUrl) {
+                              UserDB.updateProfileImage(
+                                      userModel.id, downloadUrl)
+                                  .then((value) {
+                                if (alertDialogVisible) {
+                                  Navigator.pop(context);
+                                }
+                                if (value != null) {
+                                  ScaffoldSnackbar.of(context).show(
+                                      AppLocalizations.of(context)
+                                          .an_error_occurred);
+                                }
+                              });
+                            },
+                          ).fromGallery().then((value) {
+                            if (value != null) {
+                              if (kDebugMode) {
+                                if (value == "") {
+                                  print("Yükleme başarısız");
+                                } else {
+                                  print("Yükleme başarısız. Hata: " + value);
+                                }
+                              }
+                            }
+                          });
+                        }
+                      },
                     ),
                 ],
               ),

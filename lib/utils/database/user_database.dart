@@ -86,4 +86,17 @@ class UserDB {
         .equalTo(username)
         .limitToFirst(1);
   }
+
+  static Future updateProfileImage(String userID, String imageUrl) async {
+    try {
+      DatabaseReference reference =
+          getUserRef(userID).child(Database.profileImageString);
+      await reference.set(imageUrl);
+      return null;
+    } on FirebaseException catch (e) {
+      return e.message;
+    } catch (e) {
+      return e.toString();
+    }
+  }
 }
