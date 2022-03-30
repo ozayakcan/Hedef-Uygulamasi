@@ -4,21 +4,16 @@ import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../widgets/widgets.dart';
-import 'database/database.dart';
-import 'permissions.dart';
-
-typedef WhenComplete = void Function(String downloadUri);
-typedef BeforeUpload = void Function();
-typedef OnError = void Function();
+import '../../utils/permissions.dart';
+import '../../widgets/widgets.dart';
+import '../database/database.dart';
+import 'storage.dart';
 
 class UploadProfileImage {
-  final FirebaseStorage _storage = FirebaseStorage.instance;
-
   UploadProfileImage(
     this.context, {
     required this.userID,
@@ -50,7 +45,7 @@ class UploadProfileImage {
   OnError? onError;
 
   Reference profileImageRef(String fileName) {
-    return _storage
+    return Storage.storage
         .ref(Database.usersString +
             "/" +
             userID +

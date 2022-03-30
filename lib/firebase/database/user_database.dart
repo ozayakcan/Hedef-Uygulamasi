@@ -5,8 +5,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/user.dart';
+import '../../utils/shared_pref.dart';
 import '../auth.dart';
-import '../shared_pref.dart';
 import 'database.dart';
 
 class UserDB {

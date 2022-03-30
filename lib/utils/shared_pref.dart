@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../firebase/database/user_database.dart';
 import '../main.dart';
 import '../models/user.dart';
-import 'database/user_database.dart';
 
 class SharedPref {
   static String userInfoString = "userInfo";

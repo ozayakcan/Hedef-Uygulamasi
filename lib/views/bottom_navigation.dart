@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../firebase/auth.dart';
+import '../firebase/database/user_database.dart';
 import '../models/user.dart';
-import '../utils/auth.dart';
 import '../utils/colors.dart';
-import '../utils/database/user_database.dart';
 import '../utils/shared_pref.dart';
 import '../utils/variables.dart';
 import '../utils/widget_drawer_model.dart';

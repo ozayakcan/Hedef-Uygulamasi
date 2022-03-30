@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'errors.dart';
+import '../utils/errors.dart';
 
 class Auth {
   static final FirebaseAuth auth = FirebaseAuth.instance;

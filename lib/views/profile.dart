@@ -6,12 +6,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../firebase/auth.dart';
+import '../firebase/database/followers_database.dart';
+import '../firebase/database/user_database.dart';
+import '../firebase/storage/upload_profile_image.dart';
 import '../models/user.dart';
 import '../utils/assets.dart';
-import '../utils/auth.dart';
-import '../utils/database/followers_database.dart';
-import '../utils/database/user_database.dart';
-import '../utils/storage.dart';
 import '../utils/transitions.dart';
 import '../utils/variables.dart';
 import '../utils/widget_drawer_model.dart';

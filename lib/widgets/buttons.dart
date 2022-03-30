@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../firebase/auth.dart';
+import '../firebase/database/database.dart';
+import '../firebase/database/user_database.dart';
 import '../models/user.dart';
-import '../utils/auth.dart';
 import '../utils/colors.dart';
-import '../utils/database/database.dart';
-import '../utils/database/user_database.dart';
 import '../utils/assets.dart';
 import '../utils/variables.dart';
 import '../views/home.dart';

@@ -1,4 +1,4 @@
-import '../utils/database/database.dart';
+import '../firebase/database/database.dart';
 
 class UserModel {
   final String id;
