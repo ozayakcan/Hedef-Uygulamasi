@@ -159,8 +159,9 @@ class _ProfileState extends State<Profile> {
                       rounded: true,
                       onPressed: () {
                         if (userModelMe.id == userModel.id) {
-                          UploadProfileImage(
-                            userModelMe.id,
+                          UploadProfileImage.fromGallery(
+                            context,
+                            userID: userModelMe.id,
                             beforeUpload: () {
                               if (!alertDialogVisible) {
                                 loadingAlert(context, widget.darkTheme);
@@ -191,17 +192,7 @@ class _ProfileState extends State<Profile> {
                                 }
                               });
                             },
-                          ).fromGallery().then((value) {
-                            if (value != null) {
-                              if (kDebugMode) {
-                                if (value == "") {
-                                  print("Yükleme başarısız");
-                                } else {
-                                  print("Yükleme başarısız. Hata: " + value);
-                                }
-                              }
-                            }
-                          });
+                          );
                         }
                       },
                     ),
