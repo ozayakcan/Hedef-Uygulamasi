@@ -128,6 +128,24 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  void showLoadingAlert() {
+    if (!alertDialogVisible) {
+      loadingAlert(context, widget.darkTheme);
+      setState(() {
+        alertDialogVisible = true;
+      });
+    }
+  }
+
+  void closeLoadingAlert(BuildContext context) {
+    if (alertDialogVisible) {
+      Navigator.pop(context);
+      setState(() {
+        alertDialogVisible = false;
+      });
+    }
+  }
+
   Widget profileContent(BuildContext context) {
     if (userModel.id != "" && userModelMe.id != "") {
       return Container(
@@ -163,17 +181,10 @@ class _ProfileState extends State<Profile> {
                             context,
                             userID: userModelMe.id,
                             beforeUpload: () {
-                              if (!alertDialogVisible) {
-                                loadingAlert(context, widget.darkTheme);
-                                setState(() {
-                                  alertDialogVisible = true;
-                                });
-                              }
+                              showLoadingAlert();
                             },
                             onError: () {
-                              if (alertDialogVisible) {
-                                Navigator.pop(context);
-                              }
+                              closeLoadingAlert(context);
                               ScaffoldSnackbar.of(context).show(
                                   AppLocalizations.of(context)
                                       .an_error_occurred);
@@ -182,9 +193,7 @@ class _ProfileState extends State<Profile> {
                               UserDB.updateProfileImage(
                                       userModel.id, downloadUrl)
                                   .then((value) {
-                                if (alertDialogVisible) {
-                                  Navigator.pop(context);
-                                }
+                                closeLoadingAlert(context);
                                 if (value != null) {
                                   ScaffoldSnackbar.of(context).show(
                                       AppLocalizations.of(context)
