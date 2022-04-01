@@ -169,40 +169,34 @@ class _ProfileState extends State<Profile> {
                       },
                     ),
                   ),
-                  if (userModel.id != "" &&
-                      userModelMe.id != "" &&
-                      userModel.id == userModelMe.id)
+                  if (userModel.id == userModelMe.id)
                     cameraIcon(
                       darkTheme: widget.darkTheme,
                       rounded: true,
                       onPressed: () {
-                        if (userModelMe.id == userModel.id) {
-                          UploadProfileImage.fromGallery(
-                            context,
-                            userID: userModelMe.id,
-                            beforeUpload: () {
-                              showLoadingAlert();
-                            },
-                            onError: () {
+                        UploadProfileImage.fromGallery(
+                          context,
+                          userID: userModelMe.id,
+                          beforeUpload: () {
+                            showLoadingAlert();
+                          },
+                          onError: () {
+                            closeLoadingAlert(context);
+                            ScaffoldSnackbar.of(context).show(
+                                AppLocalizations.of(context).an_error_occurred);
+                          },
+                          whenComplete: (downloadUrl) {
+                            UserDB.updateProfileImage(userModel.id, downloadUrl)
+                                .then((value) {
                               closeLoadingAlert(context);
-                              ScaffoldSnackbar.of(context).show(
-                                  AppLocalizations.of(context)
-                                      .an_error_occurred);
-                            },
-                            whenComplete: (downloadUrl) {
-                              UserDB.updateProfileImage(
-                                      userModel.id, downloadUrl)
-                                  .then((value) {
-                                closeLoadingAlert(context);
-                                if (value != null) {
-                                  ScaffoldSnackbar.of(context).show(
-                                      AppLocalizations.of(context)
-                                          .an_error_occurred);
-                                }
-                              });
-                            },
-                          );
-                        }
+                              if (value != null) {
+                                ScaffoldSnackbar.of(context).show(
+                                    AppLocalizations.of(context)
+                                        .an_error_occurred);
+                              }
+                            });
+                          },
+                        );
                       },
                     ),
                 ],
