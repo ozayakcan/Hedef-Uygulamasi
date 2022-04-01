@@ -80,7 +80,11 @@ Widget cameraIcon({
     child: imageButton(
       darkTheme: darkTheme,
       rounded: rounded,
-      child: Icon(Icons.camera_alt_outlined, size: size),
+      child: Icon(
+        Icons.camera_alt_outlined,
+        size: size,
+        color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+      ),
       onPressed: onPressed,
     ),
   );
