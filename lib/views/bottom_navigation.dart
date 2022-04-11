@@ -79,7 +79,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
         context,
         title: AppLocalizations.of(context).share,
         child: Text(
-          'Paylaşım Sayfası',
+          'Favoriler',
           style: simpleTextStyle(Variables.fontSizeNormal, widget.darkTheme),
         ),
         showBackButton: false,
@@ -139,8 +139,8 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
                 : ThemeColor.backgroundSecondary,
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.add_circle_rounded),
-            label: AppLocalizations.of(context).share,
+            icon: const Icon(Icons.favorite_rounded),
+            label: AppLocalizations.of(context).favorites,
             backgroundColor: widget.darkTheme
                 ? ThemeColorDark.backgroundSecondary
                 : ThemeColor.backgroundSecondary,
