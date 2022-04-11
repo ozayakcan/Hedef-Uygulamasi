@@ -63,5 +63,7 @@
     "million_convert": "%smlyn",
     "billion_convert": "%smlyr",
     "s_profile_image": "%s kullanıcısının fotoğrafı",
-    "permissions_not_granted": "Gerekli izinler verilemedi. Lütfen tekrar deneyin."
+    "permissions_not_granted": "Gerekli izinler verilemedi. Lütfen tekrar deneyin.",
+    "on": "Açık",
+    "off": "Kapalı"
 }

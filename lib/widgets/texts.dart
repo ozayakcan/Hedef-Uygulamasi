@@ -17,6 +17,13 @@ TextStyle simpleTextStyle(double fontSize, bool darkTheme) {
   );
 }
 
+TextStyle simpleTextStyleSecondary(double fontSize, bool darkTheme) {
+  return TextStyle(
+    color: darkTheme ? ThemeColorDark.textSecondary : ThemeColor.textSecondary,
+    fontSize: fontSize,
+  );
+}
+
 TextStyle linktTextStyle(double fonstSize, bool darkTheme) {
   return TextStyle(
     color: darkTheme ? ThemeColorDark.buttonPrimary : ThemeColor.buttonPrimary,

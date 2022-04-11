@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../utils/widget_drawer_model.dart';
 import '../widgets/buttons.dart';
+import '../widgets/menu.dart';
 import 'bottom_navigation.dart';
 import 'profile.dart';
 
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BottomNavigationPage(
       darkTheme: widget.darkTheme,
+      menu: mainPopupMenu(context, darkTheme: widget.darkTheme),
       widgetModel: WidgetModel(
         context,
         title: AppLocalizations.of(context).app_name,

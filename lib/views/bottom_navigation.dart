@@ -14,7 +14,6 @@ import '../utils/colors.dart';
 import '../utils/shared_pref.dart';
 import '../utils/variables.dart';
 import '../utils/widget_drawer_model.dart';
-import '../widgets/menu.dart';
 import '../widgets/page_style.dart';
 import '../widgets/texts.dart';
 import 'profile.dart';
@@ -24,9 +23,11 @@ class BottomNavigationPage extends StatefulWidget {
     Key? key,
     required this.darkTheme,
     required this.widgetModel,
+    this.menu,
   }) : super(key: key);
 
   final bool darkTheme;
+  final Widget? menu;
   final WidgetModel widgetModel;
 
   @override
@@ -34,8 +35,6 @@ class BottomNavigationPage extends StatefulWidget {
 }
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   late User? user;
   StreamSubscription<DatabaseEvent>? userEvent;
   UserModel userModel = UserModel.empty();
@@ -121,7 +120,6 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
       context,
       widget.darkTheme,
       title: title,
-      key: scaffoldKey,
       showBackButton: homeNavigations(
         context,
         userModel.username,
@@ -132,9 +130,6 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
         userModel.username,
         widget.darkTheme,
       ).elementAt(selectedIndex).widget,
-      endDrawer: DrawerMenu(
-        darkTheme: widget.darkTheme,
-      ),
       actions: [
         IconButton(
           onPressed: null,
@@ -145,17 +140,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
                 : ThemeColor.textPrimary,
           ),
         ),
-        IconButton(
-          onPressed: () {
-            scaffoldKey.currentState?.openEndDrawer();
-          },
-          icon: Icon(
-            Icons.menu,
-            color: widget.darkTheme
-                ? ThemeColorDark.textPrimary
-                : ThemeColor.textPrimary,
-          ),
-        )
+        if (widget.menu != null) widget.menu!,
       ],
       bottomNavigationBar: BottomNavigationBar(
         items: [

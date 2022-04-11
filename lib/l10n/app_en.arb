@@ -63,5 +63,7 @@
     "million_convert": "%sm",
     "billion_convert": "%sb",
     "s_profile_image": "%s's picture",
-    "permissions_not_granted": "Required permissions not granted. Please try again."
+    "permissions_not_granted": "Required permissions not granted. Please try again.",
+    "on": "ON",
+    "off": "OFF"
 }

@@ -113,14 +113,11 @@ Scaffold defaultScaffold(
   required String title,
   required Widget body,
   required bool showBackButton,
-  Key? key,
   Widget? floatingActionButton,
-  Widget? endDrawer,
   BottomNavigationBar? bottomNavigationBar,
   List<Widget>? actions,
 }) {
   return Scaffold(
-    key: key,
     appBar: defaultAppBar(
       context,
       title,
@@ -128,7 +125,6 @@ Scaffold defaultScaffold(
       showBackButton,
       actions: actions,
     ),
-    endDrawer: endDrawer,
     floatingActionButton: floatingActionButton,
     bottomNavigationBar: bottomNavigationBar,
     body: body,
