@@ -34,8 +34,9 @@ PreferredSizeWidget defaultAppBar(
   BuildContext context,
   String title,
   bool darkTheme,
-  bool showBackButton,
-) {
+  bool showBackButton, {
+  List<Widget>? actions,
+}) {
   return AppBar(
     iconTheme: IconThemeData(
       color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
@@ -46,6 +47,7 @@ PreferredSizeWidget defaultAppBar(
       darkTheme,
     ),
     toolbarHeight: 50,
+    actions: actions,
   );
 }
 
@@ -111,16 +113,20 @@ Scaffold defaultScaffold(
   required String title,
   required Widget body,
   required bool showBackButton,
+  Key? key,
   Widget? floatingActionButton,
   Widget? endDrawer,
   BottomNavigationBar? bottomNavigationBar,
+  List<Widget>? actions,
 }) {
   return Scaffold(
+    key: key,
     appBar: defaultAppBar(
       context,
       title,
       darkTheme,
       showBackButton,
+      actions: actions,
     ),
     endDrawer: endDrawer,
     floatingActionButton: floatingActionButton,

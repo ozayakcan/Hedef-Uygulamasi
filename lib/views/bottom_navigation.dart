@@ -34,10 +34,13 @@ class BottomNavigationPage extends StatefulWidget {
 }
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
   late User? user;
   StreamSubscription<DatabaseEvent>? userEvent;
   UserModel userModel = UserModel.empty();
   late SharedPreferences sp;
+
   double size = 24;
 
   int selectedIndex = 0;
@@ -118,6 +121,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
       context,
       widget.darkTheme,
       title: title,
+      key: scaffoldKey,
       showBackButton: homeNavigations(
         context,
         userModel.username,
@@ -131,6 +135,28 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
       endDrawer: DrawerMenu(
         darkTheme: widget.darkTheme,
       ),
+      actions: [
+        IconButton(
+          onPressed: null,
+          icon: Icon(
+            Icons.search,
+            color: widget.darkTheme
+                ? ThemeColorDark.textPrimary
+                : ThemeColor.textPrimary,
+          ),
+        ),
+        IconButton(
+          onPressed: () {
+            scaffoldKey.currentState?.openEndDrawer();
+          },
+          icon: Icon(
+            Icons.menu,
+            color: widget.darkTheme
+                ? ThemeColorDark.textPrimary
+                : ThemeColor.textPrimary,
+          ),
+        )
+      ],
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
