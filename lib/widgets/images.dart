@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../utils/assets.dart';
 import '../utils/colors.dart';
 
-Widget profileImage(
+Widget profileImageButton(
   String path, {
   required bool darkTheme,
   required bool rounded,
@@ -16,29 +16,43 @@ Widget profileImage(
     darkTheme: darkTheme,
     rounded: rounded,
     onPressed: onPressed,
-    child: CachedNetworkImage(
-      imageUrl: path,
-      imageBuilder: (context, imageProvider) => profileImageWidget(
-        imageProvider: imageProvider,
-        width: width,
-        height: height,
-        rounded: rounded,
-      ),
-      placeholder: (context, url) => profileImageWidget(
-        imageProvider: defaultProfileImageProvider,
-        width: width,
-        height: height,
-        rounded: rounded,
-      ),
-      errorWidget: (context, url, error) => profileImageWidget(
-        imageProvider: defaultProfileImageProvider,
-        width: width,
-        height: height,
-        rounded: rounded,
-      ),
-      fadeInDuration: Duration.zero,
-      fadeOutDuration: Duration.zero,
+    child: profileImage(
+      path,
+      rounded: rounded,
+      width: width,
+      height: height,
     ),
+  );
+}
+
+Widget profileImage(
+  String path, {
+  required bool rounded,
+  double width = 100,
+  double height = 100,
+}) {
+  return CachedNetworkImage(
+    imageUrl: path,
+    imageBuilder: (context, imageProvider) => profileImageWidget(
+      imageProvider: imageProvider,
+      width: width,
+      height: height,
+      rounded: rounded,
+    ),
+    placeholder: (context, url) => profileImageWidget(
+      imageProvider: defaultProfileImageProvider,
+      width: width,
+      height: height,
+      rounded: rounded,
+    ),
+    errorWidget: (context, url, error) => profileImageWidget(
+      imageProvider: defaultProfileImageProvider,
+      width: width,
+      height: height,
+      rounded: rounded,
+    ),
+    fadeInDuration: Duration.zero,
+    fadeOutDuration: Duration.zero,
   );
 }
 

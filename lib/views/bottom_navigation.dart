@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sosyal/widgets/images.dart';
 
 import '../firebase/auth.dart';
 import '../firebase/database/user_database.dart';
@@ -37,6 +38,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   StreamSubscription<DatabaseEvent>? userEvent;
   UserModel userModel = UserModel.empty();
   late SharedPreferences sp;
+  double size = 24;
 
   int selectedIndex = 0;
   String title = "";
@@ -132,21 +134,38 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
-            icon: const Icon(Icons.home_rounded),
+            icon: SizedBox(
+              width: size,
+              height: size,
+              child: const Icon(Icons.home_rounded),
+            ),
             label: AppLocalizations.of(context).home,
             backgroundColor: widget.darkTheme
                 ? ThemeColorDark.backgroundSecondary
                 : ThemeColor.backgroundSecondary,
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.favorite_rounded),
+            icon: SizedBox(
+              width: size,
+              height: size,
+              child: const Icon(Icons.favorite_rounded),
+            ),
             label: AppLocalizations.of(context).favorites,
             backgroundColor: widget.darkTheme
                 ? ThemeColorDark.backgroundSecondary
                 : ThemeColor.backgroundSecondary,
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.account_circle_rounded),
+            icon: SizedBox(
+              width: size,
+              height: size,
+              child: profileImage(
+                userModel.profileImage,
+                rounded: true,
+                width: size,
+                height: size,
+              ),
+            ),
             label: AppLocalizations.of(context).profile,
             backgroundColor: widget.darkTheme
                 ? ThemeColorDark.backgroundSecondary

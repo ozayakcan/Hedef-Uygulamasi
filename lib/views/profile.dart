@@ -159,7 +159,7 @@ class _ProfileState extends State<Profile> {
                 children: [
                   Hero(
                     tag: Transitions.profileImage,
-                    child: profileImage(
+                    child: profileImageButton(
                       userModel.profileImage,
                       darkTheme: widget.darkTheme,
                       rounded: true,
