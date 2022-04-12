@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sosyal/models/user.dart';
 
 import '../utils/colors.dart';
 import '../utils/shared_pref.dart';
 import '../utils/variables.dart';
+import '../views/profile.dart';
+import 'images.dart';
 import 'texts.dart';
 
 class ScaffoldSnackbar {
@@ -216,5 +219,50 @@ loadingAlert(BuildContext context, bool darkTheme) {
     builder: (BuildContext context) {
       return alert;
     },
+  );
+}
+
+Widget profileColumn(
+  BuildContext context, {
+  required bool darkTheme,
+  required UserModel user,
+}) {
+  return InkWell(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Profile(
+            darkTheme: darkTheme,
+            username: user.username,
+            showAppBar: true,
+          ),
+        ),
+      );
+    },
+    child: Padding(
+      padding: const EdgeInsets.all(2),
+      child: Row(
+        children: [
+          profileImage(user.profileImage, rounded: true, width: 50, height: 50),
+          const SizedBox(
+            width: 5,
+          ),
+          Column(
+            children: [
+              Text(
+                user.name,
+                style: simpleTextStyle(Variables.fontSizeMedium, darkTheme),
+              ),
+              Text(
+                user.getUserNameAt,
+                style: simpleTextStyleSecondary(
+                    Variables.fontSizeMedium, darkTheme),
+              ),
+            ],
+          )
+        ],
+      ),
+    ),
   );
 }

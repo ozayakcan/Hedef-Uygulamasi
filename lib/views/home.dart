@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sosyal/models/user.dart';
+import 'package:sosyal/widgets/widgets.dart';
 
 import '../utils/widget_drawer_model.dart';
-import '../widgets/buttons.dart';
 import '../widgets/menu.dart';
 import 'bottom_navigation.dart';
-import 'profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -20,6 +20,22 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    UserModel testUser1 = UserModel(
+      "id",
+      "email",
+      "ozayakcan",
+      "Özay Akcan",
+      DateTime.now(),
+      "https://firebasestorage.googleapis.com/v0/b/sosyal-medya-uygulamasi-1.appspot.com/o/Users%2FbicWYJLkUbau5NvJTzbG2HCqHAi2%2FprofileImage%2F1649754187737.jpg?alt=media&token=6a80e2dd-f860-4bc9-9466-643d79139c5a",
+    );
+    UserModel testUser2 = UserModel(
+      "id",
+      "email",
+      "ozay_akcan",
+      "Özay Akcan",
+      DateTime.now(),
+      "https://firebasestorage.googleapis.com/v0/b/sosyal-medya-uygulamasi-1.appspot.com/o/Users%2Fhz1G0hdalkWfbqyzHsOgP9KWuCq2%2FprofileImage%2F1649754098492.jpg?alt=media&token=0a0c42cd-188b-48ab-adb8-7727db1523a4",
+    );
     return BottomNavigationPage(
       darkTheme: widget.darkTheme,
       menu: mainPopupMenu(context, darkTheme: widget.darkTheme),
@@ -28,45 +44,13 @@ class _HomePageState extends State<HomePage> {
         title: AppLocalizations.of(context).app_name,
         child: Column(
           children: [
-            customButton(
-              context,
-              text: "Örnek Profil 1",
-              buttonStyle: ButtonStyleEnum.primaryButton,
-              darkTheme: widget.darkTheme,
-              action: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Profile(
-                      darkTheme: widget.darkTheme,
-                      username: "ozay_akcan",
-                      showAppBar: true,
-                    ),
-                  ),
-                );
-              },
-            ),
+            profileColumn(context,
+                darkTheme: widget.darkTheme, user: testUser1),
             const SizedBox(
               height: 10,
             ),
-            customButton(
-              context,
-              text: "Örnek Profil 2",
-              buttonStyle: ButtonStyleEnum.primaryButton,
-              darkTheme: widget.darkTheme,
-              action: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Profile(
-                      darkTheme: widget.darkTheme,
-                      username: "ozayakcan",
-                      showAppBar: true,
-                    ),
-                  ),
-                );
-              },
-            ),
+            profileColumn(context,
+                darkTheme: widget.darkTheme, user: testUser2),
           ],
         ),
       ),

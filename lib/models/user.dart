@@ -59,4 +59,5 @@ class UserModel {
       ];
 
   String get getUserName => "(@" + username + ")";
+  String get getUserNameAt => "@" + username;
 }
