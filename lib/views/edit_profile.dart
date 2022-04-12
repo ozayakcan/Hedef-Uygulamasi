@@ -20,6 +20,7 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return BottomNavigationPage(
       darkTheme: widget.darkTheme,
+      showSearchbar: false,
       widgetModel: WidgetModel(
         context,
         title: AppLocalizations.of(context).edit_profile,

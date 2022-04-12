@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
     );
     return BottomNavigationPage(
       darkTheme: widget.darkTheme,
+      showSearchbar: true,
       menu: mainPopupMenu(context, darkTheme: widget.darkTheme),
       widgetModel: WidgetModel(
         context,

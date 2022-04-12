@@ -22,11 +22,13 @@ class BottomNavigationPage extends StatefulWidget {
   const BottomNavigationPage({
     Key? key,
     required this.darkTheme,
+    required this.showSearchbar,
     required this.widgetModel,
     this.menu,
   }) : super(key: key);
 
   final bool darkTheme;
+  final bool showSearchbar;
   final Widget? menu;
   final WidgetModel widgetModel;
 
@@ -131,15 +133,16 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
         widget.darkTheme,
       ).elementAt(selectedIndex).widget,
       actions: [
-        IconButton(
-          onPressed: null,
-          icon: Icon(
-            Icons.search,
-            color: widget.darkTheme
-                ? ThemeColorDark.textPrimary
-                : ThemeColor.textPrimary,
+        if (widget.showSearchbar)
+          IconButton(
+            onPressed: null,
+            icon: Icon(
+              Icons.search,
+              color: widget.darkTheme
+                  ? ThemeColorDark.textPrimary
+                  : ThemeColor.textPrimary,
+            ),
           ),
-        ),
         if (widget.menu != null) widget.menu!,
       ],
       bottomNavigationBar: BottomNavigationBar(

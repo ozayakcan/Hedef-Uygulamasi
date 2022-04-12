@@ -20,6 +20,7 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return BottomNavigationPage(
       darkTheme: widget.darkTheme,
+      showSearchbar: false,
       widgetModel: WidgetModel(
         context,
         title: AppLocalizations.of(context).settings,

@@ -388,6 +388,7 @@ class _ProfileState extends State<Profile> {
     if (widget.showAppBar) {
       return BottomNavigationPage(
         darkTheme: widget.darkTheme,
+        showSearchbar: true,
         widgetModel: WidgetModel(
           context,
           title: widget.username,
