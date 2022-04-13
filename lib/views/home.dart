@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:sosyal/models/user.dart';
-import 'package:sosyal/widgets/widgets.dart';
 
-import '../utils/widget_drawer_model.dart';
+import '../models/user.dart';
+import '../models/widget.dart';
 import '../widgets/menu.dart';
+import '../widgets/widgets.dart';
 import 'bottom_navigation.dart';
 
 class HomePage extends StatefulWidget {

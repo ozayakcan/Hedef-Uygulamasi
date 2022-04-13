@@ -65,5 +65,8 @@
     "s_profile_image": "%s's picture",
     "permissions_not_granted": "Required permissions not granted. Please try again.",
     "on": "ON",
-    "off": "OFF"
+    "off": "OFF",
+    "remove_query": "Remove Query",
+    "remove_query_desc": "Are you sure you want o delete this query? \nThe query will be removed after you close the search box.",
+    "remove_query_success": "The query will be removed after you close the search box."
 }

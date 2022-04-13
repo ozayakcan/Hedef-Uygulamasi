@@ -14,7 +14,7 @@ import '../models/user.dart';
 import '../utils/assets.dart';
 import '../utils/transitions.dart';
 import '../utils/variables.dart';
-import '../utils/widget_drawer_model.dart';
+import '../models/widget.dart';
 import '../widgets/buttons.dart';
 import '../widgets/images.dart';
 import '../widgets/texts.dart';
@@ -64,7 +64,8 @@ class _ProfileState extends State<Profile> {
         });
       }
     });
-    userEvent = UserDB.getUserQuery(widget.username).onValue.listen((event) {
+    userEvent =
+        UserDB.getUserQueryByUsername(widget.username).onValue.listen((event) {
       if (event.snapshot.exists) {
         if (kDebugMode) {
           print(event.snapshot.children.first.value.toString());

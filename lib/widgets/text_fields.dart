@@ -19,7 +19,6 @@ TextField customTextField(BuildContext context, bool darkTheme,
     maxLength: maxLength,
     textInputAction:
         nextFocus != null ? TextInputAction.next : TextInputAction.done,
-    cursorColor: darkTheme ? ThemeColorDark.cursor : ThemeColor.cursor,
     style: TextStyle(
       color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
     ),

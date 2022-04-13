@@ -15,6 +15,7 @@ import '../utils/variables.dart';
 import '../views/home.dart';
 import '../views/login.dart';
 import 'text_fields.dart';
+import 'texts.dart';
 import 'widgets.dart';
 
 AuthButtonStyle defaultAuthButtonStyle(
@@ -369,4 +370,41 @@ enum ButtonStyleEnum {
   defaultButton,
   primaryButton,
   secondaryButton,
+}
+
+Widget searchSuggestion(
+  BuildContext context, {
+  required String text,
+  required bool darkTheme,
+  VoidCallback? onPressed,
+  VoidCallback? onLongPressed,
+}) {
+  return InkWell(
+    onTap: onPressed,
+    onLongPress: onLongPressed,
+    child: Container(
+      padding: EdgeInsets.symmetric(
+          vertical: Variables.paddingDefault,
+          horizontal: Variables.paddingNormal),
+      width: MediaQuery.of(context).size.width,
+      height: 50,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            text,
+            style: simpleTextStyle(Variables.fontSizeMedium, darkTheme),
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          Icon(
+            Icons.history_outlined,
+            color:
+                darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+          ),
+        ],
+      ),
+    ),
+  );
 }

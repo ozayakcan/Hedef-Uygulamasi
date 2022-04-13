@@ -5,15 +5,16 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sosyal/widgets/images.dart';
 
 import '../firebase/auth.dart';
 import '../firebase/database/user_database.dart';
 import '../models/user.dart';
 import '../utils/colors.dart';
+import '../utils/search.dart';
 import '../utils/shared_pref.dart';
 import '../utils/variables.dart';
-import '../utils/widget_drawer_model.dart';
+import '../models/widget.dart';
+import '../widgets/images.dart';
 import '../widgets/page_style.dart';
 import '../widgets/texts.dart';
 import 'profile.dart';
@@ -135,7 +136,12 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
       actions: [
         if (widget.showSearchbar)
           IconButton(
-            onPressed: null,
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: MySearchDelegate(widget.darkTheme, userModel.id),
+              );
+            },
             icon: Icon(
               Icons.search,
               color: widget.darkTheme

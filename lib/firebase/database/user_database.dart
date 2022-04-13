@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/user.dart';
@@ -80,11 +81,33 @@ class UserDB {
     return Database.getReference(Database.usersString + "/" + userid);
   }
 
-  static Query getUserQuery(String username) {
+  static Query getUserQueryByUsername(String username) {
     return Database.getReference(Database.usersString)
         .orderByChild(Database.usernameString)
         .equalTo(username)
         .limitToFirst(1);
+  }
+
+  static Query getUserQueryByID(String userid) {
+    return Database.getReference(Database.usersString).child(userid);
+  }
+
+  static Future<List<UserModel>> getUsersFromID(List<String> ids) async {
+    List<UserModel> list = [];
+    try {
+      for (final id in ids) {
+        DatabaseEvent databaseEvent = await UserDB.getUserQueryByID(id).once();
+        if (databaseEvent.snapshot.exists) {
+          final json = databaseEvent.snapshot.value as Map<dynamic, dynamic>;
+          list.add(UserModel.fromJson(json));
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("Kullanıcılar getirilemedi! Hata: " + e.toString());
+      }
+    }
+    return list;
   }
 
   static Future updateProfileImage(String userID, String imageUrl) async {
@@ -98,5 +121,9 @@ class UserDB {
     } catch (e) {
       return e.toString();
     }
+  }
+
+  static DatabaseReference getAllUsersRef() {
+    return Database.getReference(Database.usersString);
   }
 }

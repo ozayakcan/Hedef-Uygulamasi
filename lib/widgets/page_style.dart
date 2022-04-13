@@ -17,6 +17,18 @@ MaterialApp homeMaterialApp(Widget page, bool darkTheme) {
           ? ThemeColorDark.backgroundSecondary
           : ThemeColor.backgroundSecondary,
       visualDensity: VisualDensity.adaptivePlatformDensity,
+      inputDecorationTheme: InputDecorationTheme(
+        hintStyle:
+            simpleTextStyleSecondary(Variables.fontSizeNormal, darkTheme),
+      ),
+      textTheme: TextTheme(
+        headline6: simpleTextStyle(Variables.fontSizeNormal, darkTheme),
+      ),
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: darkTheme ? ThemeColorDark.cursor : ThemeColor.cursor,
+        selectionColor:
+            darkTheme ? ThemeColorDark.selection : ThemeColor.selection,
+      ),
     ),
     localizationsDelegates: const [
       AppLocalizations.delegate,

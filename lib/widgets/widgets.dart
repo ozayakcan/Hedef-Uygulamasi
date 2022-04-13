@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:sosyal/models/user.dart';
 
+import '../models/user.dart';
 import '../utils/colors.dart';
 import '../utils/shared_pref.dart';
 import '../utils/variables.dart';
@@ -226,9 +226,14 @@ Widget profileColumn(
   BuildContext context, {
   required bool darkTheme,
   required UserModel user,
+  String query = "",
+  VoidCallback? beforeClicked,
 }) {
   return InkWell(
     onTap: () {
+      if (beforeClicked != null) {
+        beforeClicked();
+      }
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -241,7 +246,7 @@ Widget profileColumn(
       );
     },
     child: Padding(
-      padding: const EdgeInsets.all(2),
+      padding: EdgeInsets.all(Variables.paddingDefault),
       child: Row(
         children: [
           profileImage(user.profileImage, rounded: true, width: 50, height: 50),
@@ -249,15 +254,21 @@ Widget profileColumn(
             width: 5,
           ),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
+              highlightTextWidget(
                 user.name,
+                query,
+                darkTheme: darkTheme,
                 style: simpleTextStyle(Variables.fontSizeMedium, darkTheme),
               ),
-              Text(
+              highlightTextWidget(
                 user.getUserNameAt,
-                style: simpleTextStyleSecondary(
-                    Variables.fontSizeMedium, darkTheme),
+                query,
+                darkTheme: darkTheme,
+                style: simpleTextStyle(Variables.fontSizeMedium, darkTheme),
               ),
             ],
           )

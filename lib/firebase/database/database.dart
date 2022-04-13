@@ -14,6 +14,11 @@ class Database {
   static String followersString = "Followers";
   static String followingString = "Following";
 
+  static String searchLogString = "SearchLogs";
+  static String queryString = "query";
+
+  static String dateString = "date";
+
   static String keyString = "key";
 
   static String defaultValue = "default";

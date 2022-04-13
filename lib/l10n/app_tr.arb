@@ -65,5 +65,8 @@
     "s_profile_image": "%s kullanıcısının fotoğrafı",
     "permissions_not_granted": "Gerekli izinler verilemedi. Lütfen tekrar deneyin.",
     "on": "Açık",
-    "off": "Kapalı"
+    "off": "Kapalı",
+    "remove_query": "Arama Terimini Kaldır",
+    "remove_query_desc": "Bu arama terimini kaldırmak istediğinize emin misiniz? \nArama terimi siz arama kutusunu kapatana kadar silinmeyecek.",
+    "remove_query_success": "Arama terimi siz arama kutusunu kapatana kadar silinmeyecek."
 }

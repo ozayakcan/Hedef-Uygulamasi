@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../utils/variables.dart';
-import '../utils/widget_drawer_model.dart';
+import '../models/widget.dart';
 import '../widgets/texts.dart';
 import 'bottom_navigation.dart';
 

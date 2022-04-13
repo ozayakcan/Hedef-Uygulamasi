@@ -16,7 +16,6 @@ class ThemeColor {
       900: Colors.white,
     },
   );
-
   static const MaterialColor backgroundSecondary = MaterialColor(
     0xFFECECEC,
     <int, Color>{
@@ -32,7 +31,6 @@ class ThemeColor {
       900: Color(0xFFECECEC),
     },
   );
-
   static const MaterialColor textPrimary = MaterialColor(
     0xFF000000,
     <int, Color>{
@@ -48,7 +46,6 @@ class ThemeColor {
       900: Colors.black,
     },
   );
-
   static const MaterialColor textSecondary = MaterialColor(
     0xDD000000,
     <int, Color>{
@@ -77,6 +74,21 @@ class ThemeColor {
       700: Colors.grey,
       800: Colors.grey,
       900: Colors.grey,
+    },
+  );
+  static const MaterialColor selection = MaterialColor(
+    0x1F000000,
+    <int, Color>{
+      50: Colors.black12,
+      100: Colors.black12,
+      200: Colors.black12,
+      300: Colors.black12,
+      400: Colors.black12,
+      500: Colors.black12,
+      600: Colors.black12,
+      700: Colors.black12,
+      800: Colors.black12,
+      900: Colors.black12,
     },
   );
   static const MaterialColor buttonPrimary = MaterialColor(
@@ -124,7 +136,6 @@ class ThemeColor {
       900: Color(0xFF03002e),
     },
   );
-
   static const MaterialColor buttonBorder = MaterialColor(
     0x42000000,
     <int, Color>{
@@ -140,7 +151,6 @@ class ThemeColor {
       900: Colors.black26,
     },
   );
-
   static const MaterialColor buttonSplash = MaterialColor(
     0x1F000000,
     <int, Color>{
@@ -189,7 +199,6 @@ class ThemeColorDark {
       900: Colors.black87,
     },
   );
-
   static const MaterialColor backgroundSecondary = MaterialColor(
     0x8A000000,
     <int, Color>{
@@ -205,7 +214,6 @@ class ThemeColorDark {
       900: Colors.black54,
     },
   );
-
   static const MaterialColor textPrimary = MaterialColor(
     0xFFFFFFFF,
     <int, Color>{
@@ -221,7 +229,6 @@ class ThemeColorDark {
       900: Colors.white,
     },
   );
-
   static const MaterialColor textSecondary = MaterialColor(
     0xB3FFFFFF,
     <int, Color>{
@@ -250,6 +257,21 @@ class ThemeColorDark {
       700: Colors.white,
       800: Colors.white,
       900: Colors.white,
+    },
+  );
+  static const MaterialColor selection = MaterialColor(
+    0x1AFFFFFF,
+    <int, Color>{
+      50: Colors.white10,
+      100: Colors.white10,
+      200: Colors.white10,
+      300: Colors.white10,
+      400: Colors.white10,
+      500: Colors.white10,
+      600: Colors.white10,
+      700: Colors.white10,
+      800: Colors.white10,
+      900: Colors.white10,
     },
   );
   static const MaterialColor buttonPrimary = MaterialColor(
@@ -297,7 +319,6 @@ class ThemeColorDark {
       900: Color(0xFF3A3A3A),
     },
   );
-
   static const MaterialColor buttonBorder = MaterialColor(
     0x42000000,
     <int, Color>{
@@ -313,7 +334,6 @@ class ThemeColorDark {
       900: Colors.black26,
     },
   );
-
   static const MaterialColor buttonSplash = MaterialColor(
     0x1F000000,
     <int, Color>{
