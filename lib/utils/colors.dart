@@ -181,6 +181,21 @@ class ThemeColor {
       900: Colors.white,
     },
   );
+  static const MaterialColor link = MaterialColor(
+    0xFF448AFF,
+    <int, Color>{
+      50: Colors.blueAccent,
+      100: Colors.blueAccent,
+      200: Colors.blueAccent,
+      300: Colors.blueAccent,
+      400: Colors.blueAccent,
+      500: Colors.blueAccent,
+      600: Colors.blueAccent,
+      700: Colors.blueAccent,
+      800: Colors.blueAccent,
+      900: Colors.blueAccent,
+    },
+  );
 }
 
 class ThemeColorDark {
@@ -362,6 +377,21 @@ class ThemeColorDark {
       700: Color(0xFF1F1F1F),
       800: Color(0xFF1F1F1F),
       900: Color(0xFF1F1F1F),
+    },
+  );
+  static const MaterialColor link = MaterialColor(
+    0xFF448AFF,
+    <int, Color>{
+      50: Colors.blueAccent,
+      100: Colors.blueAccent,
+      200: Colors.blueAccent,
+      300: Colors.blueAccent,
+      400: Colors.blueAccent,
+      500: Colors.blueAccent,
+      600: Colors.blueAccent,
+      700: Colors.blueAccent,
+      800: Colors.blueAccent,
+      900: Colors.blueAccent,
     },
   );
 }

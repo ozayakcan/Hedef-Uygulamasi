@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:sosyal/utils/time.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../models/user.dart';
 import '../utils/colors.dart';
@@ -276,4 +279,173 @@ Widget profileColumn(
       ),
     ),
   );
+}
+
+Widget post(
+  BuildContext context, {
+  required UserModel userModel,
+  required String postKey,
+  required String content,
+  required DateTime dateTime,
+  required bool darkTheme,
+  required int favoriteCount,
+  required int commentCount,
+  bool showProfileImage = true,
+}) {
+  return Column(
+    children: [
+      Row(
+        children: [
+          if (showProfileImage) const SizedBox(width: 5),
+          if (showProfileImage)
+            profileImage(userModel.profileImage,
+                rounded: true, width: 50, height: 50),
+          const SizedBox(width: 5),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Profile(
+                              username: userModel.username,
+                              darkTheme: darkTheme,
+                              showAppBar: true,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        userModel.name,
+                        style:
+                            linktTextStyle(Variables.fontSizeMedium, darkTheme),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      ConvertAgo.of(context).format(dateTime),
+                      style: simpleTextStyleSecondary(
+                          Variables.fontSizeNormal, darkTheme),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 2,
+                ),
+                SelectableLinkify(
+                  onOpen: (link) {
+                    onLinkOpen(context, link);
+                  },
+                  text: content,
+                  style: simpleTextStyle(Variables.fontSizeNormal, darkTheme),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 5),
+        ],
+      ),
+      const SizedBox(
+        height: 5,
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            AppLocalizations.of(context).s_favorite.replaceAll(
+                  "%s",
+                  favoriteCount.toString(),
+                ),
+            style:
+                simpleTextStyleSecondary(Variables.fontSizeNormal, darkTheme),
+          ),
+          const SizedBox(width: 10),
+          Text(
+            AppLocalizations.of(context).s_comment.replaceAll(
+                  "%s",
+                  commentCount.toString(),
+                ),
+            style:
+                simpleTextStyleSecondary(Variables.fontSizeNormal, darkTheme),
+          ),
+          const SizedBox(width: 5),
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          TextButton(
+            onPressed: () {
+              ScaffoldSnackbar.of(context).show("Favori");
+            },
+            child: Row(
+              children: [
+                Icon(
+                  Icons.favorite,
+                  color: darkTheme
+                      ? ThemeColorDark.textSecondary
+                      : ThemeColor.textSecondary,
+                  size: Variables.iconSizeMedium,
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  AppLocalizations.of(context).favorite_btn,
+                  style: simpleTextStyle(Variables.fontSizeMedium, darkTheme),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          TextButton(
+            onPressed: () {
+              ScaffoldSnackbar.of(context).show("Yorum Yap");
+            },
+            child: Row(
+              children: [
+                Icon(
+                  Icons.comment,
+                  color: darkTheme
+                      ? ThemeColorDark.textSecondary
+                      : ThemeColor.textSecondary,
+                  size: Variables.iconSizeMedium,
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  AppLocalizations.of(context).comment_btn,
+                  style: simpleTextStyle(Variables.fontSizeMedium, darkTheme),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 5),
+        ],
+      )
+    ],
+  );
+}
+
+Future<void> onLinkOpen(BuildContext context, LinkableElement link) async {
+  if (await canLaunch(link.url)) {
+    await launch(link.url);
+  } else {
+    ScaffoldSnackbar.of(context)
+        .show(AppLocalizations.of(context).can_not_open_links);
+  }
 }

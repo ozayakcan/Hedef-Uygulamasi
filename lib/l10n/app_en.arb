@@ -68,5 +68,22 @@
     "off": "OFF",
     "remove_query": "Remove Query",
     "remove_query_desc": "Are you sure you want o delete this query? \nThe query will be removed after you close the search box.",
-    "remove_query_success": "The query will be removed after you close the search box."
+    "remove_query_success": "The query will be removed after you close the search box.",
+    "can_not_open_links": "Can't open links!",
+    "favorite_btn": "Favorite",
+    "comment_btn": "Comment",
+    "s_favorite": "%s favorite",
+    "s_comment": "%s comment",
+    "just_now": "just now",
+    "i_minutes_ago": "%i minutes ago",
+    "an_hour_ago": "an hour ago",
+    "h_hours_ago": "%h hours ago",
+    "date_time_format": "%n, %m/%d/%y %h:%i",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday"
 }

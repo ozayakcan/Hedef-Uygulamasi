@@ -68,5 +68,22 @@
     "off": "Kapalı",
     "remove_query": "Arama Terimini Kaldır",
     "remove_query_desc": "Bu arama terimini kaldırmak istediğinize emin misiniz? \nArama terimi siz arama kutusunu kapatana kadar silinmeyecek.",
-    "remove_query_success": "Arama terimi siz arama kutusunu kapatana kadar silinmeyecek."
+    "remove_query_success": "Arama terimi siz arama kutusunu kapatana kadar silinmeyecek.",
+    "can_not_open_links": "Bağlantılar açılamıyor!",
+    "favorite_btn": "Favori",
+    "comment_btn": "Yorum Yap",
+    "s_favorite": "%s favori",
+    "s_comment": "%s yorum",
+    "just_now": "az önce",
+    "i_minutes_ago": "%i dakika önce",
+    "an_hour_ago": "bir saat önce",
+    "h_hours_ago": "%h saat önce",
+    "date_time_format": "%n, %d/%m/%y %h:%i",
+    "monday": "Pazartesi",
+    "tuesday": "Salı",
+    "wednesday": "Çarşamba",
+    "thursday": "Perşembe",
+    "friday": "Cuma",
+    "saturday": "Cumartesi",
+    "sunday": "Pazar"
 }

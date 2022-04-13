@@ -45,13 +45,24 @@ class _HomePageState extends State<HomePage> {
         title: AppLocalizations.of(context).app_name,
         child: Column(
           children: [
-            profileColumn(context,
-                darkTheme: widget.darkTheme, user: testUser1),
-            const SizedBox(
-              height: 10,
+            //profileColumn(context,
+            //    darkTheme: widget.darkTheme, user: testUser1),
+            //const SizedBox(
+            //  height: 10,
+            //),
+            //profileColumn(context,
+            //    darkTheme: widget.darkTheme, user: testUser2),
+            post(
+              context,
+              userModel: testUser1,
+              postKey: "asdasd",
+              content:
+                  "Merhaba https://ozayakcan.com.tr adresimi ziyaret ettiniz mi? Etmediyseniz bir şans verin",
+              dateTime: DateTime.now(),
+              darkTheme: widget.darkTheme,
+              favoriteCount: 5,
+              commentCount: 10,
             ),
-            profileColumn(context,
-                darkTheme: widget.darkTheme, user: testUser2),
           ],
         ),
       ),

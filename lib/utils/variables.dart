@@ -7,6 +7,8 @@ class Variables {
   static const double buttonIconSizeDefault = 30;
   static double buttonIconSizeSmall = 20;
 
+  static double iconSizeMedium = 17;
+
   static double paddingDefault = 2;
   static double paddingNormal = 5;
 

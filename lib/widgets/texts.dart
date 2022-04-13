@@ -34,7 +34,7 @@ TextStyle simpleTextStyleBold(bool darkTheme) {
 
 TextStyle linktTextStyle(double fonstSize, bool darkTheme) {
   return TextStyle(
-    color: darkTheme ? ThemeColorDark.buttonPrimary : ThemeColor.buttonPrimary,
+    color: darkTheme ? ThemeColorDark.link : ThemeColor.link,
     fontSize: fonstSize,
   );
 }
