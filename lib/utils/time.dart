@@ -29,11 +29,11 @@ class ConvertAgo {
       return AppLocalizations.of(context)
           .date_time_format
           .replaceAll("%n", getDayLocalization(dateTime.weekday))
-          .replaceAll("%m", dateTime.month.toString())
-          .replaceAll("%d", dateTime.day.toString())
-          .replaceAll("%y", dateTime.year.toString())
-          .replaceAll("%h", dateTime.hour.toString())
-          .replaceAll("%i", dateTime.minute.toString());
+          .replaceAll("%m", displayTime(dateTime.month))
+          .replaceAll("%d", displayTime(dateTime.day))
+          .replaceAll("%y", displayTime(dateTime.year))
+          .replaceAll("%h", displayTime(dateTime.hour))
+          .replaceAll("%i", displayTime(dateTime.minute));
     }
   }
 
@@ -55,6 +55,14 @@ class ConvertAgo {
         return AppLocalizations.of(context).sunday;
       default:
         return AppLocalizations.of(context).monday;
+    }
+  }
+
+  String displayTime(int time) {
+    if (time < 10) {
+      return "0" + time.toString();
+    } else {
+      return time.toString();
     }
   }
 }
