@@ -290,14 +290,14 @@ Widget post(
   required bool darkTheme,
   required int favoriteCount,
   required int commentCount,
-  bool showProfileImage = true,
+  bool inProfile = false,
 }) {
   return Column(
     children: [
       Row(
         children: [
-          if (showProfileImage) const SizedBox(width: 5),
-          if (showProfileImage)
+          if (!inProfile) const SizedBox(width: 5),
+          if (!inProfile)
             profileImage(userModel.profileImage,
                 rounded: true, width: 50, height: 50),
           const SizedBox(width: 5),
@@ -305,38 +305,45 @@ Widget post(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Profile(
-                              username: userModel.username,
-                              darkTheme: darkTheme,
-                              showAppBar: true,
-                            ),
+                TextButton(
+                  onPressed: () {
+                    if (!inProfile) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Profile(
+                            username: userModel.username,
+                            darkTheme: darkTheme,
+                            showAppBar: true,
                           ),
-                        );
-                      },
-                      child: Text(
+                        ),
+                      );
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Text(
                         userModel.name,
                         style:
                             linktTextStyle(Variables.fontSizeMedium, darkTheme),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      ConvertAgo.of(context).format(dateTime),
-                      style: simpleTextStyleSecondary(
-                          Variables.fontSizeNormal, darkTheme),
-                    ),
-                  ],
+                      if (!inProfile)
+                        const SizedBox(
+                          width: 2,
+                        ),
+                      if (!inProfile)
+                        Text(
+                          userModel.getUserName,
+                          style: simpleTextStyleSecondary(
+                              Variables.fontSizeNormal, darkTheme),
+                        ),
+                    ],
+                  ),
+                ),
+                Text(
+                  ConvertTime.of(context).elapsed(dateTime),
+                  style: simpleTextStyleSecondary(
+                      Variables.fontSizeNormal, darkTheme),
                 ),
                 const SizedBox(
                   height: 2,

@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ConvertAgo {
-  ConvertAgo(this.context);
+class ConvertTime {
+  ConvertTime(this.context);
 
-  static ConvertAgo of(BuildContext context) {
-    return ConvertAgo(context);
+  static ConvertTime of(BuildContext context) {
+    return ConvertTime(context);
   }
 
   final BuildContext context;
-  String format(DateTime dateTime) {
+  String elapsed(DateTime dateTime) {
     int timeSub =
         DateTime.now().millisecondsSinceEpoch - dateTime.millisecondsSinceEpoch;
 

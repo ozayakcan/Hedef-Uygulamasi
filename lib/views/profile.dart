@@ -106,7 +106,7 @@ class _ProfileState extends State<Profile> {
         darkTheme: widget.darkTheme,
         favoriteCount: 0,
         commentCount: 0,
-        showProfileImage: false,
+        inProfile: true,
       ));
     }
     setState(() {
