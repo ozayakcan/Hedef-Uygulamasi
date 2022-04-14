@@ -8,8 +8,10 @@ import 'package:flutter/material.dart';
 
 import '../firebase/auth.dart';
 import '../firebase/database/followers_database.dart';
+import '../firebase/database/posts_database.dart';
 import '../firebase/database/user_database.dart';
 import '../firebase/storage/upload_profile_image.dart';
+import '../models/post.dart';
 import '../models/user.dart';
 import '../utils/assets.dart';
 import '../utils/transitions.dart';
@@ -39,7 +41,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  late User? user;
+  User user = Auth.user;
   StreamSubscription<DatabaseEvent>? userEvent;
   StreamSubscription<DatabaseEvent>? userEventMe;
   UserModel userModel = UserModel.empty();
@@ -51,12 +53,13 @@ class _ProfileState extends State<Profile> {
 
   bool alertDialogVisible = false;
 
+  List<Post> posts = [];
+  List<Widget> postsWidget = [];
+  bool postsLoaded = false;
+
   @override
   void initState() {
-    setState(() {
-      user = Auth.user;
-    });
-    userEventMe = UserDB.getUserRef(user!.uid).onValue.listen((event) {
+    userEventMe = UserDB.getUserRef(user.uid).onValue.listen((event) {
       if (event.snapshot.exists) {
         final json = event.snapshot.value as Map<dynamic, dynamic>;
         setState(() {
@@ -75,7 +78,7 @@ class _ProfileState extends State<Profile> {
         setState(() {
           userModel = UserModel.fromJson(json);
         });
-        FollowersDB.checkFollowing(follower: user!.uid, following: userModel.id)
+        FollowersDB.checkFollowing(follower: user.uid, following: userModel.id)
             .then((value) {
           setState(() {
             isFollowing = value;
@@ -83,9 +86,33 @@ class _ProfileState extends State<Profile> {
         });
         setFollowerCount();
         setFollowCount();
+
+        loadPosts();
       }
     });
     super.initState();
+  }
+
+  void loadPosts() async {
+    posts = Post.sort(await PostsDB.getPosts(userModel.id));
+    List<Widget> tempPostsWidget = [];
+    for (final postData in posts) {
+      tempPostsWidget.add(post(
+        context,
+        userModel: postData.userModel,
+        postKey: postData.key,
+        content: postData.content,
+        dateTime: postData.date,
+        darkTheme: widget.darkTheme,
+        favoriteCount: 0,
+        commentCount: 0,
+        showProfileImage: false,
+      ));
+    }
+    setState(() {
+      postsWidget = tempPostsWidget;
+      postsLoaded = true;
+    });
   }
 
   @override
@@ -278,7 +305,7 @@ class _ProfileState extends State<Profile> {
                 padding: const EdgeInsets.only(
                   top: 10,
                 ),
-                child: user!.uid == userModel.id
+                child: user.uid == userModel.id
                     ? customButton(
                         context,
                         darkTheme: widget.darkTheme,
@@ -329,7 +356,7 @@ class _ProfileState extends State<Profile> {
                                 actionYes: () async {
                                   final unfollowResult =
                                       await FollowersDB.unfollow(
-                                          follower: user!.uid,
+                                          follower: user.uid,
                                           following: userModel.id);
                                   if (unfollowResult == null) {
                                     setState(() {
@@ -351,7 +378,7 @@ class _ProfileState extends State<Profile> {
                             borderRadius: Variables.buttonRadiusRound,
                             action: () async {
                               final followResult = await FollowersDB.follow(
-                                  follower: user!.uid, following: userModel.id);
+                                  follower: user.uid, following: userModel.id);
                               if (followResult == null) {
                                 setState(() {
                                   isFollowing = true;
@@ -366,13 +393,13 @@ class _ProfileState extends State<Profile> {
               padding: const EdgeInsets.only(
                 top: 10,
               ),
-              child: Text(
-                "Paylaşımlar",
-                style: simpleTextStyle(
-                  Variables.fontSizeMedium,
-                  widget.darkTheme,
-                ),
-              ),
+              child: postsLoaded
+                  ? postsWidget.isNotEmpty
+                      ? Column(
+                          children: postsWidget,
+                        )
+                      : Container()
+                  : loadingRow(context, widget.darkTheme),
             ),
           ],
         ),

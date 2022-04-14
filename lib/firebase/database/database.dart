@@ -17,6 +17,9 @@ class Database {
   static String searchLogString = "SearchLogs";
   static String queryString = "query";
 
+  static String postsString = "Posts";
+  static String contentString = "content";
+
   static String dateString = "date";
 
   static String keyString = "key";
