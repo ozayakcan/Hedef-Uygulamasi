@@ -50,7 +50,7 @@ class MySearchDelegate extends SearchDelegate {
             List<Widget> searchList = [];
             for (final userModel in snapshot.data!) {
               searchList.add(
-                profileColumn(
+                profilePreview(
                   context,
                   darkTheme: darkTheme,
                   user: userModel,

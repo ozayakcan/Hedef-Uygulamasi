@@ -227,7 +227,7 @@ loadingAlert(BuildContext context, bool darkTheme) {
   );
 }
 
-Widget profileColumn(
+Widget profilePreview(
   BuildContext context, {
   required bool darkTheme,
   required UserModel user,
@@ -259,8 +259,8 @@ Widget profileColumn(
             width: 5,
           ),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
               highlightTextWidget(
@@ -298,19 +298,28 @@ Widget post(
     children: [
       Row(
         children: [
-          if (!inProfile) const SizedBox(width: 5),
-          if (!inProfile)
-            profileImage(userModel.profileImage,
-                rounded: true, width: 50, height: 50),
-          const SizedBox(width: 5),
+          const SizedBox(width: 1),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    TextButton(
-                      onPressed: () {
+                    if (!inProfile) const SizedBox(width: 5),
+                    if (!inProfile)
+                      profileImage(
+                        userModel.profileImage,
+                        rounded: true,
+                        width: 20,
+                        height: 20,
+                      ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    InkWell(
+                      onTap: () {
                         if (!inProfile) {
                           Navigator.push(
                             context,
@@ -327,11 +336,11 @@ Widget post(
                       child: Text(
                         userModel.username,
                         style:
-                            linktTextStyle(Variables.fontSizeMedium, darkTheme),
+                            linktTextStyle(Variables.fontSizeNormal, darkTheme),
                       ),
                     ),
                     const SizedBox(
-                      width: 2,
+                      width: 5,
                     ),
                     Text(
                       Time.of(context).elapsed(dateTime),
@@ -353,7 +362,7 @@ Widget post(
               ],
             ),
           ),
-          const SizedBox(width: 5),
+          const SizedBox(width: 1),
         ],
       ),
       const SizedBox(
