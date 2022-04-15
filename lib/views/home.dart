@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  void loadPosts() async {
+  Future<void> loadPosts() async {
     posts = await PostsDB.getFollowingPost(user.uid);
     posts.addAll(await PostsDB.getPosts(user.uid));
     posts = Post.sort(posts);
@@ -55,6 +55,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  final ScrollController scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     //UserModel testUser1 = UserModel(
@@ -88,10 +89,12 @@ class _HomePageState extends State<HomePage> {
       widgetModel: WidgetModel(
         context,
         title: AppLocalizations.of(context).app_name,
+        showScrollView: false,
         child: postsLoaded
             ? postsWidget.isNotEmpty
-                ? Column(
-                    children: postsWidget,
+                ? refreshableListView(
+                    widgetList: postsWidget,
+                    onRefresh: loadPosts,
                   )
                 : Container()
             : loadingRow(context, widget.darkTheme),

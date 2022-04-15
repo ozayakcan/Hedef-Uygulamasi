@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
@@ -455,4 +457,38 @@ Future<void> onLinkOpen(BuildContext context, LinkableElement link) async {
     ScaffoldSnackbar.of(context)
         .show(AppLocalizations.of(context).can_not_open_links);
   }
+}
+
+class MyScrollBehavior extends MaterialScrollBehavior {
+  // Override behavior methods and getters like dragDevices
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+      };
+}
+
+Widget refreshableListView({
+  required List<Widget> widgetList,
+  required Future<void> Function() onRefresh,
+  required,
+  ScrollController? controller,
+}) {
+  return RefreshIndicator(
+    onRefresh: onRefresh,
+    child: ScrollConfiguration(
+      behavior: MyScrollBehavior(),
+      child: ListView.builder(
+        controller: controller,
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
+        itemCount: widgetList.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: widgetList[index],
+          );
+        },
+      ),
+    ),
+  );
 }
