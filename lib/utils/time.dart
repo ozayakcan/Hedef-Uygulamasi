@@ -12,19 +12,22 @@ class ConvertTime {
   String elapsed(DateTime dateTime) {
     int timeSub =
         DateTime.now().millisecondsSinceEpoch - dateTime.millisecondsSinceEpoch;
-
-    if (timeSub < (60 * 2)) {
+    int second = 1000;
+    int minute = second * 60;
+    int hour = minute * 60;
+    int day = hour * 24;
+    if (timeSub < minute) {
       return AppLocalizations.of(context).just_now;
-    } else if (timeSub >= (60 * 2) && timeSub < (60 * 60)) {
+    } else if (timeSub >= minute && timeSub < hour) {
       return AppLocalizations.of(context)
           .i_minutes_ago
-          .replaceAll("%i", (timeSub / 60).toString());
-    } else if (timeSub >= (60 * 60) && timeSub < (60 * 60 * 2)) {
+          .replaceAll("%i", (timeSub ~/ minute).toString());
+    } else if (timeSub >= hour && timeSub < hour * 2) {
       return AppLocalizations.of(context).an_hour_ago;
-    } else if (timeSub >= (60 * 60 * 2) && timeSub < (60 * 60 * 24)) {
+    } else if (timeSub >= hour * 2 && timeSub < day) {
       return AppLocalizations.of(context)
           .h_hours_ago
-          .replaceAll("%h", (timeSub / (60 * 60)).toString());
+          .replaceAll("%h", (timeSub ~/ hour).toString());
     } else {
       return AppLocalizations.of(context)
           .date_time_format
