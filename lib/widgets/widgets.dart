@@ -307,45 +307,38 @@ Widget post(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextButton(
-                  onPressed: () {
-                    if (!inProfile) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Profile(
-                            username: userModel.username,
-                            darkTheme: darkTheme,
-                            showAppBar: true,
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                  child: Row(
-                    children: [
-                      Text(
-                        userModel.name,
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        if (!inProfile) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Profile(
+                                username: userModel.username,
+                                darkTheme: darkTheme,
+                                showAppBar: true,
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                      child: Text(
+                        userModel.username,
                         style:
                             linktTextStyle(Variables.fontSizeMedium, darkTheme),
                       ),
-                      if (!inProfile)
-                        const SizedBox(
-                          width: 2,
-                        ),
-                      if (!inProfile)
-                        Text(
-                          userModel.getUserName,
-                          style: simpleTextStyleSecondary(
-                              Variables.fontSizeNormal, darkTheme),
-                        ),
-                    ],
-                  ),
-                ),
-                Text(
-                  ConvertTime.of(context).elapsed(dateTime),
-                  style: simpleTextStyleSecondary(
-                      Variables.fontSizeNormal, darkTheme),
+                    ),
+                    const SizedBox(
+                      width: 2,
+                    ),
+                    Text(
+                      ConvertTime.of(context).elapsed(dateTime),
+                      style: simpleTextStyleSecondary(
+                          Variables.fontSizeNormal, darkTheme),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 2,
