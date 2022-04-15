@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ConvertTime {
-  ConvertTime(this.context);
+class Time {
+  Time(this.context);
 
-  static ConvertTime of(BuildContext context) {
-    return ConvertTime(context);
+  static Time of(BuildContext context) {
+    return Time(context);
   }
 
   final BuildContext context;
   String elapsed(DateTime dateTime) {
-    int timeSub =
-        DateTime.now().millisecondsSinceEpoch - dateTime.millisecondsSinceEpoch;
+    int timeSub = Time.getTimeUtc().millisecondsSinceEpoch -
+        dateTime.millisecondsSinceEpoch;
     int second = 1000;
     int minute = second * 60;
     int hour = minute * 60;
@@ -66,6 +66,24 @@ class ConvertTime {
       return "0" + time.toString();
     } else {
       return time.toString();
+    }
+  }
+
+  static DateTime getTimeUtc() {
+    return DateTime.now().toUtc();
+  }
+
+  static DateTime getLocal() {
+    return DateTime.now().toLocal();
+  }
+
+  static DateTime toLocal({DateTime? time, String? timeString}) {
+    if (time != null) {
+      return time.toLocal();
+    } else if (timeString != null) {
+      return DateTime.parse(timeString).toLocal();
+    } else {
+      return getLocal();
     }
   }
 }

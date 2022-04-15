@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/user.dart';
 import '../../utils/shared_pref.dart';
+import '../../utils/time.dart';
 import '../auth.dart';
 import 'database.dart';
 
@@ -54,7 +55,7 @@ class UserDB {
         if (value != null) {
           if (value == false) {
             UserModel userModel = UserModel(user.uid, user.email!, user.uid,
-                user.displayName!, DateTime.now(), Database.defaultValue);
+                user.displayName!, Time.getTimeUtc(), Database.defaultValue);
             addUser(userModel).then((value) {});
           }
         }

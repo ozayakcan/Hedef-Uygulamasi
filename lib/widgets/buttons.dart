@@ -11,6 +11,7 @@ import '../firebase/database/user_database.dart';
 import '../models/user.dart';
 import '../utils/colors.dart';
 import '../utils/assets.dart';
+import '../utils/time.dart';
 import '../utils/variables.dart';
 import '../views/home.dart';
 import '../views/login.dart';
@@ -211,7 +212,7 @@ CustomAuthButton registerBtn(
                           email.text,
                           username.text,
                           name.text,
-                          DateTime.now(),
+                          Time.getTimeUtc(),
                           Database.defaultValue,
                         );
                         UserDB.addUser(userModel).then((value) {

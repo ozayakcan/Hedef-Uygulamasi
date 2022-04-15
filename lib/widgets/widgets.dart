@@ -334,7 +334,7 @@ Widget post(
                       width: 2,
                     ),
                     Text(
-                      ConvertTime.of(context).elapsed(dateTime),
+                      Time.of(context).elapsed(dateTime),
                       style: simpleTextStyleSecondary(
                           Variables.fontSizeNormal, darkTheme),
                     ),

@@ -1,4 +1,5 @@
 import '../firebase/database/database.dart';
+import '../utils/time.dart';
 
 class UserModel {
   final String id;
@@ -21,7 +22,7 @@ class UserModel {
         email = "",
         username = "",
         name = "",
-        registeredDate = DateTime.now(),
+        registeredDate = Time.getTimeUtc(),
         profileImage = Database.defaultValue;
 
   UserModel.fromJson(Map<dynamic, dynamic> json)
@@ -29,8 +30,8 @@ class UserModel {
         email = json[Database.emailString] as String,
         username = json[Database.usernameString] as String,
         name = json[Database.nameString] as String,
-        registeredDate =
-            DateTime.parse(json[Database.registeredDateString] as String),
+        registeredDate = Time.toLocal(
+            timeString: json[Database.registeredDateString] as String),
         profileImage = json[Database.profileImageString] as String;
 
   Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
@@ -47,7 +48,7 @@ class UserModel {
         email = list[1],
         username = list[2],
         name = list[3],
-        registeredDate = DateTime.parse(list[4]),
+        registeredDate = Time.toLocal(timeString: list[4]),
         profileImage = list[5];
   List<String> toList() => [
         id,

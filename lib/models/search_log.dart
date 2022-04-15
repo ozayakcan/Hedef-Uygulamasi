@@ -1,4 +1,5 @@
 import '../firebase/database/database.dart';
+import '../utils/time.dart';
 
 class SearchLogModel {
   final String key;
@@ -13,12 +14,12 @@ class SearchLogModel {
   SearchLogModel.empty()
       : key = "",
         query = "",
-        date = DateTime.now();
+        date = Time.getTimeUtc();
 
   SearchLogModel.fromJson(Map<dynamic, dynamic> json)
       : key = json[Database.keyString] as String,
         query = json[Database.queryString] as String,
-        date = DateTime.parse(json[Database.dateString] as String);
+        date = Time.toLocal(timeString: json[Database.dateString] as String);
 
   Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
         Database.keyString: key,

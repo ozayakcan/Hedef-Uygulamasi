@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../utils/permissions.dart';
+import '../../utils/time.dart';
 import '../../widgets/widgets.dart';
 import '../database/database.dart';
 import 'storage.dart';
@@ -70,7 +71,7 @@ class UploadProfileImage {
       final imagePicker = ImagePicker();
       XFile? image = await imagePicker.pickImage(source: ImageSource.gallery);
       String fileName =
-          DateTime.now().millisecondsSinceEpoch.toString() + ".jpg";
+          Time.getTimeUtc().millisecondsSinceEpoch.toString() + ".jpg";
       beforeUpload?.call();
       if (image != null) {
         UploadTask task;

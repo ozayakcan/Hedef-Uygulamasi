@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../models/search_log.dart';
 import '../../models/user.dart';
+import '../../utils/time.dart';
 import 'database.dart';
 import 'user_database.dart';
 
@@ -22,7 +23,7 @@ class SearchDB {
         String key = getLogsRef(userid).push().key!;
         DatabaseReference databaseReference = getLogsRef(userid).child(key);
         await databaseReference.set(
-            SearchLogModel(key, searchStr.toLowerCase(), DateTime.now())
+            SearchLogModel(key, searchStr.toLowerCase(), Time.getTimeUtc())
                 .toJson());
       }
       return null;

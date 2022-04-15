@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
     //  "email",
     //  "ozayakcan",
     //  "Özay Akcan",
-    //  DateTime.now(),
+    //  Time.getTimeUtc(),
     //  "https://firebasestorage.googleapis.com/v0/b/sosyal-medya-uygulamasi-1.appspot.com/o/Users%2FbicWYJLkUbau5NvJTzbG2HCqHAi2%2FprofileImage%2F1649754187737.jpg?alt=media&token=6a80e2dd-f860-4bc9-9466-643d79139c5a",
     //);
     //UserModel testUser2 = UserModel(
@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
     //  "email",
     //  "ozay_akcan",
     //  "Özay Akcan",
-    //  DateTime.now(),
+    //  Time.getTimeUtc(),
     //  "https://firebasestorage.googleapis.com/v0/b/sosyal-medya-uygulamasi-1.appspot.com/o/Users%2Fhz1G0hdalkWfbqyzHsOgP9KWuCq2%2FprofileImage%2F1649754098492.jpg?alt=media&token=0a0c42cd-188b-48ab-adb8-7727db1523a4",
     //);
     //profileColumn(context,

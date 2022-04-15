@@ -1,4 +1,5 @@
 import '../firebase/database/database.dart';
+import '../utils/time.dart';
 import 'user.dart';
 
 class Post {
@@ -16,12 +17,12 @@ class Post {
   Post.empty()
       : key = "",
         content = "",
-        date = DateTime.now();
+        date = Time.getTimeUtc();
 
   Post.fromJson(Map<dynamic, dynamic> json)
       : key = json[Database.keyString] as String,
         content = json[Database.contentString] as String,
-        date = DateTime.parse(json[Database.dateString] as String);
+        date = Time.toLocal(timeString: json[Database.dateString] as String);
 
   Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
         Database.keyString: key,
