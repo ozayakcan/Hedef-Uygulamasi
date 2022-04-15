@@ -1,9 +1,11 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 import '../../models/key.dart';
 import '../../models/post.dart';
 import '../../models/user.dart';
+import '../../widgets/widgets.dart';
 import 'database.dart';
 import 'followers_database.dart';
 import 'user_database.dart';
@@ -41,12 +43,7 @@ class PostsDB {
         final jsonUser = userEvent.snapshot.value as Map<dynamic, dynamic>;
         UserModel userModel = UserModel.fromJson(jsonUser);
         DatabaseEvent postsEvent = await getPostsRef(userid).once();
-        for (final postsChild in postsEvent.snapshot.children) {
-          final jsonPost = postsChild.value as Map<dynamic, dynamic>;
-          Post post = Post.fromJson(jsonPost);
-          post.userModel = userModel;
-          posts.add(post);
-        }
+        posts.addAll(getPostFromDBEvent(postsEvent, userModel));
       }
       return posts;
     } catch (e) {
@@ -55,5 +52,47 @@ class PostsDB {
       }
       return posts;
     }
+  }
+
+  static List<Post> getPostFromDBEvent(
+      DatabaseEvent postsEvent, UserModel userModel) {
+    List<Post> posts = [];
+    for (final postsChild in postsEvent.snapshot.children) {
+      final jsonPost = postsChild.value as Map<dynamic, dynamic>;
+      Post post = Post.fromJson(jsonPost);
+      post.userModel = userModel;
+      posts.add(post);
+    }
+    return posts;
+  }
+
+  static Future<List<Widget>> getPostsAsWidgets(
+    BuildContext context, {
+    required String userid,
+    required bool darkTheme,
+    bool inProfile = false,
+    bool includeFollowing = true,
+  }) async {
+    List<Post> postsOrj = [];
+    postsOrj.addAll(await PostsDB.getPosts(userid));
+    if (includeFollowing) {
+      postsOrj.addAll(await PostsDB.getFollowingPost(userid));
+    }
+    List<Post> sortedPosts = Post.sort(postsOrj);
+    List<Widget> tempPostsWidget = [];
+    for (final postData in sortedPosts) {
+      tempPostsWidget.add(post(
+        context,
+        userModel: postData.userModel,
+        postKey: postData.key,
+        content: postData.content,
+        dateTime: postData.date,
+        darkTheme: darkTheme,
+        favoriteCount: 0,
+        commentCount: 0,
+        inProfile: inProfile,
+      ));
+    }
+    return tempPostsWidget;
   }
 }

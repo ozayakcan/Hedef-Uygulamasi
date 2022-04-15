@@ -11,7 +11,6 @@ import '../firebase/database/followers_database.dart';
 import '../firebase/database/posts_database.dart';
 import '../firebase/database/user_database.dart';
 import '../firebase/storage/upload_profile_image.dart';
-import '../models/post.dart';
 import '../models/user.dart';
 import '../utils/assets.dart';
 import '../utils/transitions.dart';
@@ -53,7 +52,6 @@ class _ProfileState extends State<Profile> {
 
   bool alertDialogVisible = false;
 
-  List<Post> posts = [];
   List<Widget> postsWidget = [];
   bool postsLoaded = false;
 
@@ -94,21 +92,13 @@ class _ProfileState extends State<Profile> {
   }
 
   void loadPosts() async {
-    posts = Post.sort(await PostsDB.getPosts(userModel.id));
-    List<Widget> tempPostsWidget = [];
-    for (final postData in posts) {
-      tempPostsWidget.add(post(
-        context,
-        userModel: postData.userModel,
-        postKey: postData.key,
-        content: postData.content,
-        dateTime: postData.date,
-        darkTheme: widget.darkTheme,
-        favoriteCount: 0,
-        commentCount: 0,
-        inProfile: true,
-      ));
-    }
+    List<Widget> tempPostsWidget = await PostsDB.getPostsAsWidgets(
+      context,
+      userid: userModel.id,
+      darkTheme: widget.darkTheme,
+      includeFollowing: false,
+      inProfile: true,
+    );
     setState(() {
       postsWidget = tempPostsWidget;
       postsLoaded = true;

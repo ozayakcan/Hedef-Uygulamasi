@@ -4,7 +4,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../firebase/auth.dart';
 import '../firebase/database/posts_database.dart';
-import '../models/post.dart';
 import '../models/widget.dart';
 import '../widgets/menu.dart';
 import '../widgets/widgets.dart';
@@ -22,7 +21,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   User user = Auth.user;
-  List<Post> posts = [];
   List<Widget> postsWidget = [];
   bool postsLoaded = false;
 
@@ -33,22 +31,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> loadPosts() async {
-    posts = await PostsDB.getFollowingPost(user.uid);
-    posts.addAll(await PostsDB.getPosts(user.uid));
-    posts = Post.sort(posts);
-    List<Widget> tempPostsWidget = [];
-    for (final postData in posts) {
-      tempPostsWidget.add(post(
-        context,
-        userModel: postData.userModel,
-        postKey: postData.key,
-        content: postData.content,
-        dateTime: postData.date,
-        darkTheme: widget.darkTheme,
-        favoriteCount: 0,
-        commentCount: 0,
-      ));
-    }
+    List<Widget> tempPostsWidget = await PostsDB.getPostsAsWidgets(
+      context,
+      userid: user.uid,
+      darkTheme: widget.darkTheme,
+    );
     setState(() {
       postsWidget = tempPostsWidget;
       postsLoaded = true;
