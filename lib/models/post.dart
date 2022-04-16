@@ -4,11 +4,13 @@ import 'user.dart';
 
 class Post {
   UserModel userModel = UserModel.empty();
+  final String userid;
   final String key;
   final String content;
   final DateTime date;
   Post(
     this.userModel,
+    this.userid,
     this.key,
     this.content,
     this.date,
@@ -16,16 +18,19 @@ class Post {
 
   Post.empty()
       : key = "",
+        userid = "",
         content = "",
         date = Time.getTimeUtc();
 
   Post.fromJson(Map<dynamic, dynamic> json)
       : key = json[Database.keyString] as String,
+        userid = json[Database.useridString] as String,
         content = json[Database.contentString] as String,
         date = Time.toLocal(timeString: json[Database.dateString] as String);
 
   Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
         Database.keyString: key,
+        Database.useridString: userid,
         Database.contentString: content,
         Database.dateString: date.toString(),
       };

@@ -444,12 +444,6 @@ class _ToolTipButtonState extends State<ToolTipButton> {
   Color? color;
 
   @override
-  void initState() {
-    color = normalColor();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Tooltip(
       message: widget.tooltip,

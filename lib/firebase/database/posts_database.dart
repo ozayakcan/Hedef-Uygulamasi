@@ -11,8 +11,24 @@ import 'followers_database.dart';
 import 'user_database.dart';
 
 class PostsDB {
-  static DatabaseReference getPostsRef(String userid) {
-    return Database.getReference(Database.postsString).child(userid);
+  static Query getPostsQuery(String userid) {
+    return Database.getReference(Database.postsString)
+        .orderByChild(Database.useridString)
+        .equalTo(userid);
+  }
+
+  static DatabaseReference getFavoritesRef(String postKey) {
+    return Database.getReference(Database.favoritesString).child(postKey);
+  }
+
+  static DatabaseReference favoritedRef(String postKey, String userid) {
+    return Database.getReference(Database.favoritesString)
+        .child(postKey)
+        .child(userid);
+  }
+
+  static DatabaseReference getCommentsRef(String postKey) {
+    return Database.getReference(Database.commentsString).child(postKey);
   }
 
   static Future<List<Post>> getFollowingPost(String userid) async {
@@ -42,7 +58,7 @@ class PostsDB {
       if (userEvent.snapshot.exists) {
         final jsonUser = userEvent.snapshot.value as Map<dynamic, dynamic>;
         UserModel userModel = UserModel.fromJson(jsonUser);
-        DatabaseEvent postsEvent = await getPostsRef(userid).once();
+        DatabaseEvent postsEvent = await getPostsQuery(userid).once();
         posts.addAll(getPostFromDBEvent(postsEvent, userModel));
       }
       return posts;
@@ -81,15 +97,12 @@ class PostsDB {
     List<Post> sortedPosts = Post.sort(postsOrj);
     List<Widget> tempPostsWidget = [];
     for (final postData in sortedPosts) {
-      tempPostsWidget.add(post(
-        context,
+      tempPostsWidget.add(PostWidget(
         userModel: postData.userModel,
         postKey: postData.key,
         content: postData.content,
         dateTime: postData.date,
         darkTheme: darkTheme,
-        favoriteCount: 0,
-        commentCount: 0,
         inProfile: inProfile,
       ));
     }

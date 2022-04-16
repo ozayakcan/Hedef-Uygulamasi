@@ -1,29 +1,29 @@
 import '../firebase/database/database.dart';
 import '../utils/time.dart';
 
-class SearchLogModel {
+class ContentDateModel {
   final String key;
-  final String query;
+  final String content;
   final DateTime date;
-  SearchLogModel(
+  ContentDateModel(
     this.key,
-    this.query,
+    this.content,
     this.date,
   );
 
-  SearchLogModel.empty()
+  ContentDateModel.empty()
       : key = "",
-        query = "",
+        content = "",
         date = Time.getTimeUtc();
 
-  SearchLogModel.fromJson(Map<dynamic, dynamic> json)
+  ContentDateModel.fromJson(Map<dynamic, dynamic> json)
       : key = json[Database.keyString] as String,
-        query = json[Database.queryString] as String,
+        content = json[Database.contentString] as String,
         date = Time.toLocal(timeString: json[Database.dateString] as String);
 
   Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
         Database.keyString: key,
-        Database.queryString: query,
+        Database.contentString: content,
         Database.dateString: date.toString(),
       };
 }

@@ -1,7 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../models/search_log.dart';
+import '../../models/content_date.dart';
 import '../../models/user.dart';
 import '../../utils/time.dart';
 import 'database.dart';
@@ -15,7 +15,7 @@ class SearchDB {
   static Future addLog(
       {required String userid, required String searchStr}) async {
     try {
-      List<SearchLogModel> logs = await getLogs(
+      List<ContentDateModel> logs = await getLogs(
         userid,
         query: searchStr,
       );
@@ -23,7 +23,7 @@ class SearchDB {
         String key = getLogsRef(userid).push().key!;
         DatabaseReference databaseReference = getLogsRef(userid).child(key);
         await databaseReference.set(
-            SearchLogModel(key, searchStr.toLowerCase(), Time.getTimeUtc())
+            ContentDateModel(key, searchStr.toLowerCase(), Time.getTimeUtc())
                 .toJson());
       }
       return null;
@@ -47,9 +47,9 @@ class SearchDB {
     }
   }
 
-  static Future<List<SearchLogModel>> getLogs(String userid,
+  static Future<List<ContentDateModel>> getLogs(String userid,
       {String query = ""}) async {
-    List<SearchLogModel> queries = [];
+    List<ContentDateModel> queries = [];
     try {
       DatabaseEvent databaseEvent;
       if (query == "") {
@@ -59,14 +59,14 @@ class SearchDB {
             .once();
       } else {
         databaseEvent = await getLogsRef(userid)
-            .orderByChild(Database.queryString)
+            .orderByChild(Database.contentString)
             .equalTo(query.toLowerCase())
             .limitToFirst(1)
             .once();
       }
       for (final child in databaseEvent.snapshot.children) {
         final json = child.value as Map<dynamic, dynamic>;
-        SearchLogModel searchLogModel = SearchLogModel.fromJson(json);
+        ContentDateModel searchLogModel = ContentDateModel.fromJson(json);
         queries.add(searchLogModel);
       }
       return queries;

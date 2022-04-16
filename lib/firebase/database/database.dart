@@ -15,10 +15,13 @@ class Database {
   static String followingString = "Following";
 
   static String searchLogString = "SearchLogs";
-  static String queryString = "query";
 
   static String postsString = "Posts";
+  static String useridString = "userid";
   static String contentString = "content";
+
+  static String favoritesString = "Favorites";
+  static String commentsString = "Comments";
 
   static String dateString = "date";
 

@@ -1,12 +1,17 @@
+import 'dart:async';
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:sosyal/firebase/database/posts_database.dart';
 import 'package:sosyal/utils/time.dart';
 import 'package:sosyal/widgets/buttons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../firebase/auth.dart';
 import '../models/user.dart';
 import '../utils/colors.dart';
 import '../utils/shared_pref.dart';
@@ -284,125 +289,198 @@ Widget profilePreview(
   );
 }
 
-Widget post(
-  BuildContext context, {
-  required UserModel userModel,
-  required String postKey,
-  required String content,
-  required DateTime dateTime,
-  required bool darkTheme,
-  required int favoriteCount,
-  required int commentCount,
-  bool inProfile = false,
-}) {
-  return Column(
-    children: [
-      Row(
-        children: [
-          const SizedBox(width: 1),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    if (!inProfile) const SizedBox(width: 5),
-                    if (!inProfile)
-                      profileImage(
-                        userModel.profileImage,
-                        rounded: true,
-                        width: 20,
-                        height: 20,
+class PostWidget extends StatefulWidget {
+  const PostWidget({
+    Key? key,
+    required this.darkTheme,
+    required this.userModel,
+    required this.postKey,
+    required this.content,
+    required this.dateTime,
+    this.inProfile = true,
+  }) : super(key: key);
+
+  final bool darkTheme;
+  final UserModel userModel;
+  final String postKey;
+  final String content;
+  final DateTime dateTime;
+  final bool inProfile;
+  @override
+  State<PostWidget> createState() => _PostWidgetState();
+}
+
+class _PostWidgetState extends State<PostWidget> {
+  User user = Auth.user;
+  int favoriteCount = 0;
+  int commentCount = 0;
+  bool isFavorited = false;
+
+  StreamSubscription<DatabaseEvent>? favoritedEvent;
+  StreamSubscription<DatabaseEvent>? favoriteEvent;
+  StreamSubscription<DatabaseEvent>? commentEvent;
+
+  @override
+  void initState() {
+    favoritedEvent =
+        PostsDB.favoritedRef(widget.postKey, user.uid).onValue.listen((event) {
+      if (event.snapshot.exists) {
+        setState(() {
+          isFavorited = true;
+        });
+      } else {
+        setState(() {
+          isFavorited = false;
+        });
+      }
+    });
+    favoriteEvent =
+        PostsDB.getFavoritesRef(widget.postKey).onValue.listen((event) {
+      if (event.snapshot.exists) {
+        setState(() {
+          favoriteCount = event.snapshot.children.length;
+        });
+      } else {
+        setState(() {
+          favoriteCount = 0;
+        });
+      }
+    });
+    commentEvent =
+        PostsDB.getCommentsRef(widget.postKey).onValue.listen((event) {
+      if (event.snapshot.exists) {
+        setState(() {
+          commentCount = event.snapshot.children.length;
+        });
+      } else {
+        setState(() {
+          commentCount = 0;
+        });
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    favoritedEvent?.cancel();
+    favoriteEvent?.cancel();
+    commentEvent?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            const SizedBox(width: 1),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      if (!widget.inProfile) const SizedBox(width: 5),
+                      if (!widget.inProfile)
+                        profileImage(
+                          widget.userModel.profileImage,
+                          rounded: true,
+                          width: 20,
+                          height: 20,
+                        ),
+                      const SizedBox(
+                        width: 5,
                       ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        if (!inProfile) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Profile(
-                                username: userModel.username,
-                                darkTheme: darkTheme,
-                                showAppBar: true,
+                      InkWell(
+                        onTap: () {
+                          if (!widget.inProfile) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Profile(
+                                  username: widget.userModel.username,
+                                  darkTheme: widget.darkTheme,
+                                  showAppBar: true,
+                                ),
                               ),
-                            ),
-                          );
-                        }
-                      },
-                      child: Text(
-                        userModel.username,
-                        style:
-                            linktTextStyle(Variables.fontSizeNormal, darkTheme),
+                            );
+                          }
+                        },
+                        child: Text(
+                          widget.userModel.username,
+                          style: linktTextStyle(
+                              Variables.fontSizeNormal, widget.darkTheme),
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      Time.of(context).elapsed(dateTime),
-                      style: simpleTextStyleSecondary(
-                          Variables.fontSizeNormal, darkTheme),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 2,
-                ),
-                SelectableLinkify(
-                  onOpen: (link) {
-                    onLinkOpen(context, link);
-                  },
-                  text: content,
-                  style: simpleTextStyle(Variables.fontSizeNormal, darkTheme),
-                ),
-              ],
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        Time.of(context).elapsed(widget.dateTime),
+                        style: simpleTextStyleSecondary(
+                            Variables.fontSizeNormal, widget.darkTheme),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 2,
+                  ),
+                  SelectableLinkify(
+                    onOpen: (link) {
+                      onLinkOpen(context, link);
+                    },
+                    text: widget.content,
+                    style: simpleTextStyle(
+                        Variables.fontSizeNormal, widget.darkTheme),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(width: 1),
-        ],
-      ),
-      const SizedBox(
-        height: 5,
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          ToolTipButton(
-            darkTheme: darkTheme,
-            tooltip: AppLocalizations.of(context).favorite_btn,
-            text: favoriteCount.toString(),
-            icon: Icons.favorite_border,
-            onPressed: () {
-              ScaffoldSnackbar.of(context).show("Favori");
-            },
-          ),
-          ToolTipButton(
-            darkTheme: darkTheme,
-            tooltip: AppLocalizations.of(context).comment_btn,
-            text: commentCount.toString(),
-            icon: Icons.comment,
-            onPressed: () {
-              ScaffoldSnackbar.of(context).show("Yorum Yap");
-            },
-          ),
-          ToolTipButton(
-            darkTheme: darkTheme,
-            tooltip: AppLocalizations.of(context).share_btn,
-            icon: Icons.share,
-            onPressed: () {
-              ScaffoldSnackbar.of(context).show("Paylaş");
-            },
-          ),
-        ],
-      ),
-    ],
-  );
+            const SizedBox(width: 1),
+          ],
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            ToolTipButton(
+              darkTheme: widget.darkTheme,
+              tooltip: AppLocalizations.of(context).favorite_btn,
+              text: favoriteCount.toString(),
+              icon: isFavorited ? Icons.favorite : Icons.favorite_border,
+              onPressed: () {
+                ScaffoldSnackbar.of(context).show("Favori");
+              },
+            ),
+            ToolTipButton(
+              darkTheme: widget.darkTheme,
+              tooltip: AppLocalizations.of(context).comment_btn,
+              text: commentCount.toString(),
+              icon: Icons.comment,
+              onPressed: () {
+                ScaffoldSnackbar.of(context).show("Yorum Yap");
+              },
+            ),
+            ToolTipButton(
+              darkTheme: widget.darkTheme,
+              tooltip: AppLocalizations.of(context).share_btn,
+              icon: Icons.share,
+              onPressed: () {
+                ScaffoldSnackbar.of(context).show("Paylaş");
+              },
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 }
 
 Future<void> onLinkOpen(BuildContext context, LinkableElement link) async {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../firebase/database/search_database.dart';
-import '../models/search_log.dart';
+import '../models/content_date.dart';
 import '../models/user.dart';
 import '../widgets/buttons.dart';
 import '../widgets/texts.dart';
@@ -84,17 +84,17 @@ class MySearchDelegate extends SearchDelegate {
     return FutureBuilder(
       future: SearchDB.getLogs(userid),
       builder: (BuildContext context1,
-          AsyncSnapshot<List<SearchLogModel>> snapshot) {
+          AsyncSnapshot<List<ContentDateModel>> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           List<Widget> searchs = [];
           for (final searchModel in snapshot.data!) {
             searchs.add(
               searchSuggestion(
                 context,
-                text: searchModel.query,
+                text: searchModel.content,
                 darkTheme: darkTheme,
                 onPressed: () {
-                  query = searchModel.query;
+                  query = searchModel.content;
                   showResults(context);
                 },
                 onLongPressed: () {
