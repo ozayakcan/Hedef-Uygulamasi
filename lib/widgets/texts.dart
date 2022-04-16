@@ -32,6 +32,13 @@ TextStyle simpleTextStyleBold(bool darkTheme) {
   );
 }
 
+TextStyle simpleTextStyleColorable(double fontSize, Color color) {
+  return TextStyle(
+    color: color,
+    fontSize: fontSize,
+  );
+}
+
 TextStyle linktTextStyle(double fonstSize, bool darkTheme) {
   return TextStyle(
     color: darkTheme ? ThemeColorDark.link : ThemeColor.link,

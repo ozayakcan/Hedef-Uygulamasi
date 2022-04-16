@@ -46,6 +46,21 @@ class ThemeColor {
       900: Colors.black,
     },
   );
+  static const MaterialColor textPrimaryHover = MaterialColor(
+    0xFF448AFF,
+    <int, Color>{
+      50: Colors.blueAccent,
+      100: Colors.blueAccent,
+      200: Colors.blueAccent,
+      300: Colors.blueAccent,
+      400: Colors.blueAccent,
+      500: Colors.blueAccent,
+      600: Colors.blueAccent,
+      700: Colors.blueAccent,
+      800: Colors.blueAccent,
+      900: Colors.blueAccent,
+    },
+  );
   static const MaterialColor textSecondary = MaterialColor(
     0xDD000000,
     <int, Color>{
@@ -242,6 +257,21 @@ class ThemeColorDark {
       700: Colors.white,
       800: Colors.white,
       900: Colors.white,
+    },
+  );
+  static const MaterialColor textPrimaryHover = MaterialColor(
+    0xFF448AFF,
+    <int, Color>{
+      50: Colors.blueAccent,
+      100: Colors.blueAccent,
+      200: Colors.blueAccent,
+      300: Colors.blueAccent,
+      400: Colors.blueAccent,
+      500: Colors.blueAccent,
+      600: Colors.blueAccent,
+      700: Colors.blueAccent,
+      800: Colors.blueAccent,
+      900: Colors.blueAccent,
     },
   );
   static const MaterialColor textSecondary = MaterialColor(

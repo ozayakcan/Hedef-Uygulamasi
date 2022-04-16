@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:sosyal/utils/time.dart';
+import 'package:sosyal/widgets/buttons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../models/user.dart';
@@ -369,85 +370,37 @@ Widget post(
         height: 5,
       ),
       Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            AppLocalizations.of(context).s_favorite.replaceAll(
-                  "%s",
-                  favoriteCount.toString(),
-                ),
-            style:
-                simpleTextStyleSecondary(Variables.fontSizeNormal, darkTheme),
-          ),
-          const SizedBox(width: 10),
-          Text(
-            AppLocalizations.of(context).s_comment.replaceAll(
-                  "%s",
-                  commentCount.toString(),
-                ),
-            style:
-                simpleTextStyleSecondary(Variables.fontSizeNormal, darkTheme),
-          ),
-          const SizedBox(width: 5),
-        ],
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          TextButton(
+          ToolTipButton(
+            darkTheme: darkTheme,
+            tooltip: AppLocalizations.of(context).favorite_btn,
+            text: favoriteCount.toString(),
+            icon: Icons.favorite_border,
             onPressed: () {
               ScaffoldSnackbar.of(context).show("Favori");
             },
-            child: Row(
-              children: [
-                Icon(
-                  Icons.favorite,
-                  color: darkTheme
-                      ? ThemeColorDark.textSecondary
-                      : ThemeColor.textSecondary,
-                  size: Variables.iconSizeMedium,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  AppLocalizations.of(context).favorite_btn,
-                  style: simpleTextStyle(Variables.fontSizeMedium, darkTheme),
-                ),
-              ],
-            ),
           ),
-          const SizedBox(
-            width: 5,
-          ),
-          TextButton(
+          ToolTipButton(
+            darkTheme: darkTheme,
+            tooltip: AppLocalizations.of(context).comment_btn,
+            text: commentCount.toString(),
+            icon: Icons.comment,
             onPressed: () {
               ScaffoldSnackbar.of(context).show("Yorum Yap");
             },
-            child: Row(
-              children: [
-                Icon(
-                  Icons.comment,
-                  color: darkTheme
-                      ? ThemeColorDark.textSecondary
-                      : ThemeColor.textSecondary,
-                  size: Variables.iconSizeMedium,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  AppLocalizations.of(context).comment_btn,
-                  style: simpleTextStyle(Variables.fontSizeMedium, darkTheme),
-                ),
-              ],
-            ),
           ),
-          const SizedBox(width: 5),
+          ToolTipButton(
+            darkTheme: darkTheme,
+            tooltip: AppLocalizations.of(context).share_btn,
+            icon: Icons.share,
+            onPressed: () {
+              ScaffoldSnackbar.of(context).show("Paylaş");
+            },
+          ),
         ],
-      )
+      ),
     ],
   );
 }

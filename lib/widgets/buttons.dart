@@ -409,3 +409,87 @@ Widget searchSuggestion(
     ),
   );
 }
+
+class ToolTipButton extends StatefulWidget {
+  const ToolTipButton({
+    Key? key,
+    required this.darkTheme,
+    required this.tooltip,
+    this.text,
+    this.icon,
+    this.onPressed,
+  }) : super(key: key);
+  final bool darkTheme;
+  final String tooltip;
+  final String? text;
+  final IconData? icon;
+  final VoidCallback? onPressed;
+  @override
+  State<ToolTipButton> createState() => _ToolTipButtonState();
+}
+
+class _ToolTipButtonState extends State<ToolTipButton> {
+  Color normalColor() {
+    return widget.darkTheme
+        ? ThemeColorDark.textPrimary
+        : ThemeColor.textPrimary;
+  }
+
+  Color hoverColor() {
+    return widget.darkTheme
+        ? ThemeColorDark.textPrimaryHover
+        : ThemeColor.textPrimaryHover;
+  }
+
+  Color? color;
+
+  @override
+  void initState() {
+    color = normalColor();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: widget.tooltip,
+      child: TextButton(
+        onPressed: widget.onPressed,
+        onHover: (hovered) {
+          if (hovered) {
+            setState(() {
+              color = hoverColor();
+            });
+          } else {
+            setState(() {
+              color = normalColor();
+            });
+          }
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (widget.icon != null)
+              Icon(
+                widget.icon,
+                color: color ?? normalColor(),
+                size: Variables.iconSizeMedium,
+              ),
+            if (widget.icon != null)
+              const SizedBox(
+                width: 5,
+              ),
+            if (widget.text != null)
+              Text(
+                widget.text!,
+                style: simpleTextStyleColorable(
+                    Variables.fontSizeMedium, color ?? normalColor()),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
