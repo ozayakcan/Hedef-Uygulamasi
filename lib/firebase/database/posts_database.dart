@@ -46,8 +46,8 @@ class PostsDB {
     return Database.getReference(Database.commentsString).child(postKey);
   }
 
-  static Future<List<Post>> getFollowingPost(String userid) async {
-    List<Post> posts = [];
+  static Future<List<PostModel>> getFollowingPost(String userid) async {
+    List<PostModel> posts = [];
     try {
       DatabaseEvent followingEvent =
           await FollowersDB.getFollowingRef(userid).once();
@@ -66,15 +66,20 @@ class PostsDB {
     }
   }
 
-  static Future<List<Post>> getPosts(String userid) async {
-    List<Post> posts = [];
+  static Future<List<PostModel>> getPosts(String userid) async {
+    List<PostModel> posts = [];
     try {
       DatabaseEvent userEvent = await UserDB.getUserRef(userid).once();
       if (userEvent.snapshot.exists) {
         final jsonUser = userEvent.snapshot.value as Map<dynamic, dynamic>;
         UserModel userModel = UserModel.fromJson(jsonUser);
         DatabaseEvent postsEvent = await getPostsQuery(userid).once();
-        posts.addAll(getPostFromDBEvent(postsEvent, userModel));
+        for (final postsChild in postsEvent.snapshot.children) {
+          final jsonPost = postsChild.value as Map<dynamic, dynamic>;
+          PostModel post = PostModel.fromJson(jsonPost);
+          post.userModel = userModel;
+          posts.add(post);
+        }
       }
       return posts;
     } catch (e) {
@@ -85,15 +90,10 @@ class PostsDB {
     }
   }
 
-  static List<Post> getPostFromDBEvent(
+  static List<PostModel> getPostFromDBEvent(
       DatabaseEvent postsEvent, UserModel userModel) {
-    List<Post> posts = [];
-    for (final postsChild in postsEvent.snapshot.children) {
-      final jsonPost = postsChild.value as Map<dynamic, dynamic>;
-      Post post = Post.fromJson(jsonPost);
-      post.userModel = userModel;
-      posts.add(post);
-    }
+    List<PostModel> posts = [];
+
     return posts;
   }
 
@@ -104,19 +104,16 @@ class PostsDB {
     bool inProfile = false,
     bool includeFollowing = true,
   }) async {
-    List<Post> postsOrj = [];
+    List<PostModel> postsOrj = [];
     postsOrj.addAll(await PostsDB.getPosts(userid));
     if (includeFollowing) {
       postsOrj.addAll(await PostsDB.getFollowingPost(userid));
     }
-    List<Post> sortedPosts = Post.sort(postsOrj);
+    List<PostModel> sortedPosts = PostModel.sort(postsOrj);
     List<Widget> tempPostsWidget = [];
-    for (final postData in sortedPosts) {
+    for (final postModel in sortedPosts) {
       tempPostsWidget.add(PostWidget(
-        userModel: postData.userModel,
-        postKey: postData.key,
-        content: postData.content,
-        dateTime: postData.date,
+        postModel: postModel,
         darkTheme: darkTheme,
         inProfile: inProfile,
       ));

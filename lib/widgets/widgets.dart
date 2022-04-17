@@ -12,6 +12,7 @@ import 'package:sosyal/widgets/buttons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../firebase/auth.dart';
+import '../models/post.dart';
 import '../models/user.dart';
 import '../utils/colors.dart';
 import '../utils/shared_pref.dart';
@@ -293,18 +294,12 @@ class PostWidget extends StatefulWidget {
   const PostWidget({
     Key? key,
     required this.darkTheme,
-    required this.userModel,
-    required this.postKey,
-    required this.content,
-    required this.dateTime,
+    required this.postModel,
     this.inProfile = true,
   }) : super(key: key);
 
   final bool darkTheme;
-  final UserModel userModel;
-  final String postKey;
-  final String content;
-  final DateTime dateTime;
+  final PostModel postModel;
   final bool inProfile;
   @override
   State<PostWidget> createState() => _PostWidgetState();
@@ -322,8 +317,9 @@ class _PostWidgetState extends State<PostWidget> {
 
   @override
   void initState() {
-    favoritedEvent =
-        PostsDB.favoritedRef(widget.postKey, user.uid).onValue.listen((event) {
+    favoritedEvent = PostsDB.favoritedRef(widget.postModel.key, user.uid)
+        .onValue
+        .listen((event) {
       if (event.snapshot.exists) {
         setState(() {
           isFavorited = true;
@@ -335,7 +331,7 @@ class _PostWidgetState extends State<PostWidget> {
       }
     });
     favoriteEvent =
-        PostsDB.getFavoritesRef(widget.postKey).onValue.listen((event) {
+        PostsDB.getFavoritesRef(widget.postModel.key).onValue.listen((event) {
       if (event.snapshot.exists) {
         setState(() {
           favoriteCount = event.snapshot.children.length;
@@ -347,7 +343,7 @@ class _PostWidgetState extends State<PostWidget> {
       }
     });
     commentEvent =
-        PostsDB.getCommentsRef(widget.postKey).onValue.listen((event) {
+        PostsDB.getCommentsRef(widget.postModel.key).onValue.listen((event) {
       if (event.snapshot.exists) {
         setState(() {
           commentCount = event.snapshot.children.length;
@@ -387,7 +383,7 @@ class _PostWidgetState extends State<PostWidget> {
                       if (!widget.inProfile) const SizedBox(width: 5),
                       if (!widget.inProfile)
                         profileImage(
-                          widget.userModel.profileImage,
+                          widget.postModel.userModel.profileImage,
                           rounded: true,
                           width: 20,
                           height: 20,
@@ -402,7 +398,7 @@ class _PostWidgetState extends State<PostWidget> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => Profile(
-                                  username: widget.userModel.username,
+                                  username: widget.postModel.userModel.username,
                                   darkTheme: widget.darkTheme,
                                   showAppBar: true,
                                 ),
@@ -411,7 +407,7 @@ class _PostWidgetState extends State<PostWidget> {
                           }
                         },
                         child: Text(
-                          widget.userModel.username,
+                          widget.postModel.userModel.username,
                           style: linktTextStyle(
                               Variables.fontSizeNormal, widget.darkTheme),
                         ),
@@ -420,7 +416,7 @@ class _PostWidgetState extends State<PostWidget> {
                         width: 5,
                       ),
                       Text(
-                        Time.of(context).elapsed(widget.dateTime),
+                        Time.of(context).elapsed(widget.postModel.date),
                         style: simpleTextStyleSecondary(
                             Variables.fontSizeNormal, widget.darkTheme),
                       ),
@@ -433,7 +429,7 @@ class _PostWidgetState extends State<PostWidget> {
                     onOpen: (link) {
                       onLinkOpen(context, link);
                     },
-                    text: widget.content,
+                    text: widget.postModel.content,
                     style: simpleTextStyle(
                         Variables.fontSizeNormal, widget.darkTheme),
                   ),
@@ -456,7 +452,8 @@ class _PostWidgetState extends State<PostWidget> {
               text: favoriteCount.toString(),
               icon: isFavorited ? Icons.favorite : Icons.favorite_border,
               onPressed: () {
-                PostsDB.addFavorite(widget.postKey, user.uid).then((value) {
+                PostsDB.addFavorite(widget.postModel.key, user.uid)
+                    .then((value) {
                   if (value != null) {
                     ScaffoldSnackbar.of(context).show(
                         AppLocalizations.of(context).could_not_add_favorite);

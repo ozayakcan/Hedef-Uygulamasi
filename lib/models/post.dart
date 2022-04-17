@@ -2,13 +2,13 @@ import '../firebase/database/database.dart';
 import '../utils/time.dart';
 import 'user.dart';
 
-class Post {
+class PostModel {
   UserModel userModel = UserModel.empty();
   final String userid;
   final String key;
   final String content;
   final DateTime date;
-  Post(
+  PostModel(
     this.userModel,
     this.userid,
     this.key,
@@ -16,13 +16,13 @@ class Post {
     this.date,
   );
 
-  Post.empty()
+  PostModel.empty()
       : key = "",
         userid = "",
         content = "",
         date = Time.getTimeUtc();
 
-  Post.fromJson(Map<dynamic, dynamic> json)
+  PostModel.fromJson(Map<dynamic, dynamic> json)
       : key = json[Database.keyString] as String,
         userid = json[Database.useridString] as String,
         content = json[Database.contentString] as String,
@@ -34,7 +34,7 @@ class Post {
         Database.contentString: content,
         Database.dateString: date.toString(),
       };
-  static List<Post> sort(List<Post> posts, {bool descending = true}) {
+  static List<PostModel> sort(List<PostModel> posts, {bool descending = true}) {
     if (descending) {
       posts.sort((a, b) => b.date.compareTo(a.date));
     } else {
