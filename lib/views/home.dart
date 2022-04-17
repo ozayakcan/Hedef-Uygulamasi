@@ -78,12 +78,10 @@ class _HomePageState extends State<HomePage> {
         title: AppLocalizations.of(context).app_name,
         showScrollView: false,
         child: postsLoaded
-            ? postsWidget.isNotEmpty
-                ? refreshableListView(
-                    widgetList: postsWidget,
-                    onRefresh: loadPosts,
-                  )
-                : Container()
+            ? refreshableListView(
+                widgetList: postsWidget,
+                onRefresh: loadPosts,
+              )
             : loadingRow(context, widget.darkTheme),
       ),
     );
