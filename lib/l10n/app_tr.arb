@@ -84,5 +84,6 @@
     "thursday": "Perşembe",
     "friday": "Cuma",
     "saturday": "Cumartesi",
-    "sunday": "Pazar"
+    "sunday": "Pazar",
+    "could_not_add_favorite": "Favorilere eklenemedi."
 }

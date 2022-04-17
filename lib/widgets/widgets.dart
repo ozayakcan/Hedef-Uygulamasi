@@ -456,7 +456,12 @@ class _PostWidgetState extends State<PostWidget> {
               text: favoriteCount.toString(),
               icon: isFavorited ? Icons.favorite : Icons.favorite_border,
               onPressed: () {
-                ScaffoldSnackbar.of(context).show("Favori");
+                PostsDB.addFavorite(widget.postKey, user.uid).then((value) {
+                  if (value != null) {
+                    ScaffoldSnackbar.of(context).show(
+                        AppLocalizations.of(context).could_not_add_favorite);
+                  }
+                });
               },
             ),
             ToolTipButton(

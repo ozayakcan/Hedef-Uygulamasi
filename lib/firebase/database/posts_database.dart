@@ -27,6 +27,21 @@ class PostsDB {
         .child(userid);
   }
 
+  static Future addFavorite(String postKey, String userid) async {
+    try {
+      DatabaseReference databaseReference = favoritedRef(postKey, userid);
+      DatabaseEvent databaseEvent = await databaseReference.once();
+      await favoritedRef(postKey, userid).set(
+          databaseEvent.snapshot.exists ? null : KeyModel(userid).toJson());
+      return null;
+    } catch (e) {
+      if (kDebugMode) {
+        print("Favori eklenemedi. Hata: " + e.toString());
+      }
+      return e.toString();
+    }
+  }
+
   static DatabaseReference getCommentsRef(String postKey) {
     return Database.getReference(Database.commentsString).child(postKey);
   }
