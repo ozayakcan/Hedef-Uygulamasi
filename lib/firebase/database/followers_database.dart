@@ -8,13 +8,15 @@ import 'database.dart';
 
 class FollowersDB {
   static DatabaseReference getFollowersRef(String userid) {
-    return Database.getReference(
-        Database.followString + "/" + Database.followersString + "/" + userid);
+    return Database.getReference(Database.followString)
+        .child(Database.followersString)
+        .child(userid);
   }
 
   static DatabaseReference getFollowingRef(String userid) {
-    return Database.getReference(
-        Database.followString + "/" + Database.followingString + "/" + userid);
+    return Database.getReference(Database.followString)
+        .child(Database.followingString)
+        .child(userid);
   }
 
   static Future<bool> checkFollowing(

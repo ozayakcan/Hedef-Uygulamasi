@@ -79,7 +79,7 @@ class UserDB {
   }
 
   static DatabaseReference getUserRef(String userid) {
-    return Database.getReference(Database.usersString + "/" + userid);
+    return Database.getReference(Database.usersString).child(userid);
   }
 
   static Query getUserQueryByUsername(String username) {

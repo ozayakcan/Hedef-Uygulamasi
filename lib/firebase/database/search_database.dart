@@ -9,7 +9,7 @@ import 'user_database.dart';
 
 class SearchDB {
   static DatabaseReference getLogsRef(String userid) {
-    return Database.getReference(Database.searchLogString + "/" + userid);
+    return Database.getReference(Database.searchLogString).child(userid);
   }
 
   static Future addLog(

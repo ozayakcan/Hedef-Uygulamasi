@@ -47,11 +47,9 @@ class UploadProfileImage {
 
   Reference profileImageRef(String fileName) {
     return Storage.storage
-        .ref(Database.usersString +
-            "/" +
-            userID +
-            "/" +
-            Database.profileImageString)
+        .ref(Database.usersString)
+        .child(userID)
+        .child(Database.profileImageString)
         .child(fileName);
   }
 
