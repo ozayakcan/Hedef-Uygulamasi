@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../firebase/auth.dart';
 import '../firebase/database/followers_database.dart';
@@ -12,10 +12,10 @@ import '../firebase/database/posts_database.dart';
 import '../firebase/database/user_database.dart';
 import '../firebase/storage/upload_profile_image.dart';
 import '../models/user.dart';
+import '../models/widget.dart';
 import '../utils/assets.dart';
 import '../utils/transitions.dart';
 import '../utils/variables.dart';
-import '../models/widget.dart';
 import '../widgets/buttons.dart';
 import '../widgets/images.dart';
 import '../widgets/texts.dart';
@@ -223,72 +223,52 @@ class _ProfileState extends State<Profile> {
             Center(
               child: Container(
                 padding: const EdgeInsets.only(top: 10),
-                child: Text(
-                  userModel.name,
+                child: SelectableText(
+                  userModel.name + "\n" + userModel.getUserName,
                   style: simpleTextStyle(
                     Variables.fontSizeMedium,
                     widget.darkTheme,
                   ),
-                ),
-              ),
-            ),
-            Center(
-              child: Text(
-                userModel.getUserName,
-                style: simpleTextStyle(
-                  Variables.fontSizeMedium,
-                  widget.darkTheme,
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),
             const SizedBox(
               height: 10,
             ),
-            Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context).followers_profile,
-                        style: simpleTextStyle(
-                            Variables.fontSizeMedium, widget.darkTheme),
-                      ),
-                      Text(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Text(
+                    AppLocalizations.of(context).followers_profile +
+                        "\n" +
                         FollowersDB.convertFollowNumbers(
                           context,
                           followerCount,
                         ),
-                        style: simpleTextStyle(
-                            Variables.fontSizeNormal, widget.darkTheme),
-                      ),
-                    ],
+                    style: simpleTextStyle(
+                        Variables.fontSizeMedium, widget.darkTheme),
+                    textAlign: TextAlign.center,
                   ),
-                  const SizedBox(
-                    width: 40,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context).following_profile,
-                        style: simpleTextStyle(
-                            Variables.fontSizeMedium, widget.darkTheme),
-                      ),
-                      Text(
+                ),
+                const SizedBox(
+                  width: 40,
+                ),
+                Center(
+                  child: Text(
+                    AppLocalizations.of(context).following_profile +
+                        "\n" +
                         FollowersDB.convertFollowNumbers(
                           context,
                           followCount,
                         ),
-                        style: simpleTextStyle(
-                            Variables.fontSizeNormal, widget.darkTheme),
-                      ),
-                    ],
+                    style: simpleTextStyle(
+                        Variables.fontSizeMedium, widget.darkTheme),
+                    textAlign: TextAlign.center,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             Center(
               child: Container(
