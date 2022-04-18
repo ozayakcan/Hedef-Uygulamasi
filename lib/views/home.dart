@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../firebase/auth.dart';
 import '../firebase/database/posts_database.dart';
+import '../models/post.dart';
 import '../models/widget.dart';
 import '../widgets/menu.dart';
 import '../widgets/widgets.dart';
@@ -31,9 +32,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> loadPosts() async {
+    List<PostModel> posts = [];
+    posts.addAll(await PostsDB.getPosts(user.uid));
+    posts.addAll(await PostsDB.getFollowingPost(user.uid));
     List<Widget> tempPostsWidget = await PostsDB.getPostsAsWidgets(
       context,
-      userid: user.uid,
+      posts: posts,
       darkTheme: widget.darkTheme,
     );
     setState(() {

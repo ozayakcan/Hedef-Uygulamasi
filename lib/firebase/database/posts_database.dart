@@ -17,31 +17,6 @@ class PostsDB {
         .equalTo(userid);
   }
 
-  static DatabaseReference getFavoritesRef(String postKey) {
-    return Database.getReference(Database.favoritesString).child(postKey);
-  }
-
-  static DatabaseReference favoritedRef(String postKey, String userid) {
-    return Database.getReference(Database.favoritesString)
-        .child(postKey)
-        .child(userid);
-  }
-
-  static Future addFavorite(String postKey, String userid) async {
-    try {
-      DatabaseReference databaseReference = favoritedRef(postKey, userid);
-      DatabaseEvent databaseEvent = await databaseReference.once();
-      await favoritedRef(postKey, userid).set(
-          databaseEvent.snapshot.exists ? null : KeyModel(userid).toJson());
-      return null;
-    } catch (e) {
-      if (kDebugMode) {
-        print("Favori eklenemedi. Hata: " + e.toString());
-      }
-      return e.toString();
-    }
-  }
-
   static DatabaseReference getCommentsRef(String postKey) {
     return Database.getReference(Database.commentsString).child(postKey);
   }
@@ -99,17 +74,12 @@ class PostsDB {
 
   static Future<List<Widget>> getPostsAsWidgets(
     BuildContext context, {
-    required String userid,
+    required List<PostModel> posts,
     required bool darkTheme,
     bool inProfile = false,
     bool includeFollowing = true,
   }) async {
-    List<PostModel> postsOrj = [];
-    postsOrj.addAll(await PostsDB.getPosts(userid));
-    if (includeFollowing) {
-      postsOrj.addAll(await PostsDB.getFollowingPost(userid));
-    }
-    List<PostModel> sortedPosts = PostModel.sort(postsOrj);
+    List<PostModel> sortedPosts = PostModel.sort(posts);
     List<Widget> tempPostsWidget = [];
     for (final postModel in sortedPosts) {
       tempPostsWidget.add(PostWidget(

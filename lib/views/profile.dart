@@ -11,6 +11,7 @@ import '../firebase/database/followers_database.dart';
 import '../firebase/database/posts_database.dart';
 import '../firebase/database/user_database.dart';
 import '../firebase/storage/upload_profile_image.dart';
+import '../models/post.dart';
 import '../models/user.dart';
 import '../models/widget.dart';
 import '../utils/assets.dart';
@@ -92,9 +93,11 @@ class _ProfileState extends State<Profile> {
   }
 
   void loadPosts() async {
+    List<PostModel> posts = [];
+    posts.addAll(await PostsDB.getPosts(user.uid));
     List<Widget> tempPostsWidget = await PostsDB.getPostsAsWidgets(
       context,
-      userid: userModel.id,
+      posts: posts,
       darkTheme: widget.darkTheme,
       includeFollowing: false,
       inProfile: true,

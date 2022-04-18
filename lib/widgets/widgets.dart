@@ -6,18 +6,19 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
-import '../firebase/database/posts_database.dart';
-import '../utils/time.dart';
-import 'buttons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../firebase/auth.dart';
+import '../firebase/database/favorites_database.dart';
+import '../firebase/database/posts_database.dart';
 import '../models/post.dart';
 import '../models/user.dart';
 import '../utils/colors.dart';
 import '../utils/shared_pref.dart';
+import '../utils/time.dart';
 import '../utils/variables.dart';
 import '../views/profile.dart';
+import 'buttons.dart';
 import 'images.dart';
 import 'texts.dart';
 
@@ -317,7 +318,7 @@ class _PostWidgetState extends State<PostWidget> {
 
   @override
   void initState() {
-    favoritedEvent = PostsDB.favoritedRef(widget.postModel.key, user.uid)
+    favoritedEvent = FavoritesDB.favoritedRef(widget.postModel.key, user.uid)
         .onValue
         .listen((event) {
       if (event.snapshot.exists) {
@@ -330,8 +331,9 @@ class _PostWidgetState extends State<PostWidget> {
         });
       }
     });
-    favoriteEvent =
-        PostsDB.getFavoritesRef(widget.postModel.key).onValue.listen((event) {
+    favoriteEvent = FavoritesDB.getFavoritesRef(widget.postModel.key)
+        .onValue
+        .listen((event) {
       if (event.snapshot.exists) {
         setState(() {
           favoriteCount = event.snapshot.children.length;
@@ -452,7 +454,7 @@ class _PostWidgetState extends State<PostWidget> {
               text: favoriteCount.toString(),
               icon: isFavorited ? Icons.favorite : Icons.favorite_border,
               onPressed: () {
-                PostsDB.addFavorite(widget.postModel.key, user.uid)
+                FavoritesDB.addFavorite(widget.postModel.key, user.uid)
                     .then((value) {
                   if (value != null) {
                     ScaffoldSnackbar.of(context).show(
