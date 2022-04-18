@@ -5,22 +5,40 @@ import '../../models/key.dart';
 import 'database.dart';
 
 class FavoritesDB {
-  static DatabaseReference getFavoritesRef(String postKey) {
-    return Database.getReference(Database.favoritesString).child(postKey);
+  static DatabaseReference getFavoritesOfPostRef(String postKey) {
+    return Database.getReference(Database.favoritesString)
+        .child(Database.postsString)
+        .child(postKey);
   }
 
-  static DatabaseReference favoritedRef(String postKey, String userid) {
+  static DatabaseReference favoritedPostRef(String postKey, String userid) {
     return Database.getReference(Database.favoritesString)
+        .child(Database.postsString)
         .child(postKey)
         .child(userid);
   }
 
+  static DatabaseReference getFavoritesOfUserRef(String userid) {
+    return Database.getReference(Database.favoritesString)
+        .child(Database.usersString)
+        .child(userid);
+  }
+
+  static DatabaseReference favoritedUserRef(String postKey, String userid) {
+    return Database.getReference(Database.favoritesString)
+        .child(Database.usersString)
+        .child(userid)
+        .child(postKey);
+  }
+
   static Future addFavorite(String postKey, String userid) async {
     try {
-      DatabaseReference databaseReference = favoritedRef(postKey, userid);
+      DatabaseReference databaseReference = favoritedPostRef(postKey, userid);
       DatabaseEvent databaseEvent = await databaseReference.once();
-      await favoritedRef(postKey, userid).set(
+      await favoritedPostRef(postKey, userid).set(
           databaseEvent.snapshot.exists ? null : KeyModel(userid).toJson());
+      await favoritedUserRef(postKey, userid).set(
+          databaseEvent.snapshot.exists ? null : KeyModel(postKey).toJson());
       return null;
     } catch (e) {
       if (kDebugMode) {

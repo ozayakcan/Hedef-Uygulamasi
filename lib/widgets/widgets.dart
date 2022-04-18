@@ -318,9 +318,10 @@ class _PostWidgetState extends State<PostWidget> {
 
   @override
   void initState() {
-    favoritedEvent = FavoritesDB.favoritedRef(widget.postModel.key, user.uid)
-        .onValue
-        .listen((event) {
+    favoritedEvent =
+        FavoritesDB.favoritedPostRef(widget.postModel.key, user.uid)
+            .onValue
+            .listen((event) {
       if (event.snapshot.exists) {
         setState(() {
           isFavorited = true;
@@ -331,7 +332,7 @@ class _PostWidgetState extends State<PostWidget> {
         });
       }
     });
-    favoriteEvent = FavoritesDB.getFavoritesRef(widget.postModel.key)
+    favoriteEvent = FavoritesDB.getFavoritesOfPostRef(widget.postModel.key)
         .onValue
         .listen((event) {
       if (event.snapshot.exists) {
