@@ -13,10 +13,9 @@ import '../models/widget.dart';
 import '../utils/colors.dart';
 import '../utils/search.dart';
 import '../utils/shared_pref.dart';
-import '../utils/variables.dart';
 import '../widgets/images.dart';
 import '../widgets/page_style.dart';
-import '../widgets/texts.dart';
+import 'favorites.dart';
 import 'profile.dart';
 
 class BottomNavigationPage extends StatefulWidget {
@@ -84,11 +83,9 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
       widget.widgetModel,
       WidgetModel(
         context,
-        title: AppLocalizations.of(context).share,
-        child: Text(
-          'Favoriler',
-          style: simpleTextStyle(Variables.fontSizeNormal, widget.darkTheme),
-        ),
+        title: AppLocalizations.of(context).favorites,
+        child: FavoritesPage(darkTheme: darkTheme),
+        showScrollView: false,
         showBackButton: false,
       ),
       WidgetModel(

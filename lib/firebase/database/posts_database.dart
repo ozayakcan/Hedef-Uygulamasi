@@ -7,6 +7,7 @@ import '../../models/post.dart';
 import '../../models/user.dart';
 import '../../widgets/widgets.dart';
 import 'database.dart';
+import 'favorites_database.dart';
 import 'followers_database.dart';
 import 'user_database.dart';
 
@@ -15,6 +16,10 @@ class PostsDB {
     return Database.getReference(Database.postsString)
         .orderByChild(Database.useridString)
         .equalTo(userid);
+  }
+
+  static DatabaseReference getPostByKeyRef(String postKey) {
+    return Database.getReference(Database.postsString).child(postKey);
   }
 
   static DatabaseReference getCommentsRef(String postKey) {
@@ -44,16 +49,12 @@ class PostsDB {
   static Future<List<PostModel>> getPosts(String userid) async {
     List<PostModel> posts = [];
     try {
-      DatabaseEvent userEvent = await UserDB.getUserRef(userid).once();
-      if (userEvent.snapshot.exists) {
-        final jsonUser = userEvent.snapshot.value as Map<dynamic, dynamic>;
-        UserModel userModel = UserModel.fromJson(jsonUser);
-        DatabaseEvent postsEvent = await getPostsQuery(userid).once();
-        for (final postsChild in postsEvent.snapshot.children) {
-          final jsonPost = postsChild.value as Map<dynamic, dynamic>;
-          PostModel post = PostModel.fromJson(jsonPost);
-          post.userModel = userModel;
-          posts.add(post);
+      DatabaseEvent postsEvent = await getPostsQuery(userid).once();
+      for (final postsChild in postsEvent.snapshot.children) {
+        final jsonPost = postsChild.value as Map<dynamic, dynamic>;
+        PostModel? postModel = await getPostModel(jsonPost);
+        if (postModel != null) {
+          posts.add(postModel);
         }
       }
       return posts;
@@ -65,11 +66,45 @@ class PostsDB {
     }
   }
 
-  static List<PostModel> getPostFromDBEvent(
-      DatabaseEvent postsEvent, UserModel userModel) {
-    List<PostModel> posts = [];
+  static Future<PostModel?> getPostModel(Map<dynamic, dynamic> jsonPost) async {
+    try {
+      PostModel post = PostModel.fromJson(jsonPost);
+      DatabaseEvent userEvent = await UserDB.getUserRef(post.userid).once();
+      if (userEvent.snapshot.exists) {
+        final jsonUser = userEvent.snapshot.value as Map<dynamic, dynamic>;
+        UserModel userModel = UserModel.fromJson(jsonUser);
+        post.userModel = userModel;
+        return post;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("PostModel getirilemedi! Hata: " + e.toString());
+      }
+      return null;
+    }
+  }
 
-    return posts;
+  static Future<List<PostModel>> getFavoritedPosts(String userid) async {
+    List<PostModel> posts = [];
+    try {
+      List<String> favoritedList = await FavoritesDB.getUserFavorites(userid);
+      for (final favorited in favoritedList) {
+        DatabaseEvent databaseEvent = await getPostByKeyRef(favorited).once();
+        final jsonPost = databaseEvent.snapshot.value as Map<dynamic, dynamic>;
+        PostModel? postModel = await getPostModel(jsonPost);
+        if (postModel != null) {
+          posts.add(postModel);
+        }
+      }
+      return posts;
+    } catch (e) {
+      if (kDebugMode) {
+        print("Favori gönderiler getirilemedi! Hata: " + e.toString());
+      }
+      return posts;
+    }
   }
 
   static Future<List<Widget>> getPostsAsWidgets(

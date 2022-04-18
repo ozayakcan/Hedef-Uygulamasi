@@ -24,11 +24,14 @@ class FavoritesDB {
         .child(userid);
   }
 
-  static DatabaseReference favoritedUserRef(String postKey, String userid) {
+  static DatabaseReference userFavoritesRef(String userid) {
     return Database.getReference(Database.favoritesString)
         .child(Database.usersString)
-        .child(userid)
-        .child(postKey);
+        .child(userid);
+  }
+
+  static DatabaseReference favoritedUserRef(String postKey, String userid) {
+    return userFavoritesRef(userid).child(postKey);
   }
 
   static Future addFavorite(String postKey, String userid) async {
@@ -45,6 +48,24 @@ class FavoritesDB {
         print("Favori eklenemedi. Hata: " + e.toString());
       }
       return e.toString();
+    }
+  }
+
+  static Future<List<String>> getUserFavorites(String userid) async {
+    List<String> userFavorites = [];
+    try {
+      DatabaseEvent databaseEvent = await userFavoritesRef(userid).once();
+      for (final databaseEventChild in databaseEvent.snapshot.children) {
+        final jsonUserFavorites =
+            databaseEventChild.value as Map<dynamic, dynamic>;
+        userFavorites.add(KeyModel.fromJson(jsonUserFavorites).key);
+      }
+      return userFavorites;
+    } catch (e) {
+      if (kDebugMode) {
+        print("Favori eklenemedi. Hata: " + e.toString());
+      }
+      return userFavorites;
     }
   }
 }
