@@ -94,7 +94,7 @@ class _ProfileState extends State<Profile> {
 
   void loadPosts() async {
     List<PostModel> posts = [];
-    posts.addAll(await PostsDB.getPosts(user.uid));
+    posts.addAll(await PostsDB.getPosts(userModel.id));
     List<Widget> tempPostsWidget = await PostsDB.getPostsAsWidgets(
       context,
       posts: posts,
