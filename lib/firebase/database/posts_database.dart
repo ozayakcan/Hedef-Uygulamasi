@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../models/key.dart';
 import '../../models/post.dart';
 import '../../models/user.dart';
-import '../../widgets/widgets.dart';
+import '../../views/post.dart';
 import 'database.dart';
 import 'favorites_database.dart';
 import 'followers_database.dart';
