@@ -279,7 +279,7 @@ class _ProfileState extends State<Profile> {
                   top: 10,
                 ),
                 child: user.uid == userModel.id
-                    ? customButton(
+                    ? customButtonWithIcon(
                         context,
                         darkTheme: widget.darkTheme,
                         text: AppLocalizations.of(context).edit_profile,
@@ -298,7 +298,7 @@ class _ProfileState extends State<Profile> {
                         },
                       )
                     : isFollowing
-                        ? customButton(
+                        ? customButtonWithIcon(
                             context,
                             darkTheme: widget.darkTheme,
                             iconUrl: AImages.check,
@@ -342,7 +342,7 @@ class _ProfileState extends State<Profile> {
                               );
                             },
                           )
-                        : customButton(
+                        : customButtonWithIcon(
                             context,
                             darkTheme: widget.darkTheme,
                             text: AppLocalizations.of(context).follow_btn,

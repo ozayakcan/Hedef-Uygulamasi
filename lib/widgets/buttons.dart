@@ -391,7 +391,7 @@ CustomAuthButton backBtn(
   );
 }
 
-CustomAuthButton customButton(
+CustomAuthButton customButtonWithIcon(
   BuildContext context, {
   required String text,
   required ButtonStyleEnum buttonStyle,
