@@ -1,5 +1,6 @@
 class Variables {
   static const double buttonHeightDefault = 50;
+  static const double buttonHeightSmall = 10;
   static double buttonPaddingDefault = 15;
   static double buttonBorderSizeDefault = 1.0;
   static double buttonRadiusDefault = 8.0;
@@ -19,4 +20,5 @@ class Variables {
   static int maxLengthName = 50;
   static int maxLengthUsername = 28;
   static int maxLengthPassword = 20;
+  static int maxLengthShare = 400;
 }

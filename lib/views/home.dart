@@ -33,7 +33,13 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         postsWidget.insert(
           0,
-          shareButton(context, darkTheme: widget.darkTheme),
+          shareButton(
+            context,
+            darkTheme: widget.darkTheme,
+            onShared: () async {
+              await loadPosts();
+            },
+          ),
         );
       });
     });

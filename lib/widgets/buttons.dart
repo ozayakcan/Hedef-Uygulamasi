@@ -641,6 +641,7 @@ Widget shareButton(
         MaterialPageRoute(
           builder: (context) => SharePage(
             darkTheme: darkTheme,
+            onShared: onShared,
           ),
         ),
       );

@@ -86,5 +86,8 @@
     "saturday": "Cumartesi",
     "sunday": "Pazar",
     "could_not_add_favorite": "Favorilere eklenemedi.",
-    "share_your_thoughts": "Düşüncelerini paylaş..."
+    "share_your_thoughts": "Düşüncelerini paylaş...",
+    "create_post": "Gönderi Oluştur",
+    "post_must_2_character": "Gönderi en az 2 karakter içermelidir.",
+    "post_could_not_created": "Gönderi oluşturulamadı. Lütfen daha sonra tekrar deneyin."
 }

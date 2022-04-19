@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../models/key.dart';
 import '../../models/post.dart';
 import '../../models/user.dart';
+import '../../utils/time.dart';
 import '../../views/post.dart';
 import 'database.dart';
 import 'favorites_database.dart';
@@ -24,6 +25,23 @@ class PostsDB {
 
   static DatabaseReference getCommentsRef(String postKey) {
     return Database.getReference(Database.commentsString).child(postKey);
+  }
+
+  static Future addPost(
+      {required String userid, required String content}) async {
+    try {
+      DatabaseReference databaseReference = getPostsQuery(userid).ref.push();
+      String key = databaseReference.key!;
+      PostModel postModel =
+          PostModel(UserModel.empty(), userid, key, content, Time.getTimeUtc());
+      await databaseReference.set(postModel.toJson());
+      return null;
+    } catch (e) {
+      if (kDebugMode) {
+        print("Gönderi oluşturulamadı! Hata: " + e.toString());
+      }
+      return e.toString();
+    }
   }
 
   static Future<List<PostModel>> getFollowingPost(String userid) async {
