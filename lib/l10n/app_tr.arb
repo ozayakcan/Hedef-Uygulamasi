@@ -85,5 +85,6 @@
     "friday": "Cuma",
     "saturday": "Cumartesi",
     "sunday": "Pazar",
-    "could_not_add_favorite": "Favorilere eklenemedi."
+    "could_not_add_favorite": "Favorilere eklenemedi.",
+    "share_your_thoughts": "Düşüncelerini paylaş..."
 }

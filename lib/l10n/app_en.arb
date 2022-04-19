@@ -85,5 +85,6 @@
     "friday": "Friday",
     "saturday": "Saturday",
     "sunday": "Sunday",
-    "could_not_add_favorite": "Could not add favorite"
+    "could_not_add_favorite": "Could not add favorite",
+    "share_your_thoughts": "Share your thoughts..."
 }

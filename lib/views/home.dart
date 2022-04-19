@@ -6,6 +6,7 @@ import '../firebase/auth.dart';
 import '../firebase/database/posts_database.dart';
 import '../models/post.dart';
 import '../models/widget.dart';
+import '../widgets/buttons.dart';
 import '../widgets/menu.dart';
 import '../widgets/widgets.dart';
 import 'bottom_navigation.dart';
@@ -27,8 +28,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    loadPosts();
     super.initState();
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        postsWidget.insert(
+          0,
+          shareButton(context, darkTheme: widget.darkTheme),
+        );
+      });
+    });
+    loadPosts();
   }
 
   Future<void> loadPosts() async {
@@ -40,8 +49,13 @@ class _HomePageState extends State<HomePage> {
       posts: posts,
       darkTheme: widget.darkTheme,
     );
+    if (postsWidget.length > 1) {
+      setState(() {
+        postsWidget.removeRange(1, postsWidget.length);
+      });
+    }
     setState(() {
-      postsWidget = tempPostsWidget;
+      postsWidget.addAll(tempPostsWidget);
       postsLoaded = true;
     });
   }

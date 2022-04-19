@@ -9,8 +9,8 @@ import '../firebase/auth.dart';
 import '../firebase/database/database.dart';
 import '../firebase/database/user_database.dart';
 import '../models/user.dart';
-import '../utils/colors.dart';
 import '../utils/assets.dart';
+import '../utils/colors.dart';
 import '../utils/time.dart';
 import '../utils/variables.dart';
 import '../views/home.dart';
@@ -486,4 +486,44 @@ class _ToolTipButtonState extends State<ToolTipButton> {
       ),
     );
   }
+}
+
+Widget shareButton(
+  BuildContext context, {
+  required bool darkTheme,
+  VoidCallback? onShared,
+}) {
+  return InkWell(
+    onTap: () {
+      ScaffoldSnackbar.of(context).show("Paylaşım sayfası açılacak");
+    },
+    child: Container(
+      padding: const EdgeInsets.symmetric(
+        vertical: 5.0,
+        horizontal: 10.0,
+      ),
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: darkTheme
+              ? ThemeColorDark.textSecondary
+              : ThemeColor.textSecondary,
+          width: 1.5,
+        ),
+        borderRadius: BorderRadius.horizontal(
+          left: Radius.circular(
+            Variables.buttonRadiusRound,
+          ),
+          right: Radius.circular(Variables.buttonRadiusRound),
+        ),
+      ),
+      child: Text(
+        AppLocalizations.of(context).share_your_thoughts,
+        style: simpleTextStyle(
+          Variables.fontSizeMedium,
+          darkTheme,
+        ),
+      ),
+    ),
+  );
 }
