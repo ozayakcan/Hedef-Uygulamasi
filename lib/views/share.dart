@@ -30,9 +30,10 @@ class _SharePageState extends State<SharePage> {
 
   bool alertDialogVisible = false;
 
-  void showLoadingAlert() {
+  void showLoadingAlert(BuildContext context) {
     if (!alertDialogVisible) {
-      loadingAlert(context, widget.darkTheme);
+      loadingAlert(context, widget.darkTheme,
+          text: AppLocalizations.of(context).sharing);
       setState(() {
         alertDialogVisible = true;
       });
@@ -83,12 +84,12 @@ class _SharePageState extends State<SharePage> {
           ),
           borderRadius: Variables.buttonRadiusRound,
           onPressed: () {
+            showLoadingAlert(context);
             if (textEditingController.text
                     .replaceAll("\n", "")
                     .replaceAll(" ", "")
                     .length >=
                 2) {
-              showLoadingAlert();
               PostsDB.addPost(
                       userid: user.uid, content: textEditingController.text)
                   .then((value) {
@@ -108,6 +109,7 @@ class _SharePageState extends State<SharePage> {
             } else {
               ScaffoldSnackbar.of(context)
                   .show(AppLocalizations.of(context).post_must_2_character);
+              closeLoadingAlert(context);
             }
           },
         ),
