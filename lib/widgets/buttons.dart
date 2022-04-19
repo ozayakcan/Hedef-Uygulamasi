@@ -25,10 +25,12 @@ AuthButtonStyle defaultAuthButtonStyle({
   required double? width,
   required double? height,
   double? borderRadius,
+  EdgeInsets? padding,
   double iconSize = Variables.buttonIconSizeDefault,
 }) {
   return AuthButtonStyle(
     borderRadius: borderRadius ?? Variables.buttonRadiusDefault,
+    padding: padding,
     width: width,
     height: height,
     iconSize: iconSize,
@@ -44,10 +46,12 @@ AuthButtonStyle primaryButtonStyle({
   required double? width,
   required double? height,
   double? borderRadius,
+  EdgeInsets? padding,
   double iconSize = Variables.buttonIconSizeDefault,
 }) {
   return AuthButtonStyle(
     borderRadius: borderRadius ?? Variables.buttonRadiusDefault,
+    padding: padding,
     width: width,
     height: height,
     iconSize: iconSize,
@@ -67,10 +71,12 @@ AuthButtonStyle secondaryButtonStyle({
   required double? width,
   required double? height,
   double? borderRadius,
+  EdgeInsets? padding,
   double iconSize = Variables.buttonIconSizeDefault,
 }) {
   return AuthButtonStyle(
     borderRadius: borderRadius ?? Variables.buttonRadiusDefault,
+    padding: padding,
     width: width,
     height: height,
     iconSize: iconSize,
@@ -390,9 +396,11 @@ CustomAuthButton customButton(
   required String text,
   required ButtonStyleEnum buttonStyle,
   required bool darkTheme,
+  bool autoWidth = false,
   double? width,
   double height = Variables.buttonHeightDefault,
   double? borderRadius,
+  EdgeInsets? padding,
   String? iconUrl,
   VoidCallback? action,
 }) {
@@ -400,10 +408,12 @@ CustomAuthButton customButton(
     iconUrl: iconUrl ?? AImages.empty,
     style: buttonStyle == ButtonStyleEnum.primaryButton
         ? primaryButtonStyle(
-            width: width ?? MediaQuery.of(context).size.width,
+            width:
+                autoWidth ? null : width ?? MediaQuery.of(context).size.width,
             height: height,
             darkTheme: darkTheme,
             borderRadius: borderRadius,
+            padding: padding,
             iconSize: Variables.buttonIconSizeSmall,
           )
         : buttonStyle == ButtonStyleEnum.secondaryButton
@@ -412,6 +422,7 @@ CustomAuthButton customButton(
                 height: height,
                 darkTheme: darkTheme,
                 borderRadius: borderRadius,
+                padding: padding,
                 iconSize: Variables.buttonIconSizeSmall,
               )
             : defaultAuthButtonStyle(
@@ -419,6 +430,7 @@ CustomAuthButton customButton(
                 height: height,
                 darkTheme: darkTheme,
                 borderRadius: borderRadius,
+                padding: padding,
                 iconSize: Variables.buttonIconSizeSmall,
               ),
     onPressed: () {
