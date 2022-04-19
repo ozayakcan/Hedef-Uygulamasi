@@ -89,5 +89,6 @@
     "share_your_thoughts": "Share your thoughts...",
     "create_post": "Create Post",
     "post_must_2_character": "Post must be at least 2 characters.",
-    "post_could_not_created": "Post could not created. Please try again later."
+    "post_could_not_created": "Post could not created. Please try again later.",
+    "sharing": "Sharing"
 }

@@ -65,7 +65,8 @@ List<Widget> formList(List<Widget> oldList) {
 }
 
 Widget loadingRow(BuildContext context, bool darkTheme,
-    {double width = 15, double height = 15}) {
+    {double width = 15, double height = 15, String? text}) {
+  text ??= AppLocalizations.of(context).loading;
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -73,7 +74,7 @@ Widget loadingRow(BuildContext context, bool darkTheme,
         width: width,
         height: height,
         child: CircularProgressIndicator(
-          semanticsLabel: AppLocalizations.of(context).loading,
+          semanticsLabel: text,
           color:
               darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
         ),
@@ -82,7 +83,7 @@ Widget loadingRow(BuildContext context, bool darkTheme,
         width: 5,
       ),
       Text(
-        AppLocalizations.of(context).loading,
+        text,
         style: TextStyle(
           color:
               darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
@@ -204,7 +205,8 @@ Future<void> defaultAlertbox(
   );
 }
 
-loadingAlert(BuildContext context, bool darkTheme) {
+loadingAlert(BuildContext context, bool darkTheme, {String? text}) {
+  text ??= AppLocalizations.of(context).loading;
   AlertDialog alert = AlertDialog(
     backgroundColor: darkTheme
         ? ThemeColorDark.backgroundPrimary
@@ -213,7 +215,11 @@ loadingAlert(BuildContext context, bool darkTheme) {
     content: SingleChildScrollView(
       child: ListBody(
         children: [
-          loadingRow(context, darkTheme),
+          loadingRow(
+            context,
+            darkTheme,
+            text: text,
+          ),
         ],
       ),
     ),
