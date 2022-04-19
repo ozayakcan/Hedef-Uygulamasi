@@ -442,6 +442,72 @@ CustomAuthButton customButtonWithIcon(
   );
 }
 
+Widget customButton({
+  required bool darkTheme,
+  required String text,
+  required ButtonStyleEnum buttonStyle,
+  double? width,
+  double? height,
+  double? borderRadius,
+  EdgeInsets? padding,
+  EdgeInsets? margin,
+  VoidCallback? onPressed,
+}) {
+  BorderRadius? borderRad = borderRadius != null
+      ? BorderRadius.horizontal(
+          left: Radius.circular(
+            borderRadius,
+          ),
+          right: Radius.circular(
+            borderRadius,
+          ),
+        )
+      : null;
+  return Container(
+    padding: margin,
+    child: InkWell(
+      onTap: () {
+        if (onPressed != null) {
+          onPressed();
+        }
+      },
+      borderRadius: borderRad,
+      child: Container(
+        padding: padding,
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          color: buttonStyle == ButtonStyleEnum.primaryButton
+              ? darkTheme
+                  ? ThemeColorDark.buttonPrimary
+                  : ThemeColor.buttonPrimary
+              : buttonStyle == ButtonStyleEnum.secondaryButton
+                  ? darkTheme
+                      ? ThemeColorDark.buttonSecondary
+                      : ThemeColor.buttonSecondary
+                  : null,
+          borderRadius: borderRad,
+          border: Border.all(
+            color: darkTheme
+                ? ThemeColorDark.buttonBorder
+                : ThemeColor.buttonBorder,
+            width: 1.0,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            text,
+            style: simpleTextStyleColorable(
+              Variables.fontSizeMedium,
+              darkTheme ? ThemeColorDark.buttonText : ThemeColor.buttonText,
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
 enum ButtonStyleEnum {
   defaultButton,
   primaryButton,
