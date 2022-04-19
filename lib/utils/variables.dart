@@ -1,5 +1,5 @@
 class Variables {
-  static double buttonHeightDefault = 50;
+  static const double buttonHeightDefault = 50;
   static double buttonPaddingDefault = 15;
   static double buttonBorderSizeDefault = 1.0;
   static double buttonRadiusDefault = 8.0;

@@ -15,20 +15,22 @@ import '../utils/time.dart';
 import '../utils/variables.dart';
 import '../views/home.dart';
 import '../views/login.dart';
+import '../views/share.dart';
 import 'text_fields.dart';
 import 'texts.dart';
 import 'widgets.dart';
 
-AuthButtonStyle defaultAuthButtonStyle(
-  double width,
-  bool darkTheme, {
+AuthButtonStyle defaultAuthButtonStyle({
+  required bool darkTheme,
+  required double? width,
+  required double? height,
   double? borderRadius,
   double iconSize = Variables.buttonIconSizeDefault,
 }) {
   return AuthButtonStyle(
     borderRadius: borderRadius ?? Variables.buttonRadiusDefault,
     width: width,
-    height: Variables.buttonHeightDefault,
+    height: height,
     iconSize: iconSize,
     borderColor:
         darkTheme ? ThemeColorDark.buttonBorder : ThemeColor.buttonBorder,
@@ -37,16 +39,17 @@ AuthButtonStyle defaultAuthButtonStyle(
   );
 }
 
-AuthButtonStyle primaryButtonStyle(
-  double width,
-  bool darkTheme, {
+AuthButtonStyle primaryButtonStyle({
+  required bool darkTheme,
+  required double? width,
+  required double? height,
   double? borderRadius,
   double iconSize = Variables.buttonIconSizeDefault,
 }) {
   return AuthButtonStyle(
     borderRadius: borderRadius ?? Variables.buttonRadiusDefault,
     width: width,
-    height: Variables.buttonHeightDefault,
+    height: height,
     iconSize: iconSize,
     borderColor:
         darkTheme ? ThemeColorDark.buttonBorder : ThemeColor.buttonBorder,
@@ -59,16 +62,17 @@ AuthButtonStyle primaryButtonStyle(
   );
 }
 
-AuthButtonStyle secondaryButtonStyle(
-  double width,
-  bool darkTheme, {
+AuthButtonStyle secondaryButtonStyle({
+  required bool darkTheme,
+  required double? width,
+  required double? height,
   double? borderRadius,
   double iconSize = Variables.buttonIconSizeDefault,
 }) {
   return AuthButtonStyle(
     borderRadius: borderRadius ?? Variables.buttonRadiusDefault,
     width: width,
-    height: Variables.buttonHeightDefault,
+    height: height,
     iconSize: iconSize,
     borderColor:
         darkTheme ? ThemeColorDark.buttonBorder : ThemeColor.buttonBorder,
@@ -81,9 +85,17 @@ AuthButtonStyle secondaryButtonStyle(
   );
 }
 
-GoogleAuthButton googleAuthBtn(BuildContext context, bool darkTheme) {
+GoogleAuthButton googleAuthBtn(
+  BuildContext context,
+  bool darkTheme, {
+  double? width,
+  double height = Variables.buttonHeightDefault,
+}) {
   return GoogleAuthButton(
-    style: defaultAuthButtonStyle(MediaQuery.of(context).size.width, darkTheme),
+    style: defaultAuthButtonStyle(
+        width: width ?? MediaQuery.of(context).size.width,
+        height: height,
+        darkTheme: darkTheme),
     darkMode: darkTheme,
     onPressed: () {
       try {
@@ -132,9 +144,17 @@ GoogleAuthButton googleAuthBtn(BuildContext context, bool darkTheme) {
   );
 }
 
-EmailAuthButton emailLoginBtn(BuildContext context, bool darkTheme) {
+EmailAuthButton emailLoginBtn(
+  BuildContext context,
+  bool darkTheme, {
+  double? width,
+  double height = Variables.buttonHeightDefault,
+}) {
   return EmailAuthButton(
-    style: defaultAuthButtonStyle(MediaQuery.of(context).size.width, darkTheme),
+    style: defaultAuthButtonStyle(
+        width: width ?? MediaQuery.of(context).size.width,
+        height: height,
+        darkTheme: darkTheme),
     darkMode: darkTheme,
     onPressed: () {
       Navigator.push(
@@ -154,11 +174,16 @@ CustomAuthButton loginBtn(
   BuildContext context,
   TextEditingController email,
   TextEditingController password,
-  bool darkTheme,
-) {
+  bool darkTheme, {
+  double? width,
+  double height = Variables.buttonHeightDefault,
+}) {
   return CustomAuthButton(
     iconUrl: AImages.empty,
-    style: primaryButtonStyle(MediaQuery.of(context).size.width, darkTheme),
+    style: primaryButtonStyle(
+        width: width ?? MediaQuery.of(context).size.width,
+        height: height,
+        darkTheme: darkTheme),
     darkMode: darkTheme,
     onPressed: () {
       Auth.signInWithEmail(context, email.text, password.text).then((value) {
@@ -188,11 +213,17 @@ CustomAuthButton registerBtn(
   TextEditingController name,
   TextEditingController password,
   TextEditingController passwordRp,
-  bool darkTheme,
-) {
+  bool darkTheme, {
+  double? width,
+  double height = Variables.buttonHeightDefault,
+}) {
   return CustomAuthButton(
     iconUrl: AImages.empty,
-    style: secondaryButtonStyle(MediaQuery.of(context).size.width, darkTheme),
+    style: secondaryButtonStyle(
+      width: width ?? MediaQuery.of(context).size.width,
+      height: height,
+      darkTheme: darkTheme,
+    ),
     darkMode: darkTheme,
     onPressed: () {
       if (username.text.isNotEmpty && username.text.length >= 3) {
@@ -274,10 +305,19 @@ CustomAuthButton registerBtn(
 }
 
 CustomAuthButton resetPasswordBtn(
-    BuildContext context, TextEditingController email, bool darkTheme) {
+  BuildContext context,
+  TextEditingController email,
+  bool darkTheme, {
+  double? width,
+  double height = Variables.buttonHeightDefault,
+}) {
   return CustomAuthButton(
     iconUrl: AImages.empty,
-    style: secondaryButtonStyle(MediaQuery.of(context).size.width, darkTheme),
+    style: secondaryButtonStyle(
+      width: width ?? MediaQuery.of(context).size.width,
+      height: height,
+      darkTheme: darkTheme,
+    ),
     darkMode: darkTheme,
     onPressed: () {
       Auth.resetPassword(context, email.text).then((value) {
@@ -295,10 +335,20 @@ CustomAuthButton resetPasswordBtn(
 }
 
 CustomAuthButton routeBtn(
-    BuildContext context, Widget widget, String text, bool darkTheme) {
+  BuildContext context,
+  Widget widget,
+  String text,
+  bool darkTheme, {
+  double? width,
+  double height = Variables.buttonHeightDefault,
+}) {
   return CustomAuthButton(
     iconUrl: AImages.empty,
-    style: secondaryButtonStyle(MediaQuery.of(context).size.width, darkTheme),
+    style: secondaryButtonStyle(
+      width: width ?? MediaQuery.of(context).size.width,
+      height: height,
+      darkTheme: darkTheme,
+    ),
     darkMode: darkTheme,
     onPressed: () {
       Navigator.pushReplacement(
@@ -310,11 +360,20 @@ CustomAuthButton routeBtn(
   );
 }
 
-CustomAuthButton backBtn(BuildContext context, bool darkTheme,
-    {VoidCallback? action}) {
+CustomAuthButton backBtn(
+  BuildContext context,
+  bool darkTheme, {
+  VoidCallback? action,
+  double? width,
+  double height = Variables.buttonHeightDefault,
+}) {
   return CustomAuthButton(
     iconUrl: AImages.empty,
-    style: defaultAuthButtonStyle(MediaQuery.of(context).size.width, darkTheme),
+    style: defaultAuthButtonStyle(
+      width: width ?? MediaQuery.of(context).size.width,
+      height: height,
+      darkTheme: darkTheme,
+    ),
     onPressed: () {
       if (action == null) {
         Navigator.pop(context);
@@ -332,6 +391,7 @@ CustomAuthButton customButton(
   required ButtonStyleEnum buttonStyle,
   required bool darkTheme,
   double? width,
+  double height = Variables.buttonHeightDefault,
   double? borderRadius,
   String? iconUrl,
   VoidCallback? action,
@@ -340,21 +400,24 @@ CustomAuthButton customButton(
     iconUrl: iconUrl ?? AImages.empty,
     style: buttonStyle == ButtonStyleEnum.primaryButton
         ? primaryButtonStyle(
-            width ?? MediaQuery.of(context).size.width,
-            darkTheme,
+            width: width ?? MediaQuery.of(context).size.width,
+            height: height,
+            darkTheme: darkTheme,
             borderRadius: borderRadius,
             iconSize: Variables.buttonIconSizeSmall,
           )
         : buttonStyle == ButtonStyleEnum.secondaryButton
             ? secondaryButtonStyle(
-                width ?? MediaQuery.of(context).size.width,
-                darkTheme,
+                width: width ?? MediaQuery.of(context).size.width,
+                height: height,
+                darkTheme: darkTheme,
                 borderRadius: borderRadius,
                 iconSize: Variables.buttonIconSizeSmall,
               )
             : defaultAuthButtonStyle(
-                width ?? MediaQuery.of(context).size.width,
-                darkTheme,
+                width: width ?? MediaQuery.of(context).size.width,
+                height: height,
+                darkTheme: darkTheme,
                 borderRadius: borderRadius,
                 iconSize: Variables.buttonIconSizeSmall,
               ),
@@ -495,7 +558,14 @@ Widget shareButton(
 }) {
   return InkWell(
     onTap: () {
-      ScaffoldSnackbar.of(context).show("Paylaşım sayfası açılacak");
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SharePage(
+            darkTheme: darkTheme,
+          ),
+        ),
+      );
     },
     child: Container(
       padding: const EdgeInsets.symmetric(
