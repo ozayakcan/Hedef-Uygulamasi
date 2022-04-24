@@ -366,6 +366,39 @@ CustomAuthButton routeBtn(
   );
 }
 
+Widget linkButton(
+  BuildContext context,
+  Widget widget,
+  String text, {
+  required bool darkTheme,
+  bool replacement = false,
+  double fontSiza = Variables.fontSizeNormal,
+}) {
+  return InkWell(
+    onTap: () {
+      if (replacement) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => widget,
+          ),
+        );
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => widget,
+          ),
+        );
+      }
+    },
+    child: Text(
+      text,
+      style: linktTextStyle(fontSiza, darkTheme),
+    ),
+  );
+}
+
 CustomAuthButton backBtn(
   BuildContext context,
   bool darkTheme, {

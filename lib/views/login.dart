@@ -89,23 +89,33 @@ class EmailLogin extends StatelessWidget {
           authButton: loginBtnVar,
           prevFocus: passwordFocus,
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            linkButton(
+              context,
+              EmailRegister(
+                darkTheme: darkTheme,
+              ),
+              AppLocalizations.of(context).i_dont_have_an_account,
+              darkTheme: darkTheme,
+              replacement: true,
+              fontSiza: Variables.fontSizeMedium,
+            ),
+            linkButton(
+              context,
+              ResetPassword(
+                darkTheme: darkTheme,
+              ),
+              AppLocalizations.of(context).forget_password,
+              darkTheme: darkTheme,
+              replacement: true,
+              fontSiza: Variables.fontSizeMedium,
+            ),
+          ],
+        ),
         loginBtnVar,
-        routeBtn(
-          context,
-          ResetPassword(
-            darkTheme: darkTheme,
-          ),
-          AppLocalizations.of(context).reset_password,
-          darkTheme,
-        ),
-        routeBtn(
-          context,
-          EmailRegister(
-            darkTheme: darkTheme,
-          ),
-          AppLocalizations.of(context).register,
-          darkTheme,
-        ),
         backBtn(context, darkTheme),
       ],
     );

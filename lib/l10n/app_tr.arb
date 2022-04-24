@@ -25,6 +25,8 @@
     "login_with_email": "Eposta ile Giriş Yap",
     "login": "Giriş Yap",
     "register": "Kaydol",
+    "forget_password": "Şifremi unuttum.",
+    "i_dont_have_an_account": "Hesabım yok.",
     "back": "Geri",
     "email": "Eposta",
     "password": "Şifre",
