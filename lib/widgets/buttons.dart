@@ -687,9 +687,8 @@ Widget shareButton(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         border: Border.all(
-          color: darkTheme
-              ? ThemeColorDark.textSecondary
-              : ThemeColor.textSecondary,
+          color:
+              darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
           width: 1.5,
         ),
         borderRadius: BorderRadius.horizontal(
