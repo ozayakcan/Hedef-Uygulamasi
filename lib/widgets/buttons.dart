@@ -623,8 +623,8 @@ class _ToolTipButtonState extends State<ToolTipButton> {
   Widget build(BuildContext context) {
     return Tooltip(
       message: widget.tooltip,
-      child: TextButton(
-        onPressed: widget.onPressed,
+      child: InkWell(
+        onTap: widget.onPressed,
         onHover: (hovered) {
           if (hovered) {
             setState(() {
@@ -636,28 +636,33 @@ class _ToolTipButtonState extends State<ToolTipButton> {
             });
           }
         },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            if (widget.icon != null)
-              Icon(
-                widget.icon,
-                color: widget.activeColor ?? color ?? normalColor(),
-                size: Variables.iconSizeMedium,
-              ),
-            if (widget.icon != null)
-              const SizedBox(
-                width: 5,
-              ),
-            if (widget.text != null)
-              Text(
-                widget.text!,
-                style: simpleTextStyleColorable(
-                    Variables.fontSizeMedium, color ?? normalColor()),
-              ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              if (widget.icon != null)
+                Icon(
+                  widget.icon,
+                  color: widget.activeColor ?? color ?? normalColor(),
+                  size: Variables.iconSizeMedium,
+                ),
+              if (widget.icon != null)
+                const SizedBox(
+                  width: 5,
+                ),
+              if (widget.text != null)
+                Text(
+                  widget.text!,
+                  style: simpleTextStyleColorable(
+                      Variables.fontSizeMedium, color ?? normalColor()),
+                ),
+            ],
+          ),
         ),
       ),
     );
