@@ -181,6 +181,7 @@ class _PostWidgetState extends State<PostWidget> {
               tooltip: AppLocalizations.of(context).favorite_btn,
               text: favoriteCount.toString(),
               icon: isFavorited ? Icons.favorite : Icons.favorite_border,
+              activeColor: isFavorited ? Colors.red : null,
               onPressed: () {
                 FavoritesDB.addFavorite(widget.postModel.key, user.uid)
                     .then((value) {

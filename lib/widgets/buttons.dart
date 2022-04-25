@@ -591,12 +591,14 @@ class ToolTipButton extends StatefulWidget {
     required this.tooltip,
     this.text,
     this.icon,
+    this.activeColor,
     this.onPressed,
   }) : super(key: key);
   final bool darkTheme;
   final String tooltip;
   final String? text;
   final IconData? icon;
+  final Color? activeColor;
   final VoidCallback? onPressed;
   @override
   State<ToolTipButton> createState() => _ToolTipButtonState();
@@ -642,7 +644,7 @@ class _ToolTipButtonState extends State<ToolTipButton> {
             if (widget.icon != null)
               Icon(
                 widget.icon,
-                color: color ?? normalColor(),
+                color: widget.activeColor ?? color ?? normalColor(),
                 size: Variables.iconSizeMedium,
               ),
             if (widget.icon != null)
