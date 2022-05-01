@@ -27,6 +27,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
   }
 
   Future<void> loadPosts() async {
+    setState(() {
+      postsWidget.clear();
+    });
     List<PostModel> posts = [];
     posts.addAll(await PostsDB.getFavoritedPosts(user.uid));
     List<Widget> tempPostsWidget = await PostsDB.getPostsAsWidgets(
@@ -35,7 +38,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
       darkTheme: widget.darkTheme,
     );
     setState(() {
-      postsWidget = tempPostsWidget;
+      postsWidget.addAll(tempPostsWidget);
       postsLoaded = true;
     });
   }

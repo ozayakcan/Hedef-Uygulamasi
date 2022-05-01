@@ -93,6 +93,9 @@ class _ProfileState extends State<Profile> {
   }
 
   void loadPosts() async {
+    setState(() {
+      postsWidget.clear();
+    });
     List<PostModel> posts = [];
     posts.addAll(await PostsDB.getPosts(userModel.id));
     List<Widget> tempPostsWidget = await PostsDB.getPostsAsWidgets(
@@ -103,7 +106,7 @@ class _ProfileState extends State<Profile> {
       inProfile: true,
     );
     setState(() {
-      postsWidget = tempPostsWidget;
+      postsWidget.addAll(tempPostsWidget);
       postsLoaded = true;
     });
   }

@@ -29,24 +29,13 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () {
-      setState(() {
-        postsWidget.insert(
-          0,
-          shareButton(
-            context,
-            darkTheme: widget.darkTheme,
-            onShared: () async {
-              await loadPosts();
-            },
-          ),
-        );
-      });
-    });
     loadPosts();
   }
 
   Future<void> loadPosts() async {
+    setState(() {
+      postsWidget.clear();
+    });
     List<PostModel> posts = [];
     posts.addAll(await PostsDB.getPosts(user.uid));
     posts.addAll(await PostsDB.getFollowingPost(user.uid));
@@ -55,12 +44,16 @@ class _HomePageState extends State<HomePage> {
       posts: posts,
       darkTheme: widget.darkTheme,
     );
-    if (postsWidget.length > 1) {
-      setState(() {
-        postsWidget.removeRange(1, postsWidget.length);
-      });
-    }
     setState(() {
+      postsWidget.add(
+        shareButton(
+          context,
+          darkTheme: widget.darkTheme,
+          onShared: () async {
+            await loadPosts();
+          },
+        ),
+      );
       postsWidget.addAll(tempPostsWidget);
       postsLoaded = true;
     });
