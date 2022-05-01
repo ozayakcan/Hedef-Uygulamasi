@@ -201,14 +201,6 @@ class _PostWidgetState extends State<PostWidget> {
                 ScaffoldSnackbar.of(context).show("Yorum Yap");
               },
             ),
-            ToolTipButton(
-              darkTheme: widget.darkTheme,
-              tooltip: AppLocalizations.of(context).share_btn,
-              icon: Icons.share,
-              onPressed: () {
-                ScaffoldSnackbar.of(context).show("Paylaş");
-              },
-            ),
           ],
         ),
       ],
