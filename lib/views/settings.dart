@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:sosyal/views/language.dart';
 
 import '../models/widget.dart';
+import '../utils/language.dart';
 import '../utils/shared_pref.dart';
 import '../widgets/menu.dart';
 import 'bottom_navigation.dart';

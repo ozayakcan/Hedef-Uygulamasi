@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 
 import 'firebase_options.dart';
 import 'secrets.dart';
+import 'utils/language.dart';
 import 'utils/shared_pref.dart';
 import 'views/home.dart';
-import 'views/language.dart';
 import 'views/login.dart';
 import 'views/splash_screen.dart';
 import 'widgets/page_style.dart';

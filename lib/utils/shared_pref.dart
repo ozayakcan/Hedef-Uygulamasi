@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../firebase/database/user_database.dart';
 import '../main.dart';
 import '../models/user.dart';
-import '../views/language.dart';
+import 'language.dart';
 
 class SharedPref {
   static String userInfoString = "userInfo";
