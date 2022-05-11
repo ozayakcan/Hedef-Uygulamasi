@@ -4,6 +4,7 @@ import 'package:sosyal/views/language.dart';
 
 import '../models/widget.dart';
 import '../utils/shared_pref.dart';
+import '../widgets/menu.dart';
 import 'bottom_navigation.dart';
 
 class Settings extends StatefulWidget {
@@ -33,6 +34,11 @@ class _SettingsState extends State<Settings> {
     return BottomNavigationPage(
       darkTheme: widget.darkTheme,
       showSearchbar: false,
+      menu: mainPopupMenu(
+        context,
+        darkTheme: widget.darkTheme,
+        showSettings: false,
+      ),
       widgetModel: WidgetModel(
         context,
         title: AppLocalizations.of(context).settings,
