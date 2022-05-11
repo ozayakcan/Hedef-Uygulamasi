@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sosyal/views/language.dart';
 
-import '../utils/variables.dart';
 import '../models/widget.dart';
-import '../widgets/texts.dart';
+import '../utils/shared_pref.dart';
 import 'bottom_navigation.dart';
 
 class Settings extends StatefulWidget {
@@ -16,6 +16,18 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  String currentLanguageCode = getLanguageCode();
+
+  @override
+  void initState() {
+    SharedPref.getLocale().then((value) {
+      setState(() {
+        currentLanguageCode = value;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationPage(
@@ -24,9 +36,14 @@ class _SettingsState extends State<Settings> {
       widgetModel: WidgetModel(
         context,
         title: AppLocalizations.of(context).settings,
-        child: Text(
-          "Ayarlar Sayfası",
-          style: simpleTextStyle(Variables.fontSizeNormal, widget.darkTheme),
+        child: Column(
+          children: [
+            chooseLanguageWidget(
+              context,
+              darkTheme: widget.darkTheme,
+              currentLanguageCode: currentLanguageCode,
+            ),
+          ],
         ),
       ),
     );

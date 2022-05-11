@@ -92,5 +92,7 @@
     "create_post": "Gönderi Oluştur",
     "post_must_2_character": "Gönderi en az 2 karakter içermelidir.",
     "post_could_not_created": "Gönderi oluşturulamadı. Lütfen daha sonra tekrar deneyin.",
-    "sharing": "Paylaşılıyor"
+    "sharing": "Paylaşılıyor",
+    "language_s": "Dil: %s",
+    "choose_your_language": "Dil Seçin"
 }

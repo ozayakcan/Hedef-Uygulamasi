@@ -6,7 +6,7 @@ import '../utils/colors.dart';
 import '../utils/variables.dart';
 import 'texts.dart';
 
-MaterialApp homeMaterialApp(Widget page, bool darkTheme) {
+MaterialApp homeMaterialApp(Widget page, Locale locale, bool darkTheme) {
   return MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
@@ -37,6 +37,7 @@ MaterialApp homeMaterialApp(Widget page, bool darkTheme) {
       GlobalWidgetsLocalizations.delegate,
     ],
     supportedLocales: AppLocalizations.supportedLocales,
+    locale: locale,
     onGenerateTitle: (context) => AppLocalizations.of(context).app_name,
     home: page,
   );

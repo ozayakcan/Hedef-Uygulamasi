@@ -49,6 +49,7 @@ dependencies:
   permission_handler: ^9.2.0
   flutter_linkify: ^5.0.2
   url_launcher: ^6.0.20
+  universal_io: ^2.0.4
 
 dev_dependencies:
   flutter_test:

@@ -10,6 +10,7 @@ import 'firebase_options.dart';
 import 'secrets.dart';
 import 'utils/shared_pref.dart';
 import 'views/home.dart';
+import 'views/language.dart';
 import 'views/login.dart';
 import 'views/splash_screen.dart';
 import 'widgets/page_style.dart';
@@ -46,13 +47,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  Locale locale = Locale(getLanguageCode());
   bool darkTheme = false;
+
   FirebaseAuth auth = FirebaseAuth.instance;
   bool? isLogged;
   StreamSubscription<User?>? firebaseAuthEvent;
   @override
   void initState() {
     super.initState();
+    SharedPref.getLocale().then((value) {
+      setState(() {
+        locale = Locale(value);
+      });
+    });
     SharedPref.isDarkTheme().then((value) {
       setState(() {
         darkTheme = value;
@@ -88,6 +96,7 @@ class _MyAppState extends State<MyApp> {
           HomePage(
             darkTheme: darkTheme,
           ),
+          locale,
           darkTheme,
         );
       } else {
@@ -95,6 +104,7 @@ class _MyAppState extends State<MyApp> {
           Login(
             darkTheme: darkTheme,
           ),
+          locale,
           darkTheme,
         );
       }
@@ -103,6 +113,7 @@ class _MyAppState extends State<MyApp> {
         SplashScreen(
           darkTheme: darkTheme,
         ),
+        locale,
         darkTheme,
       );
     }
@@ -112,6 +123,7 @@ class _MyAppState extends State<MyApp> {
         if (snapshot1.connectionState == ConnectionState.waiting) {
           return homeMaterialApp(
             const SplashScreen(),
+            locale,
             darkTheme,
           );
         } else {
@@ -120,6 +132,7 @@ class _MyAppState extends State<MyApp> {
               HomePage(
                 darkTheme: darkTheme,
               ),
+              locale,
               darkTheme,
             );
           } else {
@@ -127,6 +140,7 @@ class _MyAppState extends State<MyApp> {
               Login(
                 darkTheme: darkTheme,
               ),
+              locale,
               darkTheme,
             );
           }

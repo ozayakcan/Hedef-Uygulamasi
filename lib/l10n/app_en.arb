@@ -92,5 +92,7 @@
     "create_post": "Create Post",
     "post_must_2_character": "Post must be at least 2 characters.",
     "post_could_not_created": "Post could not created. Please try again later.",
-    "sharing": "Sharing"
+    "sharing": "Sharing",
+    "language_s": "Language: %s",
+    "choose_your_language": "Choose Your Language"
 }
