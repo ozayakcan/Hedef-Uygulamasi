@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../firebase/auth.dart';
 import '../firebase/database/posts_database.dart';
-import '../utils/colors.dart';
+import '../utils/theme_colors.dart';
 import '../utils/variables.dart';
 import '../widgets/buttons.dart';
 import '../widgets/page_style.dart';
@@ -64,9 +64,7 @@ class _SharePageState extends State<SharePage> {
           decoration: InputDecoration(
             hintText: AppLocalizations.of(context).share_your_thoughts,
             hintStyle: TextStyle(
-              color: widget.darkTheme
-                  ? ThemeColorDark.textSecondary
-                  : ThemeColor.textSecondary,
+              color: ThemeColor.of(widget.darkTheme).textSecondary,
             ),
           ),
         ),

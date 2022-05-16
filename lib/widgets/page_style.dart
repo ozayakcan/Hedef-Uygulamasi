@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import '../utils/colors.dart';
+import '../utils/theme_colors.dart';
 import '../utils/variables.dart';
 import 'texts.dart';
 
@@ -10,12 +10,8 @@ MaterialApp homeMaterialApp(Widget page, Locale locale, bool darkTheme) {
   return MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
-      scaffoldBackgroundColor: darkTheme
-          ? ThemeColorDark.backgroundPrimary
-          : ThemeColor.backgroundPrimary,
-      primarySwatch: darkTheme
-          ? ThemeColorDark.backgroundSecondary
-          : ThemeColor.backgroundSecondary,
+      scaffoldBackgroundColor: ThemeColor.of(darkTheme).backgroundPrimary,
+      primarySwatch: ThemeColor.of(darkTheme).backgroundSecondary,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       inputDecorationTheme: InputDecorationTheme(
         hintStyle:
@@ -25,9 +21,8 @@ MaterialApp homeMaterialApp(Widget page, Locale locale, bool darkTheme) {
         headline6: simpleTextStyle(Variables.fontSizeNormal, darkTheme),
       ),
       textSelectionTheme: TextSelectionThemeData(
-        cursorColor: darkTheme ? ThemeColorDark.cursor : ThemeColor.cursor,
-        selectionColor:
-            darkTheme ? ThemeColorDark.selection : ThemeColor.selection,
+        cursorColor: ThemeColor.of(darkTheme).cursor,
+        selectionColor: ThemeColor.of(darkTheme).selection,
       ),
     ),
     localizationsDelegates: const [
@@ -52,7 +47,7 @@ PreferredSizeWidget defaultAppBar(
 }) {
   return AppBar(
     iconTheme: IconThemeData(
-      color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+      color: ThemeColor.of(darkTheme).textPrimary,
     ),
     leading: leadingBuilder(context, showBackButton),
     title: appBarTitle(
@@ -101,11 +96,11 @@ DefaultTabController defaultTabController(BuildContext context,
         title: appBarTitle(AppLocalizations.of(context).app_name, darkTheme),
         bottom: TabBar(
           labelStyle: titilliumWebTextStyle(
-            darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+            ThemeColor.of(darkTheme).textPrimary,
             Variables.fontSizeNormal,
           ),
           unselectedLabelStyle: titilliumWebTextStyle(
-            darkTheme ? ThemeColorDark.textSecondary : ThemeColor.textSecondary,
+            ThemeColor.of(darkTheme).textSecondary,
             Variables.fontSizeNormal,
           ),
           tabs: tabList,

@@ -7,7 +7,7 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../models/user.dart';
-import '../utils/colors.dart';
+import '../utils/theme_colors.dart';
 import '../utils/shared_pref.dart';
 import '../utils/variables.dart';
 import '../views/profile.dart';
@@ -75,8 +75,7 @@ Widget loadingRow(BuildContext context, bool darkTheme,
         height: height,
         child: CircularProgressIndicator(
           semanticsLabel: text,
-          color:
-              darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+          color: ThemeColor.of(darkTheme).textPrimary,
         ),
       ),
       const SizedBox(
@@ -85,8 +84,7 @@ Widget loadingRow(BuildContext context, bool darkTheme,
       Text(
         text,
         style: TextStyle(
-          color:
-              darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+          color: ThemeColor.of(darkTheme).textPrimary,
           fontSize: Variables.fontSizeMedium,
         ),
         textAlign: TextAlign.center,
@@ -115,11 +113,8 @@ Widget darkThemeSwitch(BuildContext context, bool darkTheme) {
           onChanged: (value) {
             SharedPref.setDarkThemeRestart(context, value);
           },
-          activeColor:
-              darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
-          activeTrackColor: darkTheme
-              ? ThemeColorDark.textSecondary
-              : ThemeColor.textSecondary,
+          activeColor: ThemeColor.of(darkTheme).textPrimary,
+          activeTrackColor: ThemeColor.of(darkTheme).textSecondary,
         ),
       ],
     ),
@@ -142,9 +137,7 @@ Future<void> defaultAlertbox(
     barrierDismissible: dismissible,
     builder: (context) {
       return AlertDialog(
-        backgroundColor: darkTheme
-            ? ThemeColorDark.alertBoxBackground
-            : ThemeColor.alertBoxBackground,
+        backgroundColor: ThemeColor.of(darkTheme).alertBoxBackground,
         title: Text(
           title,
           style: simpleTextStyle(Variables.fontSizeMedium, darkTheme),
@@ -208,9 +201,7 @@ Future<void> defaultAlertbox(
 loadingAlert(BuildContext context, bool darkTheme, {String? text}) {
   text ??= AppLocalizations.of(context).loading;
   AlertDialog alert = AlertDialog(
-    backgroundColor: darkTheme
-        ? ThemeColorDark.backgroundPrimary
-        : ThemeColor.backgroundPrimary,
+    backgroundColor: ThemeColor.of(darkTheme).backgroundPrimary,
     elevation: 0,
     content: SingleChildScrollView(
       child: ListBody(

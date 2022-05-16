@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/colors.dart';
+import '../utils/theme_colors.dart';
 import '../utils/variables.dart';
 
 TextStyle titilliumWebTextStyle(Color color, double fontSize) {
@@ -13,14 +13,14 @@ TextStyle titilliumWebTextStyle(Color color, double fontSize) {
 
 TextStyle simpleTextStyle(double fontSize, bool darkTheme) {
   return TextStyle(
-    color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+    color: ThemeColor.of(darkTheme).textPrimary,
     fontSize: fontSize,
   );
 }
 
 TextStyle simpleTextStyleSecondary(double fontSize, bool darkTheme) {
   return TextStyle(
-    color: darkTheme ? ThemeColorDark.textSecondary : ThemeColor.textSecondary,
+    color: ThemeColor.of(darkTheme).textSecondary,
     fontSize: fontSize,
   );
 }
@@ -28,7 +28,7 @@ TextStyle simpleTextStyleSecondary(double fontSize, bool darkTheme) {
 TextStyle simpleTextStyleBold(bool darkTheme) {
   return TextStyle(
     fontWeight: FontWeight.bold,
-    color: darkTheme ? ThemeColorDark.textSecondary : ThemeColor.textSecondary,
+    color: ThemeColor.of(darkTheme).textSecondary,
   );
 }
 
@@ -41,7 +41,7 @@ TextStyle simpleTextStyleColorable(double fontSize, Color color) {
 
 TextStyle linktTextStyle(double fonstSize, bool darkTheme) {
   return TextStyle(
-    color: darkTheme ? ThemeColorDark.link : ThemeColor.link,
+    color: ThemeColor.of(darkTheme).link,
     fontSize: fonstSize,
   );
 }

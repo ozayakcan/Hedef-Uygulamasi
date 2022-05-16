@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../firebase/auth.dart';
-import '../utils/colors.dart';
+import '../utils/theme_colors.dart';
 import '../utils/shared_pref.dart';
 import '../utils/variables.dart';
 import '../views/login.dart';
@@ -13,16 +13,13 @@ Widget mainPopupMenu(BuildContext context,
   return PopupMenuButton(
     icon: Icon(
       Icons.more_vert,
-      color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+      color: ThemeColor.of(darkTheme).textPrimary,
     ),
-    color: darkTheme
-        ? ThemeColorDark.backgroundPrimary
-        : ThemeColor.backgroundPrimary,
+    color: ThemeColor.of(darkTheme).backgroundPrimary,
     elevation: 20,
     shape: OutlineInputBorder(
       borderSide: BorderSide(
-        color:
-            darkTheme ? ThemeColorDark.textSecondary : ThemeColor.textSecondary,
+        color: ThemeColor.of(darkTheme).textSecondary,
         width: 2,
       ),
     ),

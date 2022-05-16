@@ -1,7 +1,7 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
 
-import '../utils/colors.dart';
+import '../utils/theme_colors.dart';
 import '../utils/variables.dart';
 
 TextField customTextField(BuildContext context, bool darkTheme,
@@ -20,12 +20,12 @@ TextField customTextField(BuildContext context, bool darkTheme,
     textInputAction:
         nextFocus != null ? TextInputAction.next : TextInputAction.done,
     style: TextStyle(
-      color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+      color: ThemeColor.of(darkTheme).textPrimary,
     ),
     decoration: InputDecoration(
       labelText: labelText,
       labelStyle: TextStyle(
-        color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+        color: ThemeColor.of(darkTheme).textPrimary,
       ),
       enabledBorder: enabledInputBorder(darkTheme),
       focusedBorder: focusedInputBorder(darkTheme),
@@ -58,14 +58,14 @@ TextField passwordTextField(BuildContext context, bool darkTheme,
     maxLength: Variables.maxLengthPassword,
     textInputAction:
         nextFocus != null ? TextInputAction.next : TextInputAction.done,
-    cursorColor: darkTheme ? ThemeColorDark.cursor : ThemeColor.cursor,
+    cursorColor: ThemeColor.of(darkTheme).cursor,
     style: TextStyle(
-      color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+      color: ThemeColor.of(darkTheme).textPrimary,
     ),
     decoration: InputDecoration(
       labelText: pwtext,
       labelStyle: TextStyle(
-        color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+        color: ThemeColor.of(darkTheme).textPrimary,
       ),
       enabledBorder: enabledInputBorder(darkTheme),
       focusedBorder: focusedInputBorder(darkTheme),
@@ -86,8 +86,7 @@ TextField passwordTextField(BuildContext context, bool darkTheme,
 InputBorder enabledInputBorder(bool darkTheme) {
   return UnderlineInputBorder(
     borderSide: BorderSide(
-      color:
-          darkTheme ? ThemeColorDark.textSecondary : ThemeColor.textSecondary,
+      color: ThemeColor.of(darkTheme).textSecondary,
       width: 0.0,
     ),
   );
@@ -96,8 +95,7 @@ InputBorder enabledInputBorder(bool darkTheme) {
 InputBorder focusedInputBorder(bool darkTheme) {
   return UnderlineInputBorder(
     borderSide: BorderSide(
-      color:
-          darkTheme ? ThemeColorDark.textSecondary : ThemeColor.textSecondary,
+      color: ThemeColor.of(darkTheme).textSecondary,
       width: 0.0,
     ),
   );

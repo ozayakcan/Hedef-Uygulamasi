@@ -10,7 +10,7 @@ import '../firebase/auth.dart';
 import '../firebase/database/user_database.dart';
 import '../models/user.dart';
 import '../models/widget.dart';
-import '../utils/colors.dart';
+import '../utils/theme_colors.dart';
 import '../utils/search.dart';
 import '../utils/shared_pref.dart';
 import '../widgets/images.dart';
@@ -141,9 +141,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
             },
             icon: Icon(
               Icons.search,
-              color: widget.darkTheme
-                  ? ThemeColorDark.textPrimary
-                  : ThemeColor.textPrimary,
+              color: ThemeColor.of(widget.darkTheme).textPrimary,
             ),
           ),
         if (widget.menu != null) widget.menu!,
@@ -157,9 +155,8 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
               child: const Icon(Icons.home_rounded),
             ),
             label: AppLocalizations.of(context).home,
-            backgroundColor: widget.darkTheme
-                ? ThemeColorDark.backgroundSecondary
-                : ThemeColor.backgroundSecondary,
+            backgroundColor:
+                ThemeColor.of(widget.darkTheme).backgroundSecondary,
           ),
           BottomNavigationBarItem(
             icon: SizedBox(
@@ -168,9 +165,8 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
               child: const Icon(Icons.favorite_rounded),
             ),
             label: AppLocalizations.of(context).favorites,
-            backgroundColor: widget.darkTheme
-                ? ThemeColorDark.backgroundSecondary
-                : ThemeColor.backgroundSecondary,
+            backgroundColor:
+                ThemeColor.of(widget.darkTheme).backgroundSecondary,
           ),
           BottomNavigationBarItem(
             icon: SizedBox(
@@ -184,20 +180,15 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
               ),
             ),
             label: AppLocalizations.of(context).profile,
-            backgroundColor: widget.darkTheme
-                ? ThemeColorDark.backgroundSecondary
-                : ThemeColor.backgroundSecondary,
+            backgroundColor:
+                ThemeColor.of(widget.darkTheme).backgroundSecondary,
           ),
         ],
         type: BottomNavigationBarType.shifting,
         showUnselectedLabels: false,
         currentIndex: selectedIndex,
-        selectedItemColor: widget.darkTheme
-            ? ThemeColorDark.textSecondary
-            : ThemeColor.textSecondary,
-        unselectedItemColor: widget.darkTheme
-            ? ThemeColorDark.textPrimary
-            : ThemeColor.textPrimary,
+        selectedItemColor: ThemeColor.of(widget.darkTheme).textSecondary,
+        unselectedItemColor: ThemeColor.of(widget.darkTheme).textPrimary,
         onTap: (index) {
           onItemTap(index);
           setState(() {

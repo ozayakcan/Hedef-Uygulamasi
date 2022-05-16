@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/assets.dart';
-import '../utils/colors.dart';
+import '../utils/theme_colors.dart';
 
 Widget profileImageButton(
   String path, {
@@ -97,7 +97,7 @@ Widget cameraIcon({
       child: Icon(
         Icons.camera_alt_outlined,
         size: size,
-        color: darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+        color: ThemeColor.of(darkTheme).textPrimary,
       ),
       onPressed: onPressed,
     ),
@@ -115,9 +115,7 @@ Widget imageButton({
     return RawMaterialButton(
       onPressed: onPressed,
       elevation: 2.0,
-      fillColor: darkTheme
-          ? ThemeColorDark.backgroundPrimary
-          : ThemeColor.backgroundPrimary,
+      fillColor: ThemeColor.of(darkTheme).backgroundPrimary,
       child: child,
       padding: padding == null ? EdgeInsets.zero : EdgeInsets.all(padding),
       shape: const CircleBorder(),
@@ -126,9 +124,7 @@ Widget imageButton({
     return RawMaterialButton(
       onPressed: onPressed,
       elevation: 2.0,
-      fillColor: darkTheme
-          ? ThemeColorDark.backgroundPrimary
-          : ThemeColor.backgroundPrimary,
+      fillColor: ThemeColor.of(darkTheme).backgroundPrimary,
       child: child,
       padding: padding == null ? EdgeInsets.zero : EdgeInsets.all(padding),
     );

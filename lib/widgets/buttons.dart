@@ -10,7 +10,7 @@ import '../firebase/database/database.dart';
 import '../firebase/database/user_database.dart';
 import '../models/user.dart';
 import '../utils/assets.dart';
-import '../utils/colors.dart';
+import '../utils/theme_colors.dart';
 import '../utils/time.dart';
 import '../utils/variables.dart';
 import '../views/home.dart';
@@ -34,10 +34,8 @@ AuthButtonStyle defaultAuthButtonStyle({
     width: width,
     height: height,
     iconSize: iconSize,
-    borderColor:
-        darkTheme ? ThemeColorDark.buttonBorder : ThemeColor.buttonBorder,
-    splashColor:
-        darkTheme ? ThemeColorDark.buttonSplash : ThemeColor.buttonSplash,
+    borderColor: ThemeColor.of(darkTheme).buttonBorder,
+    splashColor: ThemeColor.of(darkTheme).buttonSplash,
   );
 }
 
@@ -55,14 +53,12 @@ AuthButtonStyle primaryButtonStyle({
     width: width,
     height: height,
     iconSize: iconSize,
-    borderColor:
-        darkTheme ? ThemeColorDark.buttonBorder : ThemeColor.buttonBorder,
-    splashColor:
-        darkTheme ? ThemeColorDark.buttonSplash : ThemeColor.buttonSplash,
-    buttonColor:
-        darkTheme ? ThemeColorDark.buttonPrimary : ThemeColor.buttonPrimary,
+    borderColor: ThemeColor.of(darkTheme).buttonBorder,
+    splashColor: ThemeColor.of(darkTheme).buttonSplash,
+    buttonColor: ThemeColor.of(darkTheme).buttonPrimary,
     textStyle: TextStyle(
-        color: darkTheme ? ThemeColorDark.buttonText : ThemeColor.buttonText),
+      color: ThemeColor.of(darkTheme).buttonText,
+    ),
   );
 }
 
@@ -80,14 +76,12 @@ AuthButtonStyle secondaryButtonStyle({
     width: width,
     height: height,
     iconSize: iconSize,
-    borderColor:
-        darkTheme ? ThemeColorDark.buttonBorder : ThemeColor.buttonBorder,
-    splashColor:
-        darkTheme ? ThemeColorDark.buttonSplash : ThemeColor.buttonSplash,
-    buttonColor:
-        darkTheme ? ThemeColorDark.buttonSecondary : ThemeColor.buttonSecondary,
+    borderColor: ThemeColor.of(darkTheme).buttonBorder,
+    splashColor: ThemeColor.of(darkTheme).buttonSplash,
+    buttonColor: ThemeColor.of(darkTheme).buttonSecondary,
     textStyle: TextStyle(
-        color: darkTheme ? ThemeColorDark.buttonText : ThemeColor.buttonText),
+      color: ThemeColor.of(darkTheme).buttonText,
+    ),
   );
 }
 
@@ -511,19 +505,13 @@ Widget customButton({
         height: height,
         decoration: BoxDecoration(
           color: buttonStyle == ButtonStyleEnum.primaryButton
-              ? darkTheme
-                  ? ThemeColorDark.buttonPrimary
-                  : ThemeColor.buttonPrimary
+              ? ThemeColor.of(darkTheme).buttonPrimary
               : buttonStyle == ButtonStyleEnum.secondaryButton
-                  ? darkTheme
-                      ? ThemeColorDark.buttonSecondary
-                      : ThemeColor.buttonSecondary
+                  ? ThemeColor.of(darkTheme).buttonSecondary
                   : null,
           borderRadius: borderRad,
           border: Border.all(
-            color: darkTheme
-                ? ThemeColorDark.buttonBorder
-                : ThemeColor.buttonBorder,
+            color: ThemeColor.of(darkTheme).buttonBorder,
             width: 1.0,
           ),
         ),
@@ -532,7 +520,7 @@ Widget customButton({
             text,
             style: simpleTextStyleColorable(
               Variables.fontSizeMedium,
-              darkTheme ? ThemeColorDark.buttonText : ThemeColor.buttonText,
+              ThemeColor.of(darkTheme).buttonText,
             ),
           ),
         ),
@@ -575,8 +563,7 @@ Widget searchSuggestion(
           ),
           Icon(
             Icons.history_outlined,
-            color:
-                darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+            color: ThemeColor.of(darkTheme).textPrimary,
           ),
         ],
       ),
@@ -606,15 +593,11 @@ class ToolTipButton extends StatefulWidget {
 
 class _ToolTipButtonState extends State<ToolTipButton> {
   Color normalColor() {
-    return widget.darkTheme
-        ? ThemeColorDark.textPrimary
-        : ThemeColor.textPrimary;
+    return ThemeColor.of(widget.darkTheme).textPrimary;
   }
 
   Color hoverColor() {
-    return widget.darkTheme
-        ? ThemeColorDark.textPrimaryHover
-        : ThemeColor.textPrimaryHover;
+    return ThemeColor.of(widget.darkTheme).textPrimaryHover;
   }
 
   Color? color;
@@ -694,8 +677,7 @@ Widget shareButton(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         border: Border.all(
-          color:
-              darkTheme ? ThemeColorDark.textPrimary : ThemeColor.textPrimary,
+          color: ThemeColor.of(darkTheme).textPrimary,
           width: 1.5,
         ),
         borderRadius: BorderRadius.horizontal(
