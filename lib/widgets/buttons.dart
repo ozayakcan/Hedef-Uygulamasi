@@ -177,6 +177,8 @@ CustomAuthButton loginBtn(
   bool darkTheme, {
   double? width,
   double height = Variables.buttonHeightDefault,
+  VoidCallback? beforeLogin,
+  VoidCallback? onResponse,
 }) {
   return CustomAuthButton(
     iconUrl: AImages.empty,
@@ -186,9 +188,11 @@ CustomAuthButton loginBtn(
         darkTheme: darkTheme),
     darkMode: darkTheme,
     onPressed: () {
+      beforeLogin?.call();
       Auth.of()
           .signInWithEmail(context, email.text, password.text)
           .then((value) {
+        onResponse?.call();
         if (value == null) {
           Navigator.pushAndRemoveUntil(
             context,
@@ -218,6 +222,8 @@ CustomAuthButton registerBtn(
   bool darkTheme, {
   double? width,
   double height = Variables.buttonHeightDefault,
+  VoidCallback? beforeRegister,
+  VoidCallback? onResponse,
 }) {
   return CustomAuthButton(
     iconUrl: AImages.empty,
@@ -228,6 +234,7 @@ CustomAuthButton registerBtn(
     ),
     darkMode: darkTheme,
     onPressed: () {
+      beforeRegister?.call();
       if (username.text.isNotEmpty && username.text.length >= 3) {
         if (usernameRegExp.hasMatch(username.text)) {
           UserDB.checkUsername(username.text).then((userNameValue) {
@@ -264,6 +271,7 @@ CustomAuthButton registerBtn(
                               }
                             }
                           });
+                          onResponse?.call();
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
@@ -275,31 +283,38 @@ CustomAuthButton registerBtn(
                           );
                         });
                       } else {
+                        onResponse?.call();
                         ScaffoldSnackbar.of(context).show(registerValue);
                       }
                     });
                   } else {
+                    onResponse?.call();
                     ScaffoldSnackbar.of(context).show(
                         AppLocalizations.of(context).passwords_do_not_match);
                   }
                 } else {
+                  onResponse?.call();
                   ScaffoldSnackbar.of(context)
                       .show(AppLocalizations.of(context).name_must_3_character);
                 }
               } else {
+                onResponse?.call();
                 ScaffoldSnackbar.of(context)
                     .show(AppLocalizations.of(context).username_already_exists);
               }
             } else {
+              onResponse?.call();
               ScaffoldSnackbar.of(context)
                   .show(AppLocalizations.of(context).an_error_occurred);
             }
           });
         } else {
+          onResponse?.call();
           ScaffoldSnackbar.of(context)
               .show(AppLocalizations.of(context).username_regmatch_error);
         }
       } else {
+        onResponse?.call();
         ScaffoldSnackbar.of(context)
             .show(AppLocalizations.of(context).username_must_3_character);
       }
@@ -314,6 +329,8 @@ CustomAuthButton resetPasswordBtn(
   bool darkTheme, {
   double? width,
   double height = Variables.buttonHeightDefault,
+  VoidCallback? beforeResetPw,
+  VoidCallback? onResponse,
 }) {
   return CustomAuthButton(
     iconUrl: AImages.empty,
@@ -324,7 +341,9 @@ CustomAuthButton resetPasswordBtn(
     ),
     darkMode: darkTheme,
     onPressed: () {
+      beforeResetPw?.call();
       Auth.of().resetPassword(context, email.text).then((value) {
+        onResponse?.call();
         if (value == null) {
           ScaffoldSnackbar.of(context)
               .show(AppLocalizations.of(context).reset_password_link_sent);

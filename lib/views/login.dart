@@ -73,14 +73,42 @@ class _LoginState extends State<Login> {
   }
 }
 
-class EmailLogin extends StatelessWidget {
-  EmailLogin({Key? key, required this.darkTheme}) : super(key: key);
+class EmailLogin extends StatefulWidget {
+  const EmailLogin({Key? key, required this.darkTheme}) : super(key: key);
 
   final bool darkTheme;
 
+  @override
+  State<EmailLogin> createState() => _EmailLoginState();
+}
+
+class _EmailLoginState extends State<EmailLogin> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordFocus = FocusNode();
+
+  bool alertDialogVisible = false;
+  void showLoadingAlert() {
+    if (!alertDialogVisible) {
+      loadingAlert(
+        context,
+        widget.darkTheme,
+        text: AppLocalizations.of(context).logging_in,
+      );
+      setState(() {
+        alertDialogVisible = true;
+      });
+    }
+  }
+
+  void closeLoadingAlert(BuildContext context) {
+    if (alertDialogVisible) {
+      Navigator.pop(context);
+      setState(() {
+        alertDialogVisible = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,14 +116,20 @@ class EmailLogin extends StatelessWidget {
       context,
       emailController,
       passwordController,
-      darkTheme,
+      widget.darkTheme,
+      beforeLogin: () {
+        showLoadingAlert();
+      },
+      onResponse: () {
+        closeLoadingAlert(context);
+      },
     );
     return formPage(
       context,
       [
         customTextField(
           context,
-          darkTheme,
+          widget.darkTheme,
           labelText: AppLocalizations.of(context).email,
           textController: emailController,
           inputType: TextInputType.emailAddress,
@@ -103,7 +137,7 @@ class EmailLogin extends StatelessWidget {
         ),
         passwordTextField(
           context,
-          darkTheme,
+          widget.darkTheme,
           pwtext: AppLocalizations.of(context).password,
           passwordController: passwordController,
           authButton: loginBtnVar,
@@ -116,37 +150,42 @@ class EmailLogin extends StatelessWidget {
             linkButton(
               context,
               EmailRegister(
-                darkTheme: darkTheme,
+                darkTheme: widget.darkTheme,
               ),
               AppLocalizations.of(context).i_dont_have_an_account,
-              darkTheme: darkTheme,
+              darkTheme: widget.darkTheme,
               replacement: true,
               fontSiza: Variables.fontSizeMedium,
             ),
             linkButton(
               context,
               ResetPassword(
-                darkTheme: darkTheme,
+                darkTheme: widget.darkTheme,
               ),
               AppLocalizations.of(context).forget_password,
-              darkTheme: darkTheme,
+              darkTheme: widget.darkTheme,
               replacement: true,
               fontSiza: Variables.fontSizeMedium,
             ),
           ],
         ),
         loginBtnVar,
-        backBtn(context, darkTheme),
+        backBtn(context, widget.darkTheme),
       ],
     );
   }
 }
 
-class EmailRegister extends StatelessWidget {
-  EmailRegister({Key? key, required this.darkTheme}) : super(key: key);
+class EmailRegister extends StatefulWidget {
+  const EmailRegister({Key? key, required this.darkTheme}) : super(key: key);
 
   final bool darkTheme;
 
+  @override
+  State<EmailRegister> createState() => _EmailRegisterState();
+}
+
+class _EmailRegisterState extends State<EmailRegister> {
   final emailController = TextEditingController();
   final usernameController = TextEditingController();
   final nameController = TextEditingController();
@@ -157,6 +196,40 @@ class EmailRegister extends StatelessWidget {
   final passwordFocus = FocusNode();
   final passwordRpFocus = FocusNode();
 
+  void back(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EmailLogin(
+          darkTheme: widget.darkTheme,
+        ),
+      ),
+    );
+  }
+
+  bool alertDialogVisible = false;
+  void showLoadingAlert() {
+    if (!alertDialogVisible) {
+      loadingAlert(
+        context,
+        widget.darkTheme,
+        text: AppLocalizations.of(context).registering,
+      );
+      setState(() {
+        alertDialogVisible = true;
+      });
+    }
+  }
+
+  void closeLoadingAlert(BuildContext context) {
+    if (alertDialogVisible) {
+      Navigator.pop(context);
+      setState(() {
+        alertDialogVisible = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final CustomAuthButton registerBtnVar = registerBtn(
@@ -166,7 +239,13 @@ class EmailRegister extends StatelessWidget {
       nameController,
       passwordController,
       passwordRpController,
-      darkTheme,
+      widget.darkTheme,
+      beforeRegister: () {
+        showLoadingAlert();
+      },
+      onResponse: () {
+        closeLoadingAlert(context);
+      },
     );
     return WillPopScope(
       onWillPop: () async {
@@ -178,7 +257,7 @@ class EmailRegister extends StatelessWidget {
         [
           customTextField(
             context,
-            darkTheme,
+            widget.darkTheme,
             labelText: AppLocalizations.of(context).email,
             textController: emailController,
             inputType: TextInputType.emailAddress,
@@ -186,7 +265,7 @@ class EmailRegister extends StatelessWidget {
           ),
           customTextField(
             context,
-            darkTheme,
+            widget.darkTheme,
             labelText: AppLocalizations.of(context).username,
             maxLength: Variables.maxLengthUsername,
             textController: usernameController,
@@ -195,7 +274,7 @@ class EmailRegister extends StatelessWidget {
           ),
           customTextField(
             context,
-            darkTheme,
+            widget.darkTheme,
             labelText: AppLocalizations.of(context).name,
             maxLength: Variables.maxLengthName,
             textController: nameController,
@@ -204,7 +283,7 @@ class EmailRegister extends StatelessWidget {
           ),
           passwordTextField(
             context,
-            darkTheme,
+            widget.darkTheme,
             pwtext: AppLocalizations.of(context).password,
             passwordController: passwordController,
             prevFocus: passwordFocus,
@@ -212,7 +291,7 @@ class EmailRegister extends StatelessWidget {
           ),
           passwordTextField(
             context,
-            darkTheme,
+            widget.darkTheme,
             pwtext: AppLocalizations.of(context).password_repeat,
             passwordController: passwordRpController,
             authButton: registerBtnVar,
@@ -221,7 +300,7 @@ class EmailRegister extends StatelessWidget {
           registerBtnVar,
           backBtn(
             context,
-            darkTheme,
+            widget.darkTheme,
             action: () {
               back(context);
             },
@@ -230,32 +309,66 @@ class EmailRegister extends StatelessWidget {
       ),
     );
   }
+}
+
+class ResetPassword extends StatefulWidget {
+  const ResetPassword({Key? key, required this.darkTheme}) : super(key: key);
+
+  final bool darkTheme;
+
+  @override
+  State<ResetPassword> createState() => _ResetPasswordState();
+}
+
+class _ResetPasswordState extends State<ResetPassword> {
+  final emailController = TextEditingController();
 
   void back(BuildContext context) {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => EmailLogin(
-          darkTheme: darkTheme,
+          darkTheme: widget.darkTheme,
         ),
       ),
     );
   }
-}
 
-class ResetPassword extends StatelessWidget {
-  ResetPassword({Key? key, required this.darkTheme}) : super(key: key);
+  bool alertDialogVisible = false;
+  void showLoadingAlert() {
+    if (!alertDialogVisible) {
+      loadingAlert(
+        context,
+        widget.darkTheme,
+        text: AppLocalizations.of(context).resetting_password,
+      );
+      setState(() {
+        alertDialogVisible = true;
+      });
+    }
+  }
 
-  final bool darkTheme;
-
-  final emailController = TextEditingController();
+  void closeLoadingAlert(BuildContext context) {
+    if (alertDialogVisible) {
+      Navigator.pop(context);
+      setState(() {
+        alertDialogVisible = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final CustomAuthButton resetPasswordBtnVar = resetPasswordBtn(
       context,
       emailController,
-      darkTheme,
+      widget.darkTheme,
+      beforeResetPw: () {
+        showLoadingAlert();
+      },
+      onResponse: () {
+        closeLoadingAlert(context);
+      },
     );
     return WillPopScope(
       onWillPop: () async {
@@ -267,7 +380,7 @@ class ResetPassword extends StatelessWidget {
         [
           customTextField(
             context,
-            darkTheme,
+            widget.darkTheme,
             labelText: AppLocalizations.of(context).email,
             textController: emailController,
             authButton: resetPasswordBtnVar,
@@ -276,23 +389,12 @@ class ResetPassword extends StatelessWidget {
           resetPasswordBtnVar,
           backBtn(
             context,
-            darkTheme,
+            widget.darkTheme,
             action: () {
               back(context);
             },
           ),
         ],
-      ),
-    );
-  }
-
-  void back(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => EmailLogin(
-          darkTheme: darkTheme,
-        ),
       ),
     );
   }
