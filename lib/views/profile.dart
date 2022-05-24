@@ -41,7 +41,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  User user = Auth.user;
+  User user = Auth.of().user;
   StreamSubscription<DatabaseEvent>? userEvent;
   StreamSubscription<DatabaseEvent>? userEventMe;
   UserModel userModel = UserModel.empty();

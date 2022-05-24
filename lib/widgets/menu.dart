@@ -36,7 +36,7 @@ Widget mainPopupMenu(BuildContext context,
           ),
         );
       } else if (value == AppLocalizations.of(context).logout) {
-        Auth.auth.signOut();
+        Auth.of().signOut();
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(

@@ -49,7 +49,7 @@ class UserDB {
   }
 
   static void addGoogleUser() {
-    User? user = Auth.user;
+    User? user = Auth.of().user;
     if (user != null) {
       checkUserRegistered(user.uid).then((value) {
         if (value != null) {

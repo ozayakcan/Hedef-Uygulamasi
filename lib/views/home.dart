@@ -22,7 +22,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  User user = Auth.user;
+  User user = Auth.of().user;
   List<Widget> postsWidget = [];
   bool postsLoaded = false;
 

@@ -26,7 +26,7 @@ class SharePage extends StatefulWidget {
 }
 
 class _SharePageState extends State<SharePage> {
-  User user = Auth.user;
+  User user = Auth.of().user;
   TextEditingController textEditingController = TextEditingController();
 
   bool alertDialogVisible = false;

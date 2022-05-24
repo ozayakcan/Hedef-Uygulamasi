@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sosyal/firebase/auth.dart';
 
 import 'firebase_options.dart';
 import 'secrets.dart';
@@ -30,7 +31,7 @@ void main() async {
     }
   });*/
   if (kIsWeb) {
-    await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
+    await Auth.of().auth.setPersistence(Persistence.LOCAL);
   }
   runApp(
     const RestartAppWidget(
@@ -49,8 +50,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Locale locale = Locale(getLanguageCode());
   bool darkTheme = false;
-
-  FirebaseAuth auth = FirebaseAuth.instance;
   bool? isLogged;
   StreamSubscription<User?>? firebaseAuthEvent;
   @override
@@ -66,8 +65,7 @@ class _MyAppState extends State<MyApp> {
         darkTheme = value;
       });
     });
-    firebaseAuthEvent =
-        FirebaseAuth.instance.authStateChanges().listen((event) {
+    firebaseAuthEvent = Auth.of().auth.authStateChanges().listen((event) {
       if (isLogged == null) {
         if (event != null) {
           setState(() {
@@ -116,7 +114,7 @@ class _MyAppState extends State<MyApp> {
       );
     }
     /*return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
+      stream: Auth.of().auth.authStateChanges(),
       builder: (BuildContext context, snapshot1) {
         if (snapshot1.connectionState == ConnectionState.waiting) {
           return homeMaterialApp(

@@ -100,7 +100,7 @@ GoogleAuthButton googleAuthBtn(
     onPressed: () {
       try {
         if (kIsWeb) {
-          Auth.signInWithGoogleWeb(context).then((value) {
+          Auth.of().signInWithGoogleWeb(context).then((value) {
             if (value == null) {
               UserDB.addGoogleUser();
               Navigator.pushAndRemoveUntil(
@@ -117,7 +117,7 @@ GoogleAuthButton googleAuthBtn(
             }
           });
         } else {
-          Auth.signInWithGoogle(context).then((value) {
+          Auth.of().signInWithGoogle(context).then((value) {
             if (value == null) {
               UserDB.addGoogleUser();
               Navigator.pushAndRemoveUntil(
@@ -186,7 +186,9 @@ CustomAuthButton loginBtn(
         darkTheme: darkTheme),
     darkMode: darkTheme,
     onPressed: () {
-      Auth.signInWithEmail(context, email.text, password.text).then((value) {
+      Auth.of()
+          .signInWithEmail(context, email.text, password.text)
+          .then((value) {
         if (value == null) {
           Navigator.pushAndRemoveUntil(
             context,
@@ -233,13 +235,14 @@ CustomAuthButton registerBtn(
               if (userNameValue == false) {
                 if (name.text.isNotEmpty && name.text.length >= 3) {
                   if (password.text == passwordRp.text) {
-                    Auth.signupWithEmail(
+                    Auth.of()
+                        .signupWithEmail(
                             context, email.text, name.text, password.text)
                         .then((registerValue) {
                       if (registerValue == null) {
-                        User? user = Auth.user;
+                        User user = Auth.of().user;
                         UserModel userModel = UserModel(
-                          user!.uid,
+                          user.uid,
                           email.text,
                           username.text,
                           name.text,
@@ -247,7 +250,8 @@ CustomAuthButton registerBtn(
                           Database.defaultValue,
                         );
                         UserDB.addUser(userModel).then((value) {
-                          Auth.sendEmailVerification(context)
+                          Auth.of()
+                              .sendEmailVerification(context)
                               .then((emailVerificationValue) {
                             if (emailVerificationValue == null) {
                               if (kDebugMode) {
@@ -320,7 +324,7 @@ CustomAuthButton resetPasswordBtn(
     ),
     darkMode: darkTheme,
     onPressed: () {
-      Auth.resetPassword(context, email.text).then((value) {
+      Auth.of().resetPassword(context, email.text).then((value) {
         if (value == null) {
           ScaffoldSnackbar.of(context)
               .show(AppLocalizations.of(context).reset_password_link_sent);

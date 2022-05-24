@@ -37,7 +37,7 @@ class BottomNavigationPage extends StatefulWidget {
 }
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
-  late User? user;
+  User user = Auth.of().user;
   StreamSubscription<DatabaseEvent>? userEvent;
   UserModel userModel = UserModel.empty();
   late SharedPreferences sp;
@@ -49,10 +49,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
 
   @override
   void initState() {
-    setState(() {
-      user = Auth.user;
-    });
-    userEvent = UserDB.getUserRef(user!.uid).onValue.listen((event) {
+    userEvent = UserDB.getUserRef(user.uid).onValue.listen((event) {
       if (event.snapshot.exists) {
         final json = event.snapshot.value as Map<dynamic, dynamic>;
         setState(() {

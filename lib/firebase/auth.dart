@@ -7,11 +7,24 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../utils/errors.dart';
 
 class Auth {
-  static final FirebaseAuth auth = FirebaseAuth.instance;
-  static get user => auth.currentUser;
+  get user => auth.currentUser;
 
-  static Future signInWithGoogle(BuildContext context) async {
+  Auth(this.auth);
+
+  static Auth of() {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    return Auth(auth);
+  }
+
+  final FirebaseAuth auth;
+
+  void setLanguageCode(BuildContext context) {
+    auth.setLanguageCode(AppLocalizations.of(context).localeName);
+  }
+
+  Future signInWithGoogle(BuildContext context) async {
     try {
+      setLanguageCode(context);
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
       final GoogleSignInAuthentication? googleAuth =
@@ -47,8 +60,9 @@ class Auth {
     }
   }
 
-  static Future signInWithGoogleWeb(BuildContext context) async {
+  Future signInWithGoogleWeb(BuildContext context) async {
     try {
+      setLanguageCode(context);
       GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
       UserCredential userCredential =
@@ -77,14 +91,15 @@ class Auth {
     }
   }
 
-  static Future signupWithEmail(
+  Future signupWithEmail(
       BuildContext context, String email, String name, String password) async {
     try {
+      setLanguageCode(context);
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      Auth.changeDisplayName(
+      changeDisplayName(
         context,
         name,
         userCredential: userCredential,
@@ -106,9 +121,10 @@ class Auth {
     }
   }
 
-  static Future signInWithEmail(
+  Future signInWithEmail(
       BuildContext context, String email, String password) async {
     try {
+      setLanguageCode(context);
       await auth.signInWithEmailAndPassword(email: email, password: password);
       return null;
     } on FirebaseAuthException catch (e) {
@@ -116,10 +132,9 @@ class Auth {
     }
   }
 
-  static Future sendEmailVerification(BuildContext context) async {
+  Future sendEmailVerification(BuildContext context) async {
     try {
-      auth.setLanguageCode(AppLocalizations.of(context).localeName);
-      final user = FirebaseAuth.instance.currentUser!;
+      setLanguageCode(context);
       await user.sendEmailVerification();
       return null;
     } catch (e) {
@@ -127,9 +142,9 @@ class Auth {
     }
   }
 
-  static Future resetPassword(BuildContext context, String email) async {
+  Future resetPassword(BuildContext context, String email) async {
     try {
-      auth.setLanguageCode(AppLocalizations.of(context).localeName);
+      setLanguageCode(context);
       await auth.sendPasswordResetEmail(email: email);
       return null;
     } on FirebaseAuthException catch (e) {
@@ -137,10 +152,11 @@ class Auth {
     }
   }
 
-  static Future changeDisplayName(BuildContext context, String name,
+  Future changeDisplayName(BuildContext context, String name,
       {UserCredential? userCredential, User? user}) async {
     if (userCredential != null || user != null) {
       try {
+        setLanguageCode(context);
         if (user != null) {
           await user.updateDisplayName(name);
           return null;
@@ -157,7 +173,7 @@ class Auth {
     }
   }
 
-  static Future<User?> getUser(FirebaseAuth auth) async {
-    return auth.currentUser;
+  void signOut() {
+    auth.signOut();
   }
 }

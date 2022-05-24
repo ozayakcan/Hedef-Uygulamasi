@@ -46,7 +46,8 @@ class UploadProfileImage {
   OnError? onError;
 
   Reference profileImageRef(String fileName) {
-    return Storage.storage
+    return Storage.of()
+        .storage
         .ref(Database.usersString)
         .child(userID)
         .child(Database.profileImageString)

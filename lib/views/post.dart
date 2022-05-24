@@ -34,7 +34,7 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> {
-  User user = Auth.user;
+  User user = Auth.of().user;
   int favoriteCount = 0;
   int commentCount = 0;
   bool isFavorited = false;

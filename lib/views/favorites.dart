@@ -16,7 +16,7 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
-  User user = Auth.user;
+  User user = Auth.of().user;
   List<Widget> postsWidget = [];
   bool postsLoaded = false;
 

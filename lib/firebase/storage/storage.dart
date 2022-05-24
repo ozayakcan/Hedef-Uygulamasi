@@ -5,5 +5,12 @@ typedef BeforeUpload = void Function();
 typedef OnError = void Function();
 
 class Storage {
-  static final FirebaseStorage storage = FirebaseStorage.instance;
+  Storage(this.storage);
+
+  static Storage of() {
+    FirebaseStorage storage = FirebaseStorage.instance;
+    return Storage(storage);
+  }
+
+  final FirebaseStorage storage;
 }
