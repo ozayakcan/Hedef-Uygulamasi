@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../models/user.dart';
 import '../utils/theme_colors.dart';
@@ -281,8 +281,8 @@ Widget profilePreview(
 }
 
 Future<void> onLinkOpen(BuildContext context, LinkableElement link) async {
-  if (await canLaunch(link.url)) {
-    await launch(link.url);
+  if (await canLaunchUrlString(link.url)) {
+    await launchUrlString(link.url);
   } else {
     ScaffoldSnackbar.of(context)
         .show(AppLocalizations.of(context).can_not_open_links);
