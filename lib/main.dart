@@ -113,36 +113,6 @@ class _MyAppState extends State<MyApp> {
         darkTheme,
       );
     }
-    /*return StreamBuilder<User?>(
-      stream: Auth.of().auth.authStateChanges(),
-      builder: (BuildContext context, snapshot1) {
-        if (snapshot1.connectionState == ConnectionState.waiting) {
-          return homeMaterialApp(
-            const SplashScreen(),
-            locale,
-            darkTheme,
-          );
-        } else {
-          if (snapshot1.hasData) {
-            return homeMaterialApp(
-              HomePage(
-                darkTheme: darkTheme,
-              ),
-              locale,
-              darkTheme,
-            );
-          } else {
-            return homeMaterialApp(
-              Login(
-                darkTheme: darkTheme,
-              ),
-              locale,
-              darkTheme,
-            );
-          }
-        }
-      },
-    );*/
   }
 }
 

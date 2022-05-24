@@ -62,30 +62,6 @@ class _HomePageState extends State<HomePage> {
   final ScrollController scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
-    //UserModel testUser1 = UserModel(
-    //  "id",
-    //  "email",
-    //  "ozayakcan",
-    //  "Özay Akcan",
-    //  Time.getTimeUtc(),
-    //  "https://firebasestorage.googleapis.com/v0/b/sosyal-medya-uygulamasi-1.appspot.com/o/Users%2FbicWYJLkUbau5NvJTzbG2HCqHAi2%2FprofileImage%2F1649754187737.jpg?alt=media&token=6a80e2dd-f860-4bc9-9466-643d79139c5a",
-    //);
-    //UserModel testUser2 = UserModel(
-    //  "id",
-    //  "email",
-    //  "ozay_akcan",
-    //  "Özay Akcan",
-    //  Time.getTimeUtc(),
-    //  "https://firebasestorage.googleapis.com/v0/b/sosyal-medya-uygulamasi-1.appspot.com/o/Users%2Fhz1G0hdalkWfbqyzHsOgP9KWuCq2%2FprofileImage%2F1649754098492.jpg?alt=media&token=0a0c42cd-188b-48ab-adb8-7727db1523a4",
-    //);
-    //profileColumn(context,
-    //    darkTheme: widget.darkTheme, user: testUser1),
-    //const SizedBox(
-    //  height: 10,
-    //),
-    //profileColumn(context,
-    //    darkTheme: widget.darkTheme, user: testUser2),
-
     return BottomNavigationPage(
       darkTheme: widget.darkTheme,
       showSearchbar: true,
