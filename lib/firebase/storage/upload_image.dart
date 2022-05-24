@@ -11,47 +11,43 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../utils/permissions.dart';
 import '../../utils/time.dart';
 import '../../widgets/widgets.dart';
-import '../database/database.dart';
 import 'storage.dart';
 
-class UploadProfileImage {
-  UploadProfileImage(
+class UploadImage {
+  UploadImage(
     this.context, {
-    required this.userID,
+    required this.uploadLocation,
     this.whenComplete,
     this.beforeUpload,
     this.onError,
   });
 
-  static Future<UploadProfileImage> fromGallery(
+  static Future<UploadImage> fromGallery(
     BuildContext context, {
-    required String userID,
+    required String uploadLocation,
     WhenComplete? whenComplete,
     BeforeUpload? beforeUpload,
     OnError? onError,
   }) async {
-    UploadProfileImage uploadProfileImage = UploadProfileImage(context,
-        userID: userID,
-        whenComplete: whenComplete,
-        beforeUpload: beforeUpload,
-        onError: onError);
+    UploadImage uploadProfileImage = UploadImage(
+      context,
+      uploadLocation: uploadLocation,
+      whenComplete: whenComplete,
+      beforeUpload: beforeUpload,
+      onError: onError,
+    );
     await uploadProfileImage._fromGallery();
     return uploadProfileImage;
   }
 
   final BuildContext context;
-  final String userID;
+  final String uploadLocation;
   BeforeUpload? beforeUpload;
   WhenComplete? whenComplete;
   OnError? onError;
 
-  Reference profileImageRef(String fileName) {
-    return Storage.of()
-        .storage
-        .ref(Database.usersString)
-        .child(userID)
-        .child(Database.profileImageString)
-        .child(fileName);
+  Reference imageRef(String fileName) {
+    return Storage.of().storage.ref(uploadLocation + fileName);
   }
 
   static SettableMetadata imageMetaData =
@@ -76,10 +72,10 @@ class UploadProfileImage {
         UploadTask task;
         if (kIsWeb) {
           Uint8List imageFile = await image.readAsBytes();
-          task = profileImageRef(fileName).putData(imageFile, imageMetaData);
+          task = imageRef(fileName).putData(imageFile, imageMetaData);
         } else {
           File imageFile = File(image.path);
-          task = profileImageRef(fileName).putFile(imageFile, imageMetaData);
+          task = imageRef(fileName).putFile(imageFile, imageMetaData);
         }
         task.snapshotEvents.listen((event) async {
           if (event.state == TaskState.success) {

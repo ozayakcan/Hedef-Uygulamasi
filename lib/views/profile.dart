@@ -5,12 +5,13 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sosyal/firebase/storage/storage.dart';
 
 import '../firebase/auth.dart';
 import '../firebase/database/followers_database.dart';
 import '../firebase/database/posts_database.dart';
 import '../firebase/database/user_database.dart';
-import '../firebase/storage/upload_profile_image.dart';
+import '../firebase/storage/upload_image.dart';
 import '../models/post.dart';
 import '../models/user.dart';
 import '../models/widget.dart';
@@ -154,7 +155,11 @@ class _ProfileState extends State<Profile> {
 
   void showLoadingAlert() {
     if (!alertDialogVisible) {
-      loadingAlert(context, widget.darkTheme);
+      loadingAlert(
+        context,
+        widget.darkTheme,
+        text: AppLocalizations.of(context).uploading,
+      );
       setState(() {
         alertDialogVisible = true;
       });
@@ -198,9 +203,10 @@ class _ProfileState extends State<Profile> {
                       darkTheme: widget.darkTheme,
                       rounded: true,
                       onPressed: () {
-                        UploadProfileImage.fromGallery(
+                        UploadImage.fromGallery(
                           context,
-                          userID: userModelMe.id,
+                          uploadLocation:
+                              Storage.profileImageLocation(userModelMe.id),
                           beforeUpload: () {
                             showLoadingAlert();
                           },
