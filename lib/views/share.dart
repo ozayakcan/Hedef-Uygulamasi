@@ -8,6 +8,7 @@ import '../utils/theme_colors.dart';
 import '../utils/variables.dart';
 import '../widgets/buttons.dart';
 import '../widgets/page_style.dart';
+import '../widgets/text_fields.dart';
 import '../widgets/widgets.dart';
 
 class SharePage extends StatefulWidget {
@@ -55,20 +56,30 @@ class _SharePageState extends State<SharePage> {
       context,
       widget.darkTheme,
       title: AppLocalizations.of(context).create_post,
-      body: Column(children: [
-        TextField(
-          controller: textEditingController,
-          maxLines: 8,
-          minLines: 8,
-          maxLength: Variables.maxLengthShare,
-          decoration: InputDecoration(
-            hintText: AppLocalizations.of(context).share_your_thoughts,
-            hintStyle: TextStyle(
-              color: ThemeColor.of(widget.darkTheme).textSecondary,
+      body: Column(
+        children: [
+          TextField(
+            controller: textEditingController,
+            maxLines: 8,
+            minLines: 8,
+            maxLength: Variables.maxLengthShare,
+            style: TextStyle(
+              color: ThemeColor.of(widget.darkTheme).textPrimary,
+            ),
+            decoration: InputDecoration(
+              hintText: AppLocalizations.of(context).share_your_thoughts,
+              hintStyle: TextStyle(
+                color: ThemeColor.of(widget.darkTheme).textSecondary,
+              ),
+              counterStyle: TextStyle(
+                color: ThemeColor.of(widget.darkTheme).textPrimary,
+              ),
+              enabledBorder: enabledInputBorder(widget.darkTheme),
+              focusedBorder: focusedInputBorder(widget.darkTheme),
             ),
           ),
-        ),
-      ]),
+        ],
+      ),
       showBackButton: true,
       actions: [
         customButton(
