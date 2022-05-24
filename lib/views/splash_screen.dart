@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import '../utils/assets.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({Key? key, required this.darkTheme}) : super(key: key);
-
-  final bool darkTheme;
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +12,7 @@ class SplashScreen extends StatelessWidget {
       return Scaffold(
         body: Center(
           child: Image.asset(
-            darkTheme ? AImages.logoDark : AImages.logo,
+            AImages.logo,
             height: 40,
             width: 40,
           ),

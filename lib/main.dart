@@ -110,9 +110,7 @@ class _MyAppState extends State<MyApp> {
       }
     } else {
       return homeMaterialApp(
-        SplashScreen(
-          darkTheme: darkTheme,
-        ),
+        const SplashScreen(),
         locale,
         darkTheme,
       );
