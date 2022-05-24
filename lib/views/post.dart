@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 
 import '../firebase/auth.dart';
+import '../firebase/database/database.dart';
 import '../firebase/database/favorites_database.dart';
 import '../firebase/database/posts_database.dart';
 import '../models/post.dart';
@@ -172,6 +174,14 @@ class _PostWidgetState extends State<PostWidget> {
         const SizedBox(
           height: 5,
         ),
+        if (widget.postModel.image != Database.emptyString)
+          CachedNetworkImage(
+            imageUrl: widget.postModel.image,
+          ),
+        if (widget.postModel.image != Database.emptyString)
+          const SizedBox(
+            height: 5,
+          ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.max,

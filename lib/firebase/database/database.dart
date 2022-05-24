@@ -2,6 +2,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 
 class Database {
+  static const String emptyString = "none";
+
   static String usersString = "Users";
   static String idString = "id";
   static String emailString = "email";
@@ -19,6 +21,7 @@ class Database {
   static String postsString = "Posts";
   static String useridString = "userid";
   static String contentString = "content";
+  static String imageString = "image";
 
   static String favoritesString = "Favorites";
   static String commentsString = "Comments";

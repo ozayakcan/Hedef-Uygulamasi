@@ -27,13 +27,16 @@ class PostsDB {
     return Database.getReference(Database.commentsString).child(postKey);
   }
 
-  static Future addPost(
-      {required String userid, required String content}) async {
+  static Future addPost({
+    required String userid,
+    required String content,
+    String image = Database.emptyString,
+  }) async {
     try {
       DatabaseReference databaseReference = getPostsQuery(userid).ref.push();
       String key = databaseReference.key!;
-      PostModel postModel =
-          PostModel(UserModel.empty(), userid, key, content, Time.getTimeUtc());
+      PostModel postModel = PostModel(
+          UserModel.empty(), userid, key, content, image, Time.getTimeUtc());
       await databaseReference.set(postModel.toJson());
       return null;
     } catch (e) {

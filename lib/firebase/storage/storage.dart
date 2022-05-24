@@ -24,4 +24,13 @@ class Storage {
         Database.profileImageString +
         "/";
   }
+
+  static String postsLocation(String userID) {
+    return Database.usersString +
+        "/" +
+        userID +
+        "/" +
+        Database.postsString +
+        "/";
+  }
 }

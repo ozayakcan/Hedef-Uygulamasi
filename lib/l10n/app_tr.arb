@@ -97,5 +97,8 @@
     "post_could_not_created": "Gönderi oluşturulamadı. Lütfen daha sonra tekrar deneyin.",
     "sharing": "Paylaşılıyor",
     "language_s": "Dil: %s",
-    "choose_your_language": "Dil Seçin"
+    "choose_your_language": "Dil Seçin",
+    "add_photo": "Fotoğraf Ekle",
+    "remove_photo": "Fotoğrafı Kaldır",
+    "uploading": "Yükleniyor..."
 }
