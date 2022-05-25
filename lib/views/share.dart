@@ -150,12 +150,8 @@ class _SharePageState extends State<SharePage> {
                         const SizedBox(
                           height: 5,
                         ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width -
-                              Variables.buttonHeightDefault,
-                          child: CachedNetworkImage(
-                            imageUrl: image,
-                          ),
+                        CachedNetworkImage(
+                          imageUrl: image,
                         ),
                       ],
                     ),
