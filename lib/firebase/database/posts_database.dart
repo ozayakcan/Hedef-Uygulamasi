@@ -35,8 +35,21 @@ class PostsDB {
     try {
       DatabaseReference databaseReference = getPostsQuery(userid).ref.push();
       String key = databaseReference.key!;
+      String contentNew = content;
+      bool showContent = true;
+      if (image != Database.emptyString && content == "") {
+        contentNew = Database.emptyString;
+        showContent = false;
+      }
       PostModel postModel = PostModel(
-          UserModel.empty(), userid, key, content, image, Time.getTimeUtc());
+        UserModel.empty(),
+        userid,
+        key,
+        contentNew,
+        showContent,
+        image,
+        Time.getTimeUtc(),
+      );
       await databaseReference.set(postModel.toJson());
       return null;
     } catch (e) {

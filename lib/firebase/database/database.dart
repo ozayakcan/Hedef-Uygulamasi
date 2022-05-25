@@ -21,6 +21,7 @@ class Database {
   static String postsString = "Posts";
   static String useridString = "userid";
   static String contentString = "content";
+  static String showContentString = "showContent";
   static String imageString = "image";
 
   static String favoritesString = "Favorites";

@@ -177,11 +177,18 @@ class _SharePageState extends State<SharePage> {
           borderRadius: Variables.buttonRadiusRound,
           onPressed: () {
             showLoadingAlert(context, AppLocalizations.of(context).sharing);
+            bool canShare = false;
             if (textEditingController.text
                     .replaceAll("\n", "")
                     .replaceAll(" ", "")
                     .length >=
                 2) {
+              canShare = true;
+            }
+            if (image != Database.emptyString) {
+              canShare = true;
+            }
+            if (canShare) {
               PostsDB.addPost(
                 userid: user.uid,
                 content: textEditingController.text,

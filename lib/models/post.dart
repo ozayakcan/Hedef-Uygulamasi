@@ -7,6 +7,7 @@ class PostModel {
   final String userid;
   final String key;
   final String content;
+  final bool showContent;
   final String image;
   final DateTime date;
   PostModel(
@@ -14,6 +15,7 @@ class PostModel {
     this.userid,
     this.key,
     this.content,
+    this.showContent,
     this.image,
     this.date,
   );
@@ -22,6 +24,7 @@ class PostModel {
       : key = "",
         userid = "",
         content = "",
+        showContent = true,
         image = Database.emptyString,
         date = Time.getTimeUtc();
 
@@ -29,6 +32,7 @@ class PostModel {
       : key = json[Database.keyString] as String,
         userid = json[Database.useridString] as String,
         content = json[Database.contentString] as String,
+        showContent = json[Database.showContentString] as bool,
         image = json[Database.imageString] as String,
         date = Time.toLocal(timeString: json[Database.dateString] as String);
 
@@ -36,6 +40,7 @@ class PostModel {
         Database.keyString: key,
         Database.useridString: userid,
         Database.contentString: content,
+        Database.showContentString: showContent,
         Database.imageString: image,
         Database.dateString: date.toString(),
       };

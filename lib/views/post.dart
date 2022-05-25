@@ -154,17 +154,19 @@ class _PostWidgetState extends State<PostWidget> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  SelectableLinkify(
-                    onOpen: (link) {
-                      onLinkOpen(context, link);
-                    },
-                    text: widget.postModel.content,
-                    style: simpleTextStyle(
-                        Variables.fontSizeNormal, widget.darkTheme),
-                  ),
+                  if (widget.postModel.showContent)
+                    const SizedBox(
+                      height: 2,
+                    ),
+                  if (widget.postModel.showContent)
+                    SelectableLinkify(
+                      onOpen: (link) {
+                        onLinkOpen(context, link);
+                      },
+                      text: widget.postModel.content,
+                      style: simpleTextStyle(
+                          Variables.fontSizeNormal, widget.darkTheme),
+                    ),
                 ],
               ),
             ),
