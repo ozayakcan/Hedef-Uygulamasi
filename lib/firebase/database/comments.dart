@@ -54,6 +54,7 @@ class CommentsDB {
       }
       commentList.add(commentModel);
     }
+    commentList.sort((a, b) => a.date.compareTo(b.date));
     return commentList;
   }
 }

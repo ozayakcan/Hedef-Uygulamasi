@@ -148,9 +148,9 @@ class PostsDB {
     bool inProfile = false,
     bool includeFollowing = true,
   }) async {
-    List<PostModel> sortedPosts = PostModel.sort(posts);
+    posts.sort((a, b) => b.date.compareTo(a.date));
     List<Widget> tempPostsWidget = [];
-    for (final postModel in sortedPosts) {
+    for (final postModel in posts) {
       tempPostsWidget.add(PostWidget(
         postModel: postModel,
         darkTheme: darkTheme,

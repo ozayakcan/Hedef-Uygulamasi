@@ -44,12 +44,4 @@ class PostModel {
         Database.imageString: image,
         Database.dateString: date.toString(),
       };
-  static List<PostModel> sort(List<PostModel> posts, {bool descending = true}) {
-    if (descending) {
-      posts.sort((a, b) => Time.toInt(b.date).compareTo(Time.toInt(a.date)));
-    } else {
-      posts.sort((a, b) => Time.toInt(a.date).compareTo(Time.toInt(b.date)));
-    }
-    return posts;
-  }
 }

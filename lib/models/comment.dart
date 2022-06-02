@@ -34,13 +34,4 @@ class CommentModel {
         Database.commentString: comment,
         Database.dateString: date.toString(),
       };
-  static List<CommentModel> sort(List<CommentModel> comments,
-      {bool descending = true}) {
-    if (descending) {
-      comments.sort((a, b) => Time.toInt(b.date).compareTo(Time.toInt(a.date)));
-    } else {
-      comments.sort((a, b) => Time.toInt(a.date).compareTo(Time.toInt(b.date)));
-    }
-    return comments;
-  }
 }
