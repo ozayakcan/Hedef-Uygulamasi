@@ -601,14 +601,26 @@ class ToolTipButton extends StatefulWidget {
     required this.tooltip,
     this.text,
     this.icon,
+    this.iconSize,
+    this.width,
+    this.height,
+    this.color,
     this.activeColor,
+    this.padding,
+    this.decoration,
     this.onPressed,
   }) : super(key: key);
   final bool darkTheme;
   final String tooltip;
   final String? text;
   final IconData? icon;
+  final double? iconSize;
+  final double? width;
+  final double? height;
+  final Color? color;
   final Color? activeColor;
+  final double? padding;
+  final Decoration? decoration;
   final VoidCallback? onPressed;
   @override
   State<ToolTipButton> createState() => _ToolTipButtonState();
@@ -616,7 +628,7 @@ class ToolTipButton extends StatefulWidget {
 
 class _ToolTipButtonState extends State<ToolTipButton> {
   Color normalColor() {
-    return ThemeColor.of(widget.darkTheme).textPrimary;
+    return widget.color ?? ThemeColor.of(widget.darkTheme).textPrimary;
   }
 
   Color hoverColor() {
@@ -642,12 +654,15 @@ class _ToolTipButtonState extends State<ToolTipButton> {
             });
           }
         },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: widget.padding ?? 10,
           ),
+          width: widget.width,
+          height: widget.height,
+          decoration: widget.decoration,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -655,7 +670,7 @@ class _ToolTipButtonState extends State<ToolTipButton> {
                 Icon(
                   widget.icon,
                   color: widget.activeColor ?? color ?? normalColor(),
-                  size: Variables.iconSizeMedium,
+                  size: widget.iconSize ?? Variables.iconSizeMedium,
                 ),
               if (widget.icon != null)
                 const SizedBox(
