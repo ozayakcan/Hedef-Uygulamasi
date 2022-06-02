@@ -20,23 +20,23 @@ class Time {
       return AppLocalizations.of(context).just_now;
     } else if (timeSub >= minute && timeSub < hour) {
       return AppLocalizations.of(context)
-          .i_minutes_ago
-          .replaceAll("%i", (timeSub ~/ minute).toString());
+          .minutes_ago
+          .replaceAll("{minutes}", (timeSub ~/ minute).toString());
     } else if (timeSub >= hour && timeSub < hour * 2) {
       return AppLocalizations.of(context).an_hour_ago;
     } else if (timeSub >= hour * 2 && timeSub < day) {
       return AppLocalizations.of(context)
-          .h_hours_ago
-          .replaceAll("%h", (timeSub ~/ hour).toString());
+          .hours_ago
+          .replaceAll("{hours}", (timeSub ~/ hour).toString());
     } else {
       return AppLocalizations.of(context)
           .date_time_format
-          .replaceAll("%n", getDayLocalization(dateTime.weekday))
-          .replaceAll("%m", displayTime(dateTime.month))
-          .replaceAll("%d", displayTime(dateTime.day))
-          .replaceAll("%y", displayTime(dateTime.year))
-          .replaceAll("%h", displayTime(dateTime.hour))
-          .replaceAll("%i", displayTime(dateTime.minute));
+          .replaceAll("{weekday}", getDayLocalization(dateTime.weekday))
+          .replaceAll("{months}", displayTime(dateTime.month))
+          .replaceAll("{days}", displayTime(dateTime.day))
+          .replaceAll("{years}", displayTime(dateTime.year))
+          .replaceAll("{hours}", displayTime(dateTime.hour))
+          .replaceAll("{minutes}", displayTime(dateTime.minute));
     }
   }
 

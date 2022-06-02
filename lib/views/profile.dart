@@ -325,7 +325,7 @@ class _ProfileState extends State<Profile> {
                                     AppLocalizations.of(context)
                                         .unfollow_warn
                                         .replaceAll(
-                                            "%s",
+                                            "{user}",
                                             userModel.name +
                                                 " " +
                                                 userModel.getUserName),

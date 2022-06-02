@@ -56,19 +56,19 @@ class FollowersDB {
     if (number > 999) {
       double convertedNumber = number / 1000;
       return AppLocalizations.of(context).thousand_convert.replaceAll(
-            "%s",
+            "{number}",
             convertedNumber.toString(),
           );
     } else if (number > 999999) {
       double convertedNumber = number / 1000000;
       return AppLocalizations.of(context).million_convert.replaceAll(
-            "%s",
+            "{number}",
             convertedNumber.toString(),
           );
     } else if (number > 999999999) {
       double convertedNumber = number / 1000000000;
       return AppLocalizations.of(context).billion_convert.replaceAll(
-            "%s",
+            "{number}",
             convertedNumber.toString(),
           );
     } else {

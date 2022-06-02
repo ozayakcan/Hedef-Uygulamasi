@@ -25,7 +25,7 @@ class ProfileImage extends StatelessWidget {
       darkTheme,
       title: AppLocalizations.of(context)
           .s_profile_image
-          .replaceAll("%s", username),
+          .replaceAll("{username}", username),
       body: Center(
         child: SizedBox(
           width: size,

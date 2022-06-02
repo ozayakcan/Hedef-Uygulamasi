@@ -45,8 +45,8 @@ Widget chooseLanguageWidget(
   bool centered = false,
 }) {
   Widget langWidget = Text(
-    AppLocalizations.of(context).language_s.replaceAll(
-          "%s",
+    AppLocalizations.of(context).language.replaceAll(
+          "{lang}",
           supportedLocales.firstWhere(
               (element) => element["locale"] == currentLanguageCode,
               orElse: () => supportedLocales[0])["name"],
