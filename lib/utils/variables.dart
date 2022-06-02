@@ -9,6 +9,7 @@ class Variables {
   static double buttonIconSizeSmall = 20;
 
   static double iconSizeMedium = 17;
+  static double iconSizeBig = 30;
 
   static double paddingDefault = 2;
   static double paddingNormal = 5;

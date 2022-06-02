@@ -7,8 +7,9 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../models/user.dart';
-import '../utils/theme_colors.dart';
 import '../utils/shared_pref.dart';
+import '../utils/theme_colors.dart';
+import '../utils/time.dart';
 import '../utils/variables.dart';
 import '../views/profile.dart';
 import 'images.dart';
@@ -301,45 +302,116 @@ class MyScrollBehavior extends MaterialScrollBehavior {
 Widget refreshableListView({
   required List<Widget> widgetList,
   required Future<void> Function() onRefresh,
-  required,
   ScrollController? controller,
 }) {
   return RefreshIndicator(
     onRefresh: onRefresh,
     child: ScrollConfiguration(
       behavior: MyScrollBehavior(),
-      child: ListView.builder(
-        controller: controller,
-        physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics()),
-        itemCount: widgetList.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: widgetList[index],
-          );
-        },
+      child: listView(
+        widgetList: widgetList,
       ),
     ),
   );
 }
 
-void fullscreenBottomSheetModal({
-  required BuildContext context,
-  required Widget child,
+ListView listView({
+  required List<Widget> widgetList,
+  ScrollController? controller,
 }) {
-  showModalBottomSheet(
-    context: context,
-    builder: (context) => child,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(
-          Variables.borderRadiusDefault,
-        ),
-        topRight: Radius.circular(
-          Variables.borderRadiusDefault,
+  return ListView.builder(
+    controller: controller,
+    physics:
+        const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+    itemCount: widgetList.length,
+    itemBuilder: (context, index) {
+      return ListTile(
+        title: widgetList[index],
+      );
+    },
+  );
+}
+
+Widget contentWidget({
+  required BuildContext context,
+  required bool darkTheme,
+  required bool inProfile,
+  required UserModel userModel,
+  required DateTime date,
+  required bool showContent,
+  required String content,
+}) {
+  return Row(
+    children: [
+      const SizedBox(width: 1),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                if (!inProfile) const SizedBox(width: 5),
+                if (!inProfile)
+                  profileImage(
+                    userModel.profileImage,
+                    rounded: true,
+                    width: 20,
+                    height: 20,
+                  ),
+                const SizedBox(
+                  width: 5,
+                ),
+                InkWell(
+                  onTap: () {
+                    if (!inProfile) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Profile(
+                            username: userModel.username,
+                            darkTheme: darkTheme,
+                            showAppBar: true,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  child: Text(
+                    userModel.username,
+                    style: linktTextStyle(
+                      Variables.fontSizeNormal,
+                      darkTheme,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  Time.of(context).elapsed(date),
+                  style: simpleTextStyleSecondary(
+                      Variables.fontSizeNormal, darkTheme),
+                ),
+              ],
+            ),
+            if (showContent)
+              const SizedBox(
+                height: 2,
+              ),
+            if (showContent)
+              SelectableLinkify(
+                onOpen: (link) {
+                  onLinkOpen(context, link);
+                },
+                text: content,
+                style: simpleTextStyle(Variables.fontSizeNormal, darkTheme),
+              ),
+          ],
         ),
       ),
-    ),
-    isScrollControlled: true,
+      const SizedBox(width: 1),
+    ],
   );
 }

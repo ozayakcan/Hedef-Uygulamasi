@@ -46,9 +46,9 @@ class PostModel {
       };
   static List<PostModel> sort(List<PostModel> posts, {bool descending = true}) {
     if (descending) {
-      posts.sort((a, b) => b.date.compareTo(a.date));
+      posts.sort((a, b) => Time.toInt(b.date).compareTo(Time.toInt(a.date)));
     } else {
-      posts.sort((a, b) => a.date.compareTo(b.date));
+      posts.sort((a, b) => Time.toInt(a.date).compareTo(Time.toInt(b.date)));
     }
     return posts;
   }

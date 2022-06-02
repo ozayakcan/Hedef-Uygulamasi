@@ -26,6 +26,7 @@ class Database {
 
   static String favoritesString = "Favorites";
   static String commentsString = "Comments";
+  static String commentString = "comment";
 
   static String dateString = "date";
 

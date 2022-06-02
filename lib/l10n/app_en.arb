@@ -99,5 +99,8 @@
     "choose_your_language": "Choose Your Language",
     "add_photo": "Add Photo",
     "remove_photo": "Remove Photo",
-    "uploading": "Uploading..."
+    "uploading": "Uploading...",
+    "type_a_comment": "Type a comment...",
+    "could_not_send_comment": "Could not send comment",
+    "post_title": "Post | {user}"
 }

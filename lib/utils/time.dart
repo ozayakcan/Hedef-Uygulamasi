@@ -86,4 +86,8 @@ class Time {
       return getLocal();
     }
   }
+
+  static int toInt(DateTime date) {
+    return date.millisecond;
+  }
 }

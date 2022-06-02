@@ -5,20 +5,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
 
 import '../firebase/auth.dart';
 import '../firebase/database/database.dart';
 import '../firebase/database/favorites_database.dart';
 import '../firebase/database/posts_database.dart';
 import '../models/post.dart';
-import '../utils/time.dart';
-import '../utils/variables.dart';
 import '../widgets/buttons.dart';
-import '../widgets/images.dart';
-import '../widgets/texts.dart';
 import '../widgets/widgets.dart';
-import 'profile.dart';
+import 'comments.dart';
 
 class PostWidget extends StatefulWidget {
   const PostWidget({
@@ -26,11 +21,13 @@ class PostWidget extends StatefulWidget {
     required this.darkTheme,
     required this.postModel,
     this.inProfile = true,
+    this.commentButtonEnabled = true,
   }) : super(key: key);
 
   final bool darkTheme;
   final PostModel postModel;
   final bool inProfile;
+  final bool commentButtonEnabled;
   @override
   State<PostWidget> createState() => _PostWidgetState();
 }
@@ -101,77 +98,14 @@ class _PostWidgetState extends State<PostWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            const SizedBox(width: 1),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      if (!widget.inProfile) const SizedBox(width: 5),
-                      if (!widget.inProfile)
-                        profileImage(
-                          widget.postModel.userModel.profileImage,
-                          rounded: true,
-                          width: 20,
-                          height: 20,
-                        ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          if (!widget.inProfile) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Profile(
-                                  username: widget.postModel.userModel.username,
-                                  darkTheme: widget.darkTheme,
-                                  showAppBar: true,
-                                ),
-                              ),
-                            );
-                          }
-                        },
-                        child: Text(
-                          widget.postModel.userModel.username,
-                          style: linktTextStyle(
-                              Variables.fontSizeNormal, widget.darkTheme),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        Time.of(context).elapsed(widget.postModel.date),
-                        style: simpleTextStyleSecondary(
-                            Variables.fontSizeNormal, widget.darkTheme),
-                      ),
-                    ],
-                  ),
-                  if (widget.postModel.showContent)
-                    const SizedBox(
-                      height: 2,
-                    ),
-                  if (widget.postModel.showContent)
-                    SelectableLinkify(
-                      onOpen: (link) {
-                        onLinkOpen(context, link);
-                      },
-                      text: widget.postModel.content,
-                      style: simpleTextStyle(
-                          Variables.fontSizeNormal, widget.darkTheme),
-                    ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 1),
-          ],
+        contentWidget(
+          context: context,
+          darkTheme: widget.darkTheme,
+          inProfile: widget.inProfile,
+          userModel: widget.postModel.userModel,
+          date: widget.postModel.date,
+          showContent: widget.postModel.showContent,
+          content: widget.postModel.content,
         ),
         const SizedBox(
           height: 5,
@@ -210,7 +144,17 @@ class _PostWidgetState extends State<PostWidget> {
               text: commentCount.toString(),
               icon: Icons.comment,
               onPressed: () {
-                ScaffoldSnackbar.of(context).show("Yorum Yap");
+                if (widget.commentButtonEnabled) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CommentsPage(
+                        darkTheme: widget.darkTheme,
+                        postModel: widget.postModel,
+                      ),
+                    ),
+                  );
+                }
               },
             ),
           ],
