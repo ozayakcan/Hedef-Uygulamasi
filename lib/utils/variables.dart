@@ -21,4 +21,6 @@ class Variables {
   static int maxLengthUsername = 28;
   static int maxLengthPassword = 20;
   static int maxLengthShare = 400;
+
+  static double borderRadiusDefault = 20;
 }

@@ -322,3 +322,24 @@ Widget refreshableListView({
     ),
   );
 }
+
+void fullscreenBottomSheetModal({
+  required BuildContext context,
+  required Widget child,
+}) {
+  showModalBottomSheet(
+    context: context,
+    builder: (context) => child,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(
+          Variables.borderRadiusDefault,
+        ),
+        topRight: Radius.circular(
+          Variables.borderRadiusDefault,
+        ),
+      ),
+    ),
+    isScrollControlled: true,
+  );
+}
