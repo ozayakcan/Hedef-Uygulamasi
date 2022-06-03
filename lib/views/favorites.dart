@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:sosyal/firebase/database/favorites_database.dart';
 
 import '../firebase/auth.dart';
+import '../firebase/database/database.dart';
 import '../firebase/database/posts_database.dart';
 import '../models/post.dart';
 import '../widgets/widgets.dart';
@@ -20,26 +25,39 @@ class _FavoritesPageState extends State<FavoritesPage> {
   List<Widget> postsWidget = [];
   bool postsLoaded = false;
 
+  StreamSubscription<DatabaseEvent>? usersEvent;
+
   @override
   void initState() {
-    loadPosts();
     super.initState();
+    usersEvent =
+        Database.getReference(Database.usersString).onValue.listen((event) {
+      loadPosts();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    usersEvent?.cancel();
   }
 
   Future<void> loadPosts() async {
-    setState(() {
-      postsWidget.clear();
-    });
-    List<PostModel> posts = [];
-    posts.addAll(await PostsDB.getFavoritedPosts(user.uid));
-    List<Widget> tempPostsWidget = await PostsDB.getPostsAsWidgets(
-      context,
-      posts: posts,
-      darkTheme: widget.darkTheme,
-    );
-    setState(() {
-      postsWidget.addAll(tempPostsWidget);
-      postsLoaded = true;
+    FavoritesDB.userFavoritesRef(user.uid).onValue.listen((event) async {
+      setState(() {
+        postsWidget.clear();
+      });
+      List<PostModel> posts = [];
+      posts.addAll(await PostsDB.getFavoritedPosts(event));
+      List<Widget> tempPostsWidget = await PostsDB.getPostsAsWidgets(
+        context,
+        posts: posts,
+        darkTheme: widget.darkTheme,
+      );
+      setState(() {
+        postsWidget.addAll(tempPostsWidget);
+        postsLoaded = true;
+      });
     });
   }
 

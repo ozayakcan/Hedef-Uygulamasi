@@ -120,10 +120,12 @@ class PostsDB {
     }
   }
 
-  static Future<List<PostModel>> getFavoritedPosts(String userid) async {
+  static Future<List<PostModel>> getFavoritedPosts(
+      DatabaseEvent databaseEvent) async {
     List<PostModel> posts = [];
     try {
-      List<String> favoritedList = await FavoritesDB.getUserFavorites(userid);
+      List<String> favoritedList =
+          await FavoritesDB.getUserFavorites(databaseEvent);
       for (final favorited in favoritedList) {
         DatabaseEvent databaseEvent = await getPostByKeyRef(favorited).once();
         final jsonPost = databaseEvent.snapshot.value as Map<dynamic, dynamic>;

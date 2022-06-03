@@ -11,12 +11,11 @@ import '../../models/user.dart';
 import '../../utils/shared_pref.dart';
 import '../../utils/time.dart';
 import '../../widgets/text_fields.dart';
-import '../../widgets/widgets.dart';
 import '../auth.dart';
 import 'database.dart';
 
 class UserDB {
-  static Future<bool> checkUsername(
+  static Future<String> checkUsername(
     BuildContext context,
     String username,
   ) async {
@@ -31,27 +30,19 @@ class UserDB {
               .limitToFirst(1)
               .once();
           if (databaseEvent.snapshot.exists) {
-            ScaffoldSnackbar.of(context)
-                .show(AppLocalizations.of(context).username_already_exists);
-            return false;
+            return AppLocalizations.of(context).username_already_exists;
           } else {
-            return true;
+            return "";
           }
         } else {
-          ScaffoldSnackbar.of(context)
-              .show(AppLocalizations.of(context).username_regmatch_error);
-          return false;
+          return AppLocalizations.of(context).username_regmatch_error;
         }
       } else {
-        ScaffoldSnackbar.of(context)
-            .show(AppLocalizations.of(context).username_must_3_character);
-        return false;
+        return AppLocalizations.of(context).username_must_3_character;
       }
     } catch (e) {
       Database.printError(e);
-      ScaffoldSnackbar.of(context)
-          .show(AppLocalizations.of(context).an_error_occurred);
-      return false;
+      return AppLocalizations.of(context).an_error_occurred;
     }
   }
 
@@ -107,13 +98,6 @@ class UserDB {
     return Database.getReference(Database.usersString).child(userid);
   }
 
-  static Query getUserQueryByUsername(String username) {
-    return Database.getReference(Database.usersString)
-        .orderByChild(Database.usernameString)
-        .equalTo(username)
-        .limitToFirst(1);
-  }
-
   static Query getUserQueryByID(String userid) {
     return Database.getReference(Database.usersString).child(userid);
   }
@@ -134,6 +118,21 @@ class UserDB {
       }
     }
     return list;
+  }
+
+  static Future updateUserName(
+    String userID,
+    String username,
+  ) async {
+    try {
+      DatabaseReference reference =
+          getUserRef(userID).child(Database.usernameString);
+      await reference.set(username);
+      return null;
+    } catch (e) {
+      Database.printError(e);
+      return e.toString();
+    }
   }
 
   static Future updateProfileImage(String userID, String imageUrl) async {

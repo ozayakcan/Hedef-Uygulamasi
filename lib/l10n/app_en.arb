@@ -102,5 +102,13 @@
     "uploading": "Uploading...",
     "type_a_comment": "Type a comment...",
     "could_not_send_comment": "Could not send comment",
-    "post_title": "Post | {user}"
+    "post_title": "Post | {user}",
+    "change": "Change",
+    "save": "Save",
+    "change_email": "Change Email",
+    "email_dot": "Email: {email}",
+    "change_username": "Change Username",
+    "username_dot": "Username: {username}",
+    "could_not_update_username": "Could not update username",
+    "this_content_is_currently_unavailable": "This content is currently unavailable. Please try again later."
 }

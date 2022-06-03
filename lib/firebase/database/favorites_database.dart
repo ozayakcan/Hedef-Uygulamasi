@@ -51,10 +51,10 @@ class FavoritesDB {
     }
   }
 
-  static Future<List<String>> getUserFavorites(String userid) async {
+  static Future<List<String>> getUserFavorites(
+      DatabaseEvent databaseEvent) async {
     List<String> userFavorites = [];
     try {
-      DatabaseEvent databaseEvent = await userFavoritesRef(userid).once();
       for (final databaseEventChild in databaseEvent.snapshot.children) {
         final jsonUserFavorites =
             databaseEventChild.value as Map<dynamic, dynamic>;

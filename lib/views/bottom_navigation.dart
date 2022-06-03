@@ -90,7 +90,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
         title: AppLocalizations.of(context).profile,
         child: Profile(
           darkTheme: darkTheme,
-          username: username,
+          userID: user.uid,
           showAppBar: false,
         ),
         showBackButton: false,

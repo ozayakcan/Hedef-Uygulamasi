@@ -242,7 +242,7 @@ Widget profilePreview(
         MaterialPageRoute(
           builder: (context) => Profile(
             darkTheme: darkTheme,
-            username: user.username,
+            userID: user.id,
             showAppBar: true,
           ),
         ),
@@ -370,7 +370,7 @@ Widget contentWidget({
                         context,
                         MaterialPageRoute(
                           builder: (context) => Profile(
-                            username: userModel.username,
+                            userID: userModel.id,
                             darkTheme: darkTheme,
                             showAppBar: true,
                           ),
@@ -413,5 +413,79 @@ Widget contentWidget({
       ),
       const SizedBox(width: 1),
     ],
+  );
+}
+
+void showBottomFormModal({
+  required BuildContext context,
+  required bool darkTheme,
+  required String title,
+  required VoidCallback? onSave,
+  required List<Widget> children,
+}) {
+  double space = 10;
+  showModalBottomSheet(
+    context: context,
+    builder: (context) {
+      return SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Padding(
+          padding: EdgeInsets.all(space),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: simpleTextStyle(Variables.fontSizeMedium, darkTheme),
+              ),
+              SizedBox(
+                height: space,
+              ),
+              Column(
+                children: children,
+              ),
+              SizedBox(
+                height: space,
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      AppLocalizations.of(context).cancel.toUpperCase(),
+                      style: linktTextStyle(
+                        Variables.fontSizeMedium,
+                        darkTheme,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      onSave?.call();
+                    },
+                    child: Text(
+                      AppLocalizations.of(context).save.toUpperCase(),
+                      style: linktTextStyle(
+                        Variables.fontSizeMedium,
+                        darkTheme,
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+      );
+    },
   );
 }

@@ -27,16 +27,16 @@ import 'edit_profile.dart';
 import 'profile_image.dart';
 
 class Profile extends StatefulWidget {
-  const Profile(
-      {Key? key,
-      required this.darkTheme,
-      required this.showAppBar,
-      required this.username})
-      : super(key: key);
+  const Profile({
+    Key? key,
+    required this.darkTheme,
+    required this.showAppBar,
+    required this.userID,
+  }) : super(key: key);
 
   final bool darkTheme;
   final bool showAppBar;
-  final String username;
+  final String userID;
   @override
   State<Profile> createState() => _ProfileState();
 }
@@ -44,9 +44,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   User user = Auth.of().user;
   StreamSubscription<DatabaseEvent>? userEvent;
-  StreamSubscription<DatabaseEvent>? userEventMe;
   UserModel userModel = UserModel.empty();
-  UserModel userModelMe = UserModel.empty();
   bool isFollowing = false;
 
   int followerCount = 0;
@@ -59,22 +57,12 @@ class _ProfileState extends State<Profile> {
 
   @override
   void initState() {
-    userEventMe = UserDB.getUserRef(user.uid).onValue.listen((event) {
-      if (event.snapshot.exists) {
-        final json = event.snapshot.value as Map<dynamic, dynamic>;
-        setState(() {
-          userModelMe = UserModel.fromJson(json);
-        });
-      }
-    });
-    userEvent =
-        UserDB.getUserQueryByUsername(widget.username).onValue.listen((event) {
+    userEvent = UserDB.getUserRef(widget.userID).onValue.listen((event) {
       if (event.snapshot.exists) {
         if (kDebugMode) {
-          print(event.snapshot.children.first.value.toString());
+          print(event.snapshot.value.toString());
         }
-        final json =
-            event.snapshot.children.first.value as Map<dynamic, dynamic>;
+        final json = event.snapshot.value as Map<dynamic, dynamic>;
         setState(() {
           userModel = UserModel.fromJson(json);
         });
@@ -116,7 +104,6 @@ class _ProfileState extends State<Profile> {
   void dispose() {
     super.dispose();
     userEvent?.cancel();
-    userEventMe?.cancel();
   }
 
   void setFollowerCount() {
@@ -176,7 +163,7 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget profileContent(BuildContext context) {
-    if (userModel.id != "" && userModelMe.id != "") {
+    if (userModel.id != "") {
       return Container(
         padding: const EdgeInsets.only(top: 10),
         child: Column(
@@ -198,7 +185,7 @@ class _ProfileState extends State<Profile> {
                       },
                     ),
                   ),
-                  if (userModel.id == userModelMe.id)
+                  if (userModel.id == user.uid)
                     cameraIcon(
                       darkTheme: widget.darkTheme,
                       rounded: true,
@@ -206,7 +193,7 @@ class _ProfileState extends State<Profile> {
                         UploadImage.fromGallery(
                           context,
                           uploadLocation:
-                              Storage.profileImageLocation(userModelMe.id),
+                              Storage.profileImageLocation(user.uid),
                           beforeUpload: () {
                             showLoadingAlert();
                           },
@@ -401,7 +388,9 @@ class _ProfileState extends State<Profile> {
         showSearchbar: true,
         widgetModel: WidgetModel(
           context,
-          title: widget.username,
+          title: userModel.id == ""
+              ? AppLocalizations.of(context).loading
+              : userModel.username,
           child: profileContent(context),
         ),
       );

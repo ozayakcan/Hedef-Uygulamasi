@@ -102,5 +102,13 @@
     "uploading": "Yükleniyor...",
     "type_a_comment": "Yorum yaz...",
     "could_not_send_comment": "Yorum gönderilemedi.",
-    "post_title": "Gönderi | {user}"
+    "post_title": "Gönderi | {user}",
+    "change": "Değiştir",
+    "save": "Kaydet",
+    "change_email": "Eposta Değiştir",
+    "email_dot": "Eposta: {email}",
+    "change_username": "Kullanıcı Adı Değiştir",
+    "username_dot": "Kullanıcı Adı: {username}",
+    "could_not_update_username": "Kullanıcı adı güncellenemedi",
+    "this_content_is_currently_unavailable": "Bu içeriğe şuanda ulaşılamıyor. Lütfen daha sonra tekrar deneyin."
 }

@@ -235,7 +235,7 @@ CustomAuthButton registerBtn(
     onPressed: () {
       beforeRegister?.call();
       UserDB.checkUsername(context, username.text).then((userNameValue) {
-        if (userNameValue == true) {
+        if (userNameValue.isEmpty) {
           if (name.text.isNotEmpty && name.text.length >= 3) {
             if (password.text == passwordRp.text) {
               Auth.of()
@@ -293,6 +293,9 @@ CustomAuthButton registerBtn(
             ScaffoldSnackbar.of(context)
                 .show(AppLocalizations.of(context).name_must_3_character);
           }
+        } else {
+          onResponse?.call();
+          ScaffoldSnackbar.of(context).show(userNameValue);
         }
       });
     },
