@@ -4,14 +4,17 @@ import 'package:flutter/material.dart';
 import '../utils/theme_colors.dart';
 import '../utils/variables.dart';
 
-TextField customTextField(BuildContext context, bool darkTheme,
-    {required String labelText,
-    required TextEditingController textController,
-    TextInputType? inputType,
-    int? maxLength,
-    CustomAuthButton? authButton,
-    FocusNode? prevFocus,
-    FocusNode? nextFocus}) {
+TextField customTextField(
+  BuildContext context,
+  bool darkTheme, {
+  required TextEditingController textController,
+  String? labelText,
+  TextInputType? inputType,
+  int? maxLength,
+  CustomAuthButton? authButton,
+  FocusNode? prevFocus,
+  FocusNode? nextFocus,
+}) {
   return TextField(
     controller: textController,
     focusNode: prevFocus,
@@ -24,9 +27,11 @@ TextField customTextField(BuildContext context, bool darkTheme,
     ),
     decoration: InputDecoration(
       labelText: labelText,
-      labelStyle: TextStyle(
-        color: ThemeColor.of(darkTheme).textPrimary,
-      ),
+      labelStyle: labelText != null
+          ? TextStyle(
+              color: ThemeColor.of(darkTheme).textPrimary,
+            )
+          : null,
       enabledBorder: enabledInputBorder(darkTheme),
       focusedBorder: focusedInputBorder(darkTheme),
     ),
@@ -43,12 +48,15 @@ TextField customTextField(BuildContext context, bool darkTheme,
   );
 }
 
-TextField passwordTextField(BuildContext context, bool darkTheme,
-    {required String pwtext,
-    required TextEditingController passwordController,
-    CustomAuthButton? authButton,
-    FocusNode? prevFocus,
-    FocusNode? nextFocus}) {
+TextField passwordTextField(
+  BuildContext context,
+  bool darkTheme, {
+  required TextEditingController passwordController,
+  String? pwtext,
+  CustomAuthButton? authButton,
+  FocusNode? prevFocus,
+  FocusNode? nextFocus,
+}) {
   return TextField(
     controller: passwordController,
     focusNode: prevFocus,
@@ -64,9 +72,11 @@ TextField passwordTextField(BuildContext context, bool darkTheme,
     ),
     decoration: InputDecoration(
       labelText: pwtext,
-      labelStyle: TextStyle(
-        color: ThemeColor.of(darkTheme).textPrimary,
-      ),
+      labelStyle: pwtext != null
+          ? TextStyle(
+              color: ThemeColor.of(darkTheme).textPrimary,
+            )
+          : null,
       enabledBorder: enabledInputBorder(darkTheme),
       focusedBorder: focusedInputBorder(darkTheme),
     ),
