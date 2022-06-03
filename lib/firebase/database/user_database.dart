@@ -3,30 +3,55 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../models/user.dart';
 import '../../utils/shared_pref.dart';
 import '../../utils/time.dart';
+import '../../widgets/text_fields.dart';
+import '../../widgets/widgets.dart';
 import '../auth.dart';
 import 'database.dart';
 
 class UserDB {
-  static Future<bool?> checkUsername(String username) async {
+  static Future<bool> checkUsername(
+    BuildContext context,
+    String username,
+  ) async {
     try {
-      DatabaseReference databaseReference =
-          Database.getReference(Database.usersString);
-      return databaseReference
-          .orderByChild(Database.usernameString)
-          .equalTo(username)
-          .limitToFirst(1)
-          .once()
-          .then((value) {
-        return value.snapshot.exists;
-      });
+      if (username.isNotEmpty && username.length >= 3) {
+        if (usernameRegExp.hasMatch(username)) {
+          DatabaseReference databaseReference =
+              Database.getReference(Database.usersString);
+          DatabaseEvent databaseEvent = await databaseReference
+              .orderByChild(Database.usernameString)
+              .equalTo(username)
+              .limitToFirst(1)
+              .once();
+          if (databaseEvent.snapshot.exists) {
+            ScaffoldSnackbar.of(context)
+                .show(AppLocalizations.of(context).username_already_exists);
+            return false;
+          } else {
+            return true;
+          }
+        } else {
+          ScaffoldSnackbar.of(context)
+              .show(AppLocalizations.of(context).username_regmatch_error);
+          return false;
+        }
+      } else {
+        ScaffoldSnackbar.of(context)
+            .show(AppLocalizations.of(context).username_must_3_character);
+        return false;
+      }
     } catch (e) {
       Database.printError(e);
-      return null;
+      ScaffoldSnackbar.of(context)
+          .show(AppLocalizations.of(context).an_error_occurred);
+      return false;
     }
   }
 

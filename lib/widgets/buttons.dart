@@ -16,7 +16,6 @@ import '../utils/variables.dart';
 import '../views/home.dart';
 import '../views/login.dart';
 import '../views/share.dart';
-import 'text_fields.dart';
 import 'texts.dart';
 import 'widgets.dart';
 
@@ -235,89 +234,67 @@ CustomAuthButton registerBtn(
     darkMode: darkTheme,
     onPressed: () {
       beforeRegister?.call();
-      if (username.text.isNotEmpty && username.text.length >= 3) {
-        if (usernameRegExp.hasMatch(username.text)) {
-          UserDB.checkUsername(username.text).then((userNameValue) {
-            if (userNameValue != null) {
-              if (userNameValue == false) {
-                if (name.text.isNotEmpty && name.text.length >= 3) {
-                  if (password.text == passwordRp.text) {
+      UserDB.checkUsername(context, username.text).then((userNameValue) {
+        if (userNameValue == true) {
+          if (name.text.isNotEmpty && name.text.length >= 3) {
+            if (password.text == passwordRp.text) {
+              Auth.of()
+                  .signupWithEmail(
+                      context, email.text, name.text, password.text)
+                  .then((registerValue) {
+                if (registerValue == null) {
+                  User user = Auth.of().user;
+                  UserModel userModel = UserModel(
+                    user.uid,
+                    email.text,
+                    username.text,
+                    name.text,
+                    Time.getTimeUtc(),
+                    Database.defaultValue,
+                  );
+                  UserDB.addUser(userModel).then((value) {
                     Auth.of()
-                        .signupWithEmail(
-                            context, email.text, name.text, password.text)
-                        .then((registerValue) {
-                      if (registerValue == null) {
-                        User user = Auth.of().user;
-                        UserModel userModel = UserModel(
-                          user.uid,
-                          email.text,
-                          username.text,
-                          name.text,
-                          Time.getTimeUtc(),
-                          Database.defaultValue,
-                        );
-                        UserDB.addUser(userModel).then((value) {
-                          Auth.of()
-                              .sendEmailVerification(context)
-                              .then((emailVerificationValue) {
-                            if (emailVerificationValue == null) {
-                              if (kDebugMode) {
-                                print("Eposta onayı gönderildi.");
-                              }
-                            } else {
-                              if (kDebugMode) {
-                                print("Eposta gönderilemedi. Hata: " +
-                                    emailVerificationValue);
-                              }
-                            }
-                          });
-                          onResponse?.call();
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomePage(
-                                darkTheme: darkTheme,
-                              ),
-                            ),
-                            (route) => false,
-                          );
-                        });
+                        .sendEmailVerification(context)
+                        .then((emailVerificationValue) {
+                      if (emailVerificationValue == null) {
+                        if (kDebugMode) {
+                          print("Eposta onayı gönderildi.");
+                        }
                       } else {
-                        onResponse?.call();
-                        ScaffoldSnackbar.of(context).show(registerValue);
+                        if (kDebugMode) {
+                          print("Eposta gönderilemedi. Hata: " +
+                              emailVerificationValue);
+                        }
                       }
                     });
-                  } else {
                     onResponse?.call();
-                    ScaffoldSnackbar.of(context).show(
-                        AppLocalizations.of(context).passwords_do_not_match);
-                  }
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(
+                          darkTheme: darkTheme,
+                        ),
+                      ),
+                      (route) => false,
+                    );
+                  });
                 } else {
                   onResponse?.call();
-                  ScaffoldSnackbar.of(context)
-                      .show(AppLocalizations.of(context).name_must_3_character);
+                  ScaffoldSnackbar.of(context).show(registerValue);
                 }
-              } else {
-                onResponse?.call();
-                ScaffoldSnackbar.of(context)
-                    .show(AppLocalizations.of(context).username_already_exists);
-              }
+              });
             } else {
               onResponse?.call();
               ScaffoldSnackbar.of(context)
-                  .show(AppLocalizations.of(context).an_error_occurred);
+                  .show(AppLocalizations.of(context).passwords_do_not_match);
             }
-          });
-        } else {
-          onResponse?.call();
-          ScaffoldSnackbar.of(context)
-              .show(AppLocalizations.of(context).username_regmatch_error);
+          } else {
+            onResponse?.call();
+            ScaffoldSnackbar.of(context)
+                .show(AppLocalizations.of(context).name_must_3_character);
+          }
         }
-      } else {
-        onResponse?.call();
-        ScaffoldSnackbar.of(context)
-            .show(AppLocalizations.of(context).username_must_3_character);
-      }
+      });
     },
     text: AppLocalizations.of(context).register,
   );
